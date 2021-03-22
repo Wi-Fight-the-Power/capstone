@@ -103,6 +103,7 @@ button {
   right: 0;
   bottom: 0;
   top: 0;
+  border: solid #5b6dcd 10px;
 }
 
 .colors {
@@ -129,4 +130,12 @@ button {
 }
 .color.yellow {
   background-color: yellow;
+}
+
+/* game */
+.drawinggame {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
