@@ -7,6 +7,7 @@ import Chatbox from './components/chatbox'
 import Board from './components/whiteboardv1'
 import Mvp from './components/mvp'
 import {me} from './store'
+import HomePage from './components/homepage'
 
 /**
  * COMPONENT
@@ -22,6 +23,8 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+
+        <Route exact path="/home" component={HomePage} />
         <Route path="/chatbox" component={Chatbox} />
         <Route path="/w" component={Board} />
         <Route path="/mvp" component={Mvp} />
