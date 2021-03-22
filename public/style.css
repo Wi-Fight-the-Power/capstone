@@ -2,6 +2,12 @@ body {
   font-family: sans-serif;
 }
 
+.handleColor {
+  color: blue;
+  font-weight: bold;
+  padding: 5px;
+}
+
 a {
   text-decoration: none;
 }

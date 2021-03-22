@@ -13,6 +13,7 @@ class Chatbox extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
     this.handleChangeHandle = this.handleChangeHandle.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
   }
 
   handleChangeMessage(event) {
@@ -32,25 +33,41 @@ class Chatbox extends React.Component {
     const message = this.state.message
     const handle = this.state.handle
 
-    const newMessage = `${handle}: ${message}`
+    const newMessage = `${handle}œ${message}`
 
-    this.props.sendMessage(newMessage)
+    this.props.sendMessage(newMessage);
     this.setState({
       message: ''
     })
   }
 
+  handleKeyPress(event){
+    if (event.keyCode === 13){
+      this.handleSubmit();
+    }
+  }
+
   render() {
     const messages = this.props.chat.messages || []
-    const handle = this.props.chat.handle
 
     return (
       <div id="chat-box">
         <h2>CHATBOX</h2>
         <div id="chat-window">
           <div id="output">
-            {messages.map((message, i) => {
-              return <div key={i}>{message}</div>
+            {messages.map((handleMessage, i) => {
+              let handle = null;
+              let message = null;
+              for (let i = 0; i < handleMessage.length; i++){
+                let currChar = handleMessage[i];
+                if (currChar === 'œ'){
+                  handle = handleMessage.slice(0, i);
+                  message = handleMessage.slice(i + 1, handleMessage.length)
+                }
+              }
+              return <div key={i}>
+                <span className='handleColor'>{`${handle}:`}</span>{message}
+                </div>
             })}
           </div>
           <div id="feedback" />
@@ -62,16 +79,19 @@ class Chatbox extends React.Component {
           value={this.state.handle}
           placeholder="Handle"
         />
+        <form>
         <input
           id="message"
           type="text"
           onChange={this.handleChangeMessage}
+          onKeyPress={this.handleKeyPress}
           value={this.state.message}
           placeholder="Message"
         />
-        <button type="button" id="send" onClick={this.handleSubmit}>
+        <button type="submit" id="send" onClick={this.handleSubmit} >
           Send
         </button>
+        </form>
       </div>
     )
   }
