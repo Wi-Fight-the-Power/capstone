@@ -2,18 +2,16 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
+import {Login, Signup, UserHome, Navbar} from './components'
 import Chatbox from './components/chatbox'
 import Board from './components/whiteboardv1'
 import Mvp from './components/mvp'
 import {me} from './store'
 
-
-import RoutesComp from './componentRoutes'
 /**
  * COMPONENT
  */
-class Routes extends Component {
+class RoutesComp extends Component {
   componentDidMount() {
     this.props.loadInitialData()
   }
@@ -22,10 +20,12 @@ class Routes extends Component {
     const {isLoggedIn} = this.props
 
     return (
+      <div>
+        <Route path="/" component={Navbar} />
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/w" component={Board} />
-        <Route path="/" component={RoutesComp} />
+        <Route path="/chatbox" component={Chatbox} />
+        <Route path="/mvp" component={Mvp} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (
@@ -37,6 +37,7 @@ class Routes extends Component {
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
+        </div>
     )
   }
 }
@@ -62,12 +63,12 @@ const mapDispatch = dispatch => {
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Routes))
+export default withRouter(connect(mapState, mapDispatch)(RoutesComp))
 
 /**
  * PROP TYPES
  */
-Routes.propTypes = {
+RoutesComp.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
