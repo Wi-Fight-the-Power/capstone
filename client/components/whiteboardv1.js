@@ -1,167 +1,91 @@
-import React, {useRef, useEffect} from 'react'
-import io from 'socket.io-client'
+import React, { useRef } from "react";
+// import { render } from "react-dom";
+import { Stage, Layer, Line, Text } from "react-konva";
 
-const Board = () => {
-  const canvasRef = useRef(null)
-  const colorsRef = useRef(null)
-  const socketRef = useRef()
 
-  useEffect(() => {
-    // --------------- getContext() method returns a drawing context on the canvas-----
+const Board = (props) => {
+  const [tool, setTool] = React.useState("pen");
+  const [lines, setLines] = React.useState([]);
+  // const socketRef = useRef();
 
-    const canvas = canvasRef.current
-    const test = colorsRef.current
-    const context = canvas.getContext('2d')
 
-    // ----------------------- Colors --------------------------------------------------
+  const isDrawing = React.useRef(false);
 
-    const colors = document.getElementsByClassName('color')
-    console.log(colors, 'the colors')
-    console.log(test)
-    // set the current color
-    const current = {
-      color: 'black'
+  const handleMouseDown = (e) => {
+    isDrawing.current = true;
+    const pos = e.target.getStage().getPointerPosition();
+    setLines([...lines, { tool, points: [pos.x, pos.y] }]);
+  };
+
+  const handleMouseMove = (e) => {
+    // no drawing - skipping
+    if (!isDrawing.current) {
+      return;
     }
+    const stage = e.target.getStage();
+    const point = stage.getPointerPosition();
+    let lastLine = lines[lines.length - 1];
+    // add point
+    lastLine.points = lastLine.points.concat([point.x, point.y]);
 
-    // helper that will update the current color
-    const onColorUpdate = e => {
-      current.color = e.target.className.split(' ')[1]
-    }
+    // socketRef.current.emit('drawing', 'Data')
 
-    // loop through the color elements and add the click event listeners
-    for (let i = 0; i < colors.length; i++) {
-      colors[i].addEventListener('click', onColorUpdate, false)
-    }
-    let drawing = false
+    // replace last
+    lines.splice(lines.length - 1, 1, lastLine);
+    props.io.emit('drawing', lines.concat())
+    setLines(lines.concat());
+  };
 
-    // ------------------------------- create the drawing ----------------------------
+  props.io.on('drawing', drawn => setLines(drawn))
+  // const testSocket = (data) => {
+  //   console.log(data)
+  // }
 
-    const drawLine = (x0, y0, x1, y1, color, emit) => {
-      context.beginPath()
-      context.moveTo(x0, y0)
-      context.lineTo(x1, y1)
-      context.strokeStyle = color
-      context.lineWidth = 2
-      context.stroke()
-      context.closePath()
 
-      if (!emit) {
-        return
-      }
-      const w = canvas.width
-      const h = canvas.height
+  // socketRef.current.on('drawing', testSocket)
 
-      socketRef.current.emit('drawing', {
-        x0: x0 / w,
-        y0: y0 / h,
-        x1: x1 / w,
-        y1: y1 / h,
-        color
-      })
-    }
-
-    // ---------------- mouse movement --------------------------------------
-
-    const onMouseDown = e => {
-      drawing = true
-      current.x = e.clientX || e.touches[0].clientX
-      current.y = e.clientY || e.touches[0].clientY
-    }
-
-    const onMouseMove = e => {
-      if (!drawing) {
-        return
-      }
-      drawLine(
-        current.x,
-        current.y,
-        e.clientX || e.touches[0].clientX,
-        e.clientY || e.touches[0].clientY,
-        current.color,
-        true
-      )
-      current.x = e.clientX || e.touches[0].clientX
-      current.y = e.clientY || e.touches[0].clientY
-    }
-
-    const onMouseUp = e => {
-      if (!drawing) {
-        return
-      }
-      drawing = false
-      drawLine(
-        current.x,
-        current.y,
-        e.clientX || e.touches[0].clientX,
-        e.clientY || e.touches[0].clientY,
-        current.color,
-        true
-      )
-    }
-
-    // ----------- limit the number of events per second -----------------------
-
-    const throttle = (callback, delay) => {
-      let previousCall = new Date().getTime()
-      return function() {
-        const time = new Date().getTime()
-
-        if (time - previousCall >= delay) {
-          previousCall = time
-          callback.apply(null, arguments)
-        }
-      }
-    }
-
-    // -----------------add event listeners to our canvas ----------------------
-
-    canvas.addEventListener('mousedown', onMouseDown, false)
-    canvas.addEventListener('mouseup', onMouseUp, false)
-    canvas.addEventListener('mouseout', onMouseUp, false)
-    canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false)
-
-    // Touch support for mobile devices
-    canvas.addEventListener('touchstart', onMouseDown, false)
-    canvas.addEventListener('touchend', onMouseUp, false)
-    canvas.addEventListener('touchcancel', onMouseUp, false)
-    canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false)
-
-    // -------------- make the canvas fill its parent component -----------------
-
-    const onResize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-
-    window.addEventListener('resize', onResize, false)
-    onResize()
-
-    // ----------------------- socket.io connection ----------------------------
-    const onDrawingEvent = data => {
-      const w = canvas.width
-      const h = canvas.height
-      drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color)
-    }
-
-    socketRef.current = io.connect('/')
-    socketRef.current.on('drawing', onDrawingEvent)
-  }, [])
-
-  // ------------- The Canvas and color elements --------------------------
+  const handleMouseUp = () => {
+    isDrawing.current = false;
+  };
 
   return (
     <div>
-      <canvas ref={canvasRef} className="whiteboard" />
-
-      <div ref={colorsRef} className="colors">
-        <div className="color black" />
-        <div className="color red" />
-        <div className="color green" />
-        <div className="color blue" />
-        <div className="color yellow" />
-      </div>
+      <select
+        style={{ position: "absolute", top: "5px", left: "5px" }}
+        value={tool}
+        onChange={(e) => {
+          setTool(e.target.value);
+        }}
+      >
+        <option value="pen">Pen</option>
+        <option value="eraser">Eraser</option>
+      </select>
+      <Stage
+        width={500}
+        height={500}
+        onMouseDown={handleMouseDown}
+        onMousemove={handleMouseMove}
+        onMouseup={handleMouseUp}
+      >
+        <Layer>
+          <Text text="Just start drawing" x={5} y={30} />
+          {lines.map((line, i) => (
+            <Line
+              key={i}
+              points={line.points}
+              stroke="#df4b26"
+              strokeWidth={5}
+              tension={0.5}
+              lineCap="round"
+              globalCompositeOperation={
+                line.tool === "eraser" ? "destination-out" : "source-over"
+              }
+            />
+          ))}
+        </Layer>
+      </Stage>
     </div>
-  )
-}
+  );
+};
 
 export default Board

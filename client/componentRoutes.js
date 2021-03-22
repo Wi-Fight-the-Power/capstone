@@ -4,7 +4,6 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, Navbar} from './components'
 import Chatbox from './components/chatbox'
-import Board from './components/whiteboardv1'
 import Mvp from './components/mvp'
 import {me} from './store'
 

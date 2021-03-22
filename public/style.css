@@ -2,6 +2,8 @@ body {
   font-family: sans-serif;
 }
 
+/* html, body {margin: 0; height: 100%; overflow: hidden} */
+
 a {
   text-decoration: none;
 }
@@ -104,6 +106,11 @@ button {
   bottom: 0;
   top: 0;
   border: solid #5b6dcd 10px;
+}
+
+.konvajs-content {
+  margin: 5em;
+  background-color: grey;
 }
 
 .colors {

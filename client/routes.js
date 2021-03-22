@@ -4,7 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import Chatbox from './components/chatbox'
-import Board from './components/whiteboardv1'
+import BoardLauncher from './components/whiteboardLauncher'
 import Mvp from './components/mvp'
 import {me} from './store'
 
@@ -24,7 +24,7 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/w" component={Board} />
+        <Route path="/w" component={BoardLauncher} />
         <Route path="/" component={RoutesComp} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
