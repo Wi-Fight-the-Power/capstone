@@ -3,10 +3,12 @@ import Chatbox from './chatbox'
 const Mvp = () => {
   return (
     <div className="drawinggame">
-      <embed src="http://localhost:8080/w"
-width="600"
-height="500"
-onError="alert('URL invalid !!');" />
+      <embed
+        src="http://localhost:8080/w"
+        width="600"
+        height="500"
+        onError="alert('URL invalid !!');"
+      />
       {/* <iframe
         src="http://localhost:8080/w"
         title="plz wOrK"

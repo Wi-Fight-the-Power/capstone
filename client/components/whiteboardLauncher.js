@@ -1,4 +1,4 @@
-import io from 'socket.io-client';
+import io from 'socket.io-client'
 import React, {useRef} from 'react'
 import Board from './whiteboardv1'
 
@@ -7,7 +7,7 @@ const BoardLauncher = () => {
   const server = io.connect('/')
   return (
     <div>
-        <Board io={server} />
+      <Board io={server} />
     </div>
   )
 }

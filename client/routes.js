@@ -8,7 +8,6 @@ import BoardLauncher from './components/whiteboardLauncher'
 import Mvp from './components/mvp'
 import {me} from './store'
 
-
 import RoutesComp from './componentRoutes'
 /**
  * COMPONENT
