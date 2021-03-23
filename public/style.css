@@ -1,6 +1,18 @@
 body {
   font-family: sans-serif;
 }
+/* this is the chat box stuff */
+.handleColor {
+  color: blue;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.handleColor-rec {
+  color: red;
+  font-weight: bold;
+  padding: 5px;
+}
 
 @media (max-width: 600px) {
 html, body {margin: 0; height: 100%; overflow: hidden}

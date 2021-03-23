@@ -5,6 +5,7 @@ import {sendMessage} from '../store/chatbox'
 class Chatbox extends React.Component {
   constructor() {
     super()
+    this.chatContainer = React.createRef();
 
     this.state = {
       message: '',
@@ -13,6 +14,13 @@ class Chatbox extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
     this.handleChangeHandle = this.handleChangeHandle.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.scrollToMyRef = this.scrollToMyRef.bind(this)
+  }
+
+
+  componentDidUpdate(){
+    this.scrollToMyRef();
   }
 
   handleChangeMessage(event) {
@@ -32,25 +40,48 @@ class Chatbox extends React.Component {
     const message = this.state.message
     const handle = this.state.handle
 
-    const newMessage = `${handle}: ${message}`
+    const newMessage = {
+      handle: handle,
+      message: message
+    }
 
-    this.props.sendMessage(newMessage)
+    this.props.sendMessage(newMessage);
     this.setState({
       message: ''
     })
   }
 
+  handleKeyPress(event){
+    if (event.keyCode === 13){
+      this.handleSubmit();
+    }
+  }
+
+  scrollToMyRef = () => {
+    const scroll =
+      this.chatContainer.current.scrollHeight -
+      this.chatContainer.current.clientHeight;
+    this.chatContainer.current.scrollTo(0, scroll);
+  };
+
   render() {
     const messages = this.props.chat.messages || []
-    const handle = this.props.chat.handle
 
     return (
       <div id="chat-box">
         <h2>CHATBOX</h2>
-        <div id="chat-window">
-          <div id="output">
-            {messages.map((message, i) => {
-              return <div key={i}>{message}</div>
+        <div ref={this.chatContainer} id="chat-window">
+          <div id="output" >
+            {messages.map((object, i) => {
+              let handle = object.handle;
+              let message = object.message;
+
+              return <div key={i}>
+                <span className={handle === this.state.handle
+                  ? 'handleColor'
+                  : 'handleColor-rec'
+                  }>{`${handle}:`}</span>{message}
+                </div>
             })}
           </div>
           <div id="feedback" />
@@ -62,16 +93,19 @@ class Chatbox extends React.Component {
           value={this.state.handle}
           placeholder="Handle"
         />
+        <form>
         <input
           id="message"
           type="text"
           onChange={this.handleChangeMessage}
+          onKeyPress={this.handleKeyPress}
           value={this.state.message}
           placeholder="Message"
         />
-        <button type="button" id="send" onClick={this.handleSubmit}>
+        <button type="submit" id="send" onClick={this.handleSubmit} >
           Send
         </button>
+        </form>
       </div>
     )
   }
