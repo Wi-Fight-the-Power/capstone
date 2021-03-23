@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {sendMessage} from '../store/chatbox'
+import {nouns} from './gameFunctions'
 
 class Chatbox extends React.Component {
   constructor() {
