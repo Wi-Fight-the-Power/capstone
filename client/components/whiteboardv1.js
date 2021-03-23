@@ -3,7 +3,7 @@ import React, {useRef} from 'react'
 import {Stage, Layer, Line, Text} from 'react-konva'
 
 const Board = props => {
-  const [stroke, changeStroke] = React.useState(50)
+  const [stroke, changeStroke] = React.useState(12)
   const [color, changeColor] = React.useState('#FFAEBC')
   const [tool, setTool] = React.useState('pen')
   const [lines, setLines] = React.useState([])
@@ -23,18 +23,21 @@ const Board = props => {
       return
     }
 
+
     const stage = e.target.getStage()
     const point = stage.getPointerPosition()
     let lastLine = lines[lines.length - 1]
     // add point
     lastLine.points = lastLine.points.concat([point.x, point.y])
 
+    console.log(lines)
     // replace last
     lines.splice(lines.length - 1, 1, lastLine)
     props.io.emit('drawing', lines.concat())
     setLines(lines.concat())
   }
 
+  // props.io.on('drawing', drawn => console.log(drawn))
   props.io.on('drawing', drawn => setLines(drawn))
 
 
@@ -44,7 +47,8 @@ const Board = props => {
 
   return (
     <div>
-        <input type="range" min='1' max='100'  className='strokeScale drawTools' onChange={e => changeStroke(e.target.value)}/>
+
+        <input type="range" min='1' max='25'  className='strokeScale drawTools' onChange={e => changeStroke(e.target.value)}/>
 
         <select
         className="drawTools"
@@ -86,8 +90,9 @@ const Board = props => {
               points={line.points}
               stroke={line.color}
               strokeWidth={line.stroke}
-              tension={0.5}
+              tension={0}
               lineCap="round"
+              lineJoin="round"
               globalCompositeOperation={
                 line.tool === 'eraser' ? 'destination-out' : 'source-over'
               }
