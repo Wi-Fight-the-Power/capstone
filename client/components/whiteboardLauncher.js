@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import React from 'react'
-import Board from './whiteboardv1'
+import Board from './whiteboard'
 
 const BoardLauncher = () => {
   const server = io.connect('/')

@@ -30,7 +30,7 @@ const Board = props => {
     // add point
     lastLine.points = lastLine.points.concat([point.x, point.y])
 
-    console.log(lines)
+
     // replace last
     lines.splice(lines.length - 1, 1, lastLine)
     props.io.emit('drawing', lines.concat())
