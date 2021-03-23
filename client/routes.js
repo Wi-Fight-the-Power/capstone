@@ -4,8 +4,11 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import Chatbox from './components/chatbox'
+import Board from './components/whiteboardv1'
+import Lobby from './components/lobby'
 import BoardLauncher from './components/whiteboardLauncher'
 import Mvp from './components/mvp'
+import Mvp2 from './components/mvp2'
 import {me} from './store'
 import HomePage from './components/homepage'
 
@@ -29,8 +32,11 @@ class Routes extends Component {
         <Route path="/chatbox" component={Chatbox} />
         <Route path="/w" component={BoardLauncher} />
         <Route path="/mvp" component={Mvp} />
+        <Route path="/mvp2" component={Mvp2} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/lobby" component={Lobby} />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

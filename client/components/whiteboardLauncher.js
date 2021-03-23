@@ -1,10 +1,11 @@
 import React from 'react'
 import Board from './whiteboardv1'
 
+
 const BoardLauncher = () => {
   return (
     <div>
-      <Board/>
+      <Board roomNum={props.roomNum}/>
     </div>
   )
 }

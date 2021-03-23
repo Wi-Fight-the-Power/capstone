@@ -15,10 +15,11 @@ export const newMessage = message => {
 
 //thunks
 
-export const sendMessage = message => dispatch => {
+export const sendMessage = (message,room) => dispatch => {
   try {
     dispatch(newMessage(message))
-    socket.emit('message', message)
+
+    socket.emit('message', message,room)
   } catch (error) {
     console.log(error)
   }
