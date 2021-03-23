@@ -8,7 +8,7 @@ import socket from '../socket'
 
 const Mvp = () => {
   // io.connect('/')
-  const roomNum = 12345
+  const roomNum = 54321
   socket.emit('Join Room', roomNum);
   return (
     <div className="drawinggame">
