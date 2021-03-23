@@ -7,7 +7,8 @@ const BoardLauncher = () => {
   const server = io.connect('/')
   return (
     <div>
-      <Board io={server} />
+
+      <Board io={server}/>
     </div>
   )
 }

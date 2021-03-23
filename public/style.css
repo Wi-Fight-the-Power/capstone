@@ -2,7 +2,10 @@ body {
   font-family: sans-serif;
 }
 
-/* html, body {margin: 0; height: 100%; overflow: hidden} */
+@media (max-width: 600px) {
+html, body {margin: 0; height: 100%; overflow: hidden}
+}
+
 
 a {
   text-decoration: none;
@@ -108,10 +111,38 @@ button {
   border: solid #5b6dcd 10px;
 }
 
+/* Konva Board */
 .konvajs-content {
-  margin: 5em;
+  margin-top: 5em;
+  margin-left: 0;
   background-color: grey;
 }
+
+.HotPink{
+  background-color: #FFAEBC;
+}
+.TiffanyBlue{
+  background-color: #A0E7E5;
+}
+.Mint{
+  background-color: #B4F8C8;
+}
+.Yellow {
+  background-color: #FBE7C6;
+}
+
+
+
+.drawTools{
+
+}
+
+.strokeScale{
+  width: 200px;
+  /* position:absolute; */
+  /* left: 300px; */
+}
+
 
 .colors {
   position: fixed;
