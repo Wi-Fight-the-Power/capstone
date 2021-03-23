@@ -5,6 +5,7 @@ import {sendMessage} from '../store/chatbox'
 class Chatbox extends React.Component {
   constructor() {
     super()
+    this.chatContainer = React.createRef();
 
     this.state = {
       message: '',
@@ -14,6 +15,12 @@ class Chatbox extends React.Component {
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
     this.handleChangeHandle = this.handleChangeHandle.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.scrollToMyRef = this.scrollToMyRef.bind(this)
+  }
+
+
+  componentDidUpdate(){
+    this.scrollToMyRef();
   }
 
   handleChangeMessage(event) {
@@ -33,7 +40,10 @@ class Chatbox extends React.Component {
     const message = this.state.message
     const handle = this.state.handle
 
-    const newMessage = `${handle}œ${message}`
+    const newMessage = {
+      handle: handle,
+      message: message
+    }
 
     this.props.sendMessage(newMessage);
     this.setState({
@@ -47,26 +57,30 @@ class Chatbox extends React.Component {
     }
   }
 
+  scrollToMyRef = () => {
+    const scroll =
+      this.chatContainer.current.scrollHeight -
+      this.chatContainer.current.clientHeight;
+    this.chatContainer.current.scrollTo(0, scroll);
+  };
+
   render() {
     const messages = this.props.chat.messages || []
 
     return (
       <div id="chat-box">
         <h2>CHATBOX</h2>
-        <div id="chat-window">
-          <div id="output">
-            {messages.map((handleMessage, i) => {
-              let handle = null;
-              let message = null;
-              for (let i = 0; i < handleMessage.length; i++){
-                let currChar = handleMessage[i];
-                if (currChar === 'œ'){
-                  handle = handleMessage.slice(0, i);
-                  message = handleMessage.slice(i + 1, handleMessage.length)
-                }
-              }
+        <div ref={this.chatContainer} id="chat-window">
+          <div id="output" >
+            {messages.map((object, i) => {
+              let handle = object.handle;
+              let message = object.message;
+
               return <div key={i}>
-                <span className='handleColor'>{`${handle}:`}</span>{message}
+                <span className={handle === this.state.handle
+                  ? 'handleColor'
+                  : 'handleColor-rec'
+                  }>{`${handle}:`}</span>{message}
                 </div>
             })}
           </div>
