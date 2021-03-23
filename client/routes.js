@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import Chatbox from './components/chatbox'
 import Board from './components/whiteboardv1'
+import Lobby from './components/lobby'
 import Mvp from './components/mvp'
 import {me} from './store'
 
@@ -27,6 +28,8 @@ class Routes extends Component {
         <Route path="/mvp" component={Mvp} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/lobby" component={Lobby} />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
