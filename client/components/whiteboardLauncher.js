@@ -1,12 +1,11 @@
-import io from 'socket.io-client'
 import React from 'react'
 import Board from './whiteboardv1'
 
-const BoardLauncher = (props) => {
-  const server = io.connect('/')
+
+const BoardLauncher = () => {
   return (
     <div>
-      <Board io={server} roomNum={props.roomNum}/>
+      <Board roomNum={props.roomNum}/>
     </div>
   )
 }
