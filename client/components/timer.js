@@ -69,7 +69,7 @@ class Timer extends React.Component {
         <button className='testButtons' type='submit' onClick={this.startTimer}>Start</button>
         MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points} USERPOINTS: {this.state.userPoints}
       </div>
-      <Chatbox points={this.state.points} />
+      <Chatbox points={this.state.points} roomNum={this.props.roomNum} />
       </div>
     );
   }

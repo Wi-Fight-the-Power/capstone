@@ -1,7 +1,7 @@
 import React from 'react'
 import Chatbox from './chatbox'
 // import BoardLauncher from './whiteboardLauncher'
-import Board from './whiteboardv1'
+import Board from './whiteboard'
 import socket from '../socket'
 // import {joinRoom} from '../socket'
 
