@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {nouns} from './gameFunctions'
+import Chatbox from './chatbox';
 
 class Timer extends React.Component {
   constructor() {
@@ -9,12 +10,10 @@ class Timer extends React.Component {
       time: {},
       seconds: 90,
       points: 900,
-      userPoints: 0,
     };
     this.timer = 0;
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
-    this.correctGuess = this.correctGuess.bind(this);
   }
 
   secondsToTime(secs){
@@ -39,19 +38,7 @@ class Timer extends React.Component {
     this.setState({ time: timeLeftVar });
   }
 
-  correctGuess(){
-    let messages = this.props.messages;
 
-    let {message} = messages[messages.length - 1];
-
-    if (nouns.includes(message)){
-      let userPoints = this.state.userPoints;
-      this.setState({
-        userPoints: userPoints += this.state.points,
-      })
-    }
-    console.log(this.state.userPoints)
-  }
 
   startTimer() {
     if (this.timer === 0 && this.state.seconds > 0) {
@@ -80,11 +67,9 @@ class Timer extends React.Component {
       <div>
       <div className='buttonContainer'>
         <button className='testButtons' type='submit' onClick={this.startTimer}>Start</button>
-      </div>
-      <div className='buttonContainer'>
-        <button className='testButtons' type='submit' onClick={this.correctGuess}>Guess</button>
         MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points} USERPOINTS: {this.state.userPoints}
       </div>
+      <Chatbox points={this.state.points} />
       </div>
     );
   }

@@ -24,6 +24,7 @@ class HomePage extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     this.props.newUser(this.state)
+    // localStorage.setItem('user', this.state)
   }
   render() {
     // Existing User will be based off of cookie/session/local storage

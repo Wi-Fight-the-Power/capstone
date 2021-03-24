@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {sendMessage} from '../store/chatbox'
+import {sendMessage, sendScore} from '../store/chatbox'
 import {nouns} from './gameFunctions'
+
 
 class Chatbox extends React.Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class Chatbox extends React.Component {
 
     this.state = {
       message: '',
-      handle: ''
+      handle: '',
+      score: 0
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
@@ -38,19 +40,36 @@ class Chatbox extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    const message = this.state.message
-    const handle = this.state.handle
 
+    let message = this.state.message
+    const handle = this.state.handle
+    let score = this.state.score
+
+      if (nouns.includes(message.toLowerCase())){
+      this.setState({
+        score: this.state.score += this.props.points
+      })
+      score = this.state.score
+      message = `GOT THE ANSWER +${this.props.points} points`
+    }
+
+    const newScore = {
+      handle: handle,
+      score: score
+    }
     const newMessage = {
       handle: handle,
       message: message
     }
+    this.props.sendScore(newScore);
 
     this.props.sendMessage(newMessage,this.props.roomNum);
     this.setState({
       message: ''
     })
+    console.log(this.state.score, 'inside the function')
   }
+
 
   handleKeyPress(event){
     if (event.keyCode === 13){
@@ -67,8 +86,9 @@ class Chatbox extends React.Component {
 
   render() {
     const messages = this.props.chat.messages || []
-
+    console.log(this.state.score, 'inside the render')
     return (
+
       <div id="chat-box">
         <h2>CHATBOX</h2>
         <div ref={this.chatContainer} id="chat-window">
@@ -113,6 +133,7 @@ class Chatbox extends React.Component {
 }
 
 const mapState = state => {
+  console.log(state)
   return {
     chat: state.chatbox
   }
@@ -120,7 +141,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    sendMessage: (message,room) => dispatch(sendMessage(message,room))
+    sendMessage: (message,room) => dispatch(sendMessage(message, room)),
+    sendScore: score => dispatch(sendScore(score))
   }
 }
 
