@@ -5,12 +5,13 @@ import socket from '../socket'
 
 
 const Mvp = (props) => {
-  const roomNum = props.location.state.room
+  const roomNum = props.match.params.id
   console.log('socket.rooms)',socket.rooms)
   console.log('connected',roomNum)
   socket.emit('Join Room', roomNum);
   return (
     <div className="drawinggame">
+      <h1>Room code:{roomNum}</h1>
       <Board roomNum={roomNum}/>
       <Chatbox roomNum={roomNum}/>
     </div>
