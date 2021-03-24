@@ -24,12 +24,15 @@ class Scoreboard extends Component {
           {info.map((object, i) => {
             let handle = object.handle;
             let score = object.score;
+            // return <div key={i}>
+            //     <span className={handle === this.state.handle
+            //       ? 'handleColor'
+            //       : 'handleColor-rec'
+            //       }>{`${handle}:`}</span>{score}
+            //     </div>
             return <div key={i}>
-                <span className={handle === this.state.handle
-                  ? 'handleColor'
-                  : 'handleColor-rec'
-                  }>{`${handle}:`}</span>{score}
-                </div>
+              {`${handle}: ${score}`}
+            </div>
           })}
         </div>
       </div>

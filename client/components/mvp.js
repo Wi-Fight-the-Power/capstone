@@ -19,11 +19,9 @@ const Mvp = (props) => {
     <div className="drawinggame">
       <h1>Room code:{roomNum}</h1>
       <Board roomNum={roomNum}/>
-      <Chatbox roomNum={roomNum}/>
-      <BoardLauncher />
+      {/* <Chatbox roomNum={roomNum}/> */}
       <Scoreboard />
-      <Timer />
-      {/* <Chatbox /> */}
+      <Timer roomNum={roomNum}/>
     </div>
   )
 }

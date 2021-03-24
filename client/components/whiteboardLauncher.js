@@ -2,7 +2,7 @@ import React from 'react'
 import Board from './whiteboard'
 
 
-const BoardLauncher = () => {
+const BoardLauncher = (props) => {
   return (
     <div>
       <Board roomNum={props.roomNum}/>
