@@ -1,7 +1,9 @@
 import React, {useRef} from 'react'
 // import { render } from "react-dom";
 import {Stage, Layer, Line, Text} from 'react-konva'
+
 import socket from '../socket'
+
 
 const Board = props => {
   const [stroke, changeStroke] = React.useState(12)
@@ -32,6 +34,7 @@ const Board = props => {
     lastLine.points = lastLine.points.concat([point.x, point.y])
 
 
+
     // replace last
     lines.splice(lines.length - 1, 1, lastLine)
     socket.emit('drawing', lines.concat(),props.roomNum)
@@ -39,6 +42,7 @@ const Board = props => {
   }
 
   // props.io.on('drawing', drawn => console.log(drawn))
+
   socket.on('drawing', drawn => setLines(drawn))
 
 
