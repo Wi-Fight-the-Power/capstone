@@ -1,35 +1,26 @@
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
-
-    // socket.on('message', (message, roomnum) => {
-    //   socket.broadcast.emit('message', message, roomnum)
-    //   console.log(roomnum)
-    // })
-
-    // socket.on('drawing', (data,room) => {console.log(room)})
-
-    // socket.on('Join Room', room => {socket.join(room)})
-
-    // socket.on('message', ({room , message}) => {
-    //   socket.to(room).emit("message", message)
-    // })
-
-    // socket.on('drawing', ({room , data}) => {
-    //   socket.to(room).emit("data", data)
-    // })
-
-        socket.on('Join Room', room => {socket.join(room)})
-
+     //creates the room
+    socket.on('Join Room', room => {socket.join(room)})
+    //checks to see if room exist or not
+    socket.on('exist', (room ) => {
+      const roominfo = io.sockets.adapter.rooms[room] || []
+      // console.log(roominfo)
+      if(roominfo.length > 0){socket.emit('exist',true)}
+      else {
+        socket.emit('exist',false)
+        console.log("room doesnt exist")}
+        })
+    //sends message data to room
     socket.on('message', (message, room ) => {
       socket.to(room).emit("message", message)
     })
-
+    //sends drawing data to room
     socket.on('drawing', (data, room) => {
       socket.to(room).emit("drawing", data)
     })
-
-
+    //disconnect
     socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left the building`)
     })
