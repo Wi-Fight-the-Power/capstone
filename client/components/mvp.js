@@ -1,7 +1,13 @@
 import React from 'react'
 import Chatbox from './chatbox'
-import Board from './whiteboardv1'
+import Board from './whiteboard'
 import socket from '../socket'
+import BoardLauncher from './whiteboardLauncher'
+import Timer from './timer'
+import Scoreboard from './scoreboard'
+
+
+
 
 
 const Mvp = (props) => {
@@ -14,6 +20,10 @@ const Mvp = (props) => {
       <h1>Room code:{roomNum}</h1>
       <Board roomNum={roomNum}/>
       <Chatbox roomNum={roomNum}/>
+      <BoardLauncher />
+      <Scoreboard />
+      <Timer />
+      {/* <Chatbox /> */}
     </div>
   )
 }
