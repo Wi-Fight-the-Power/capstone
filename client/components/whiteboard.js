@@ -2,6 +2,9 @@ import React, {useRef} from 'react'
 // import { render } from "react-dom";
 import {Stage, Layer, Line, Text} from 'react-konva'
 
+import socket from '../socket'
+
+
 const Board = props => {
   const [stroke, changeStroke] = React.useState(12)
   const [color, changeColor] = React.useState('#FFAEBC')
@@ -31,14 +34,16 @@ const Board = props => {
     lastLine.points = lastLine.points.concat([point.x, point.y])
 
 
+
     // replace last
     lines.splice(lines.length - 1, 1, lastLine)
-    props.io.emit('drawing', lines.concat())
+    socket.emit('drawing', lines.concat(),props.roomNum)
     setLines(lines.concat())
   }
 
   // props.io.on('drawing', drawn => console.log(drawn))
-  props.io.on('drawing', drawn => setLines(drawn))
+
+  socket.on('drawing', drawn => setLines(drawn))
 
 
   const handleMouseUp = () => {

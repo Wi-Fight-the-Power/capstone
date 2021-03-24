@@ -12,4 +12,5 @@ socket.on('message', message => {
   store.dispatch(newMessage(message))
 })
 
+
 export default socket

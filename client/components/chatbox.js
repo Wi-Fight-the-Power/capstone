@@ -4,8 +4,8 @@ import {sendMessage} from '../store/chatbox'
 import {nouns} from './gameFunctions'
 
 class Chatbox extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.chatContainer = React.createRef();
 
     this.state = {
@@ -46,7 +46,7 @@ class Chatbox extends React.Component {
       message: message
     }
 
-    this.props.sendMessage(newMessage);
+    this.props.sendMessage(newMessage,this.props.roomNum);
     this.setState({
       message: ''
     })
@@ -120,7 +120,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    sendMessage: message => dispatch(sendMessage(message))
+    sendMessage: (message,room) => dispatch(sendMessage(message,room))
   }
 }
 
