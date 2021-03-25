@@ -87,6 +87,7 @@ class Chatbox extends React.Component {
   render() {
     const messages = this.props.chat.messages || []
     // console.log(this.state.score, 'inside the render')
+    console.log('chatbox re-render')
     return (
 
       <div id="chat-box">

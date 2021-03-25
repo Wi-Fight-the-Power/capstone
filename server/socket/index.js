@@ -6,8 +6,10 @@ module.exports = io => {
     //checks to see if room exist or not
     socket.on('exist', (room ) => {
       const roominfo = io.sockets.adapter.rooms[room] || []
-      // console.log(roominfo)
-      if(roominfo.length > 0){socket.emit('exist',true)}
+      if(roominfo.length > 0){
+        console.log(roominfo)
+        socket.emit('exist',true)
+      }
       else {
         socket.emit('exist',false)
         console.log("room doesnt exist")}
@@ -28,6 +30,21 @@ module.exports = io => {
     socket.on('countdown', (time,room) => {
     socket.to(room).emit("timer",time)
   });
+    //rotation
+    socket.on('rotation', room => {
+      const zeroOne = Math.round(Math.random)
+      const roominfo = io.sockets.adapter.rooms[room].sockets
+      const playerArr = Object.keys(roominfo)
+      console.log(playerArr)
+      console.log(socket.id)
+      if(zeroOne > .5){
+        socket.to(playerArr[1]).emit('rotation', true)
+      } else {
+        socket.to(playerArr[0]).emit('rotation', true)
+      }
+      // if(socket.id)
+
+    })
     //disconnect
     socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left the building`)

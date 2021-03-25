@@ -9,12 +9,13 @@ class Timer extends React.Component {
     super(props);
     this.state = {
       time: {},
-      seconds: 90,
+      seconds: this.props.seconds,
       points: 900,
     };
     this.timer = 0;
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
+    this.checkTime = this.checkTime.bind(this);
   }
 
   secondsToTime(secs){
@@ -39,20 +40,22 @@ class Timer extends React.Component {
     this.setState({ time: timeLeftVar });
   }
 
+  checkTime(){
+    socket.emit("countdown", 'data', this.props.roomNum)
+    this.startTimer()
+  }
 
 
   startTimer() {
     if (this.timer === 0 && this.state.seconds > 0) {
       this.timer = setInterval(this.countDown, 1000);
     }
-    // socket.on('timer',time=>{this.setState({seconds:time})})
   }
 
   countDown() {
     // Remove one second, set state so a re-render happens.
     let seconds = this.state.seconds - 1;
     let points = this.state.points -10;
-    socket.emit("countdown", seconds, this.props.roomNum)
     this.setState({
       time: this.secondsToTime(seconds),
       seconds: seconds,
@@ -61,17 +64,18 @@ class Timer extends React.Component {
 
     // Check if we're at zero.
     if (seconds == 0) {
+      socket.emit('rotation', this.props.roomNum)
       clearInterval(this.timer);
+      this.setState({seconds: this.props.seconds})
     }
   }
 
   render() {
-    socket.on('timer',time=>{this.setState({time:this.secondsToTime(time)})})
-
+    socket.on('timer',data=>{this.startTimer()})
     return(
       <div>
       <div className='buttonContainer'>
-        <button className='testButtons' type='submit' onClick={this.startTimer}>Start</button>
+        <button className='testButtons' type='submit' onClick={this.checkTime}>Start</button>
         MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points} USERPOINTS: {this.state.userPoints}
       </div>
       <Chatbox points={this.state.points} roomNum={this.props.roomNum} />
