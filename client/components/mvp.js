@@ -1,6 +1,6 @@
 import React from 'react'
 import Chatbox from './chatbox'
-import Board from './whiteboardv1'
+import Board from './whiteboard'
 import socket from '../socket'
 
 
