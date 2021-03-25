@@ -21,6 +21,11 @@ module.exports = io => {
       socket.to(room).emit("drawing", data)
     })
     //disconnect
+
+    socket.on('score', score => {
+      socket.broadcast.emit('score', score)
+    })
+
     socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left the building`)
     })

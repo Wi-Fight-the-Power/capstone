@@ -3,6 +3,7 @@ import socket from '../socket'
 //action types
 
 const NEW_MESSAGE = 'GOT_MESSAGE'
+const UPDATE_SCORE = 'UPDATE_SCORE';
 
 //action creators
 
@@ -10,6 +11,13 @@ export const newMessage = message => {
   return {
     type: NEW_MESSAGE,
     message
+  }
+}
+
+export const updateScore = score => {
+  return {
+    type: UPDATE_SCORE,
+    score
   }
 }
 
@@ -25,9 +33,18 @@ export const sendMessage = (message,room) => dispatch => {
   }
 }
 
+export const sendScore = score => dispatch => {
+  try {
+    dispatch(updateScore(score))
+    socket.emit('score', score)
+  } catch (error){
+    console.log(error);
+  }
+}
+
 const initialState = {
-  messages: []
-  //handle: ''
+  messages: [],
+  score: [],
 }
 
 //reducer
@@ -38,8 +55,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         messages: [...state.messages, action.message]
-        //handle: action.handle
       }
+    case UPDATE_SCORE:
+        return {
+          ...state,
+          score: [...state.score, action.score]
+        }
     default:
       return state
   }
