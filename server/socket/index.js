@@ -20,12 +20,15 @@ module.exports = io => {
     socket.on('drawing', (data, room) => {
       socket.to(room).emit("drawing", data)
     })
-    //disconnect
-
+    //score
     socket.on('score', score => {
       socket.broadcast.emit('score', score)
     })
-
+    //timer
+    socket.on('countdown', (time,room) => {
+    socket.to(room).emit("timer",time)
+  });
+    //disconnect
     socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left the building`)
     })
