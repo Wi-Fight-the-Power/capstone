@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {sendMessage, sendScore} from '../store/chatbox'
+import {sendMessage, sendScore} from '../store/game'
 import {nouns} from './gameFunctions'
 
 
@@ -11,12 +11,11 @@ class Chatbox extends React.Component {
 
     this.state = {
       message: '',
-      handle: '',
+      handle: JSON.parse(localStorage.getItem('user')).handle || 'john',
       score: 0
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
-    this.handleChangeHandle = this.handleChangeHandle.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.scrollToMyRef = this.scrollToMyRef.bind(this)
   }
@@ -29,12 +28,6 @@ class Chatbox extends React.Component {
   handleChangeMessage(event) {
     this.setState({
       message: event.target.value
-    })
-  }
-
-  handleChangeHandle(event) {
-    this.setState({
-      handle: event.target.value
     })
   }
 
@@ -61,13 +54,13 @@ class Chatbox extends React.Component {
       handle: handle,
       message: message
     }
-    this.props.sendScore(newScore);
+    this.props.sendScore(newScore, this.props.roomNum);
 
     this.props.sendMessage(newMessage,this.props.roomNum);
     this.setState({
-      message: ''
+      message: '',
+      score: 0
     })
-    console.log(this.state.score, 'inside the function')
   }
 
 
@@ -85,8 +78,8 @@ class Chatbox extends React.Component {
   };
 
   render() {
-    const messages = this.props.chat.messages || []
-    console.log(this.state.score, 'inside the render')
+    const messages = this.props.game.messages || []
+    console.log(this.props.game.users)
     return (
 
       <div id="chat-box">
@@ -107,13 +100,6 @@ class Chatbox extends React.Component {
           </div>
           <div id="feedback" />
         </div>
-        <input
-          id="handle"
-          type="text"
-          onChange={this.handleChangeHandle}
-          value={this.state.handle}
-          placeholder="Handle"
-        />
         <form>
         <input
           id="message"
@@ -135,14 +121,14 @@ class Chatbox extends React.Component {
 const mapState = state => {
   console.log(state)
   return {
-    chat: state.chatbox
+    game: state.game,
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     sendMessage: (message,room) => dispatch(sendMessage(message, room)),
-    sendScore: score => dispatch(sendScore(score))
+    sendScore: (score, room) => dispatch(sendScore(score, room))
   }
 }
 
