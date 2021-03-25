@@ -16,14 +16,21 @@ module.exports = io => {
     socket.on('message', (message, room ) => {
       socket.to(room).emit("message", message)
     })
+    //sends user data to room
+    socket.on('user', (user, room) => {
+      socket.to(room).emit('user', user)
+    })
+    // socket.on('user', user => {
+    //   socket.emit('user', user)
+    // })
     //sends drawing data to room
     socket.on('drawing', (data, room) => {
       socket.to(room).emit("drawing", data)
     })
     //disconnect
 
-    socket.on('score', score => {
-      socket.broadcast.emit('score', score)
+    socket.on('score', (score, room) => {
+      socket.to(room).emit('score', score)
     })
 
     socket.on('disconnect', () => {
