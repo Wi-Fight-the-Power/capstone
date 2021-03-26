@@ -3,6 +3,7 @@ import Board from './whiteboard'
 import socket from '../socket'
 import Timer from './timer'
 import Scoreboard from './scoreboard'
+import CreateUser from './createUser';
 import ViewBoard from './whiteBoardViewer'
 
 class Mvp extends React.Component{
@@ -52,6 +53,7 @@ class Mvp extends React.Component{
       <div className="drawinggame">
         <h1>Room code:{roomNum}</h1>
         <h1>Viewer</h1>
+        <CreateUser roomNum={roomNum} />
         <ViewBoard roomNum={roomNum} />
         <Scoreboard />
       <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={!this.state.view}/>
@@ -64,6 +66,7 @@ class Mvp extends React.Component{
       <div className="drawinggame">
         <h1>Room code:{roomNum}</h1>
         <h1>Drawer</h1>
+        <CreateUser roomNum={roomNum} />
         <Board roomNum={roomNum}/>
         <Scoreboard />
       <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={!this.state.view}/>

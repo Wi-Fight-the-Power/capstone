@@ -94,7 +94,7 @@ class Timer extends React.Component {
 
 const mapState = state => {
   return {
-    messages: state.chatbox.messages
+    messages: state.game.messages
   }
 }
 

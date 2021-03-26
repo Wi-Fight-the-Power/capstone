@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import store from './store/index'
-import {newMessage, updateScore} from './store/chatbox'
+import {newMessage, updateScore, newUser} from './store/game'
 
 const socket = io(window.location.origin)
 
@@ -14,6 +14,10 @@ socket.on('message', message => {
 
 socket.on('score', score => {
   store.dispatch(updateScore(score))
+})
+
+socket.on('user', user => {
+  store.dispatch(newUser(user))
 })
 
 export default socket

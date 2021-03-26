@@ -18,13 +18,19 @@ module.exports = io => {
     socket.on('message', (message, room ) => {
       socket.to(room).emit("message", message)
     })
+    //sends user data to room
+    socket.on('user', (user, room) => {
+      socket.to(room).emit('user', user)
+    })
+
     //sends drawing data to room
     socket.on('drawing', (data, room) => {
       socket.to(room).emit("drawing", data)
     })
-    //score
-    socket.on('score', score => {
-      socket.broadcast.emit('score', score)
+    //disconnect
+
+    socket.on('score', (score, room) => {
+      socket.to(room).emit('score', score)
     })
     //timer
     socket.on('countdown', (time,room) => {
