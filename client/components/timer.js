@@ -2,18 +2,20 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {nouns} from './gameFunctions'
 import Chatbox from './chatbox';
+import socket from '../socket'
 
 class Timer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       time: {},
-      seconds: 90,
+      seconds: this.props.seconds,
       points: 900,
     };
     this.timer = 0;
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
+    this.checkTime = this.checkTime.bind(this);
   }
 
   secondsToTime(secs){
@@ -38,6 +40,10 @@ class Timer extends React.Component {
     this.setState({ time: timeLeftVar });
   }
 
+  checkTime(){
+    socket.emit("countdown", 'data', this.props.roomNum)
+    this.startTimer()
+  }
 
 
   startTimer() {
@@ -58,15 +64,18 @@ class Timer extends React.Component {
 
     // Check if we're at zero.
     if (seconds == 0) {
+      socket.emit('rotation', this.props.roomNum)
       clearInterval(this.timer);
+      this.setState({seconds: this.props.seconds})
     }
   }
 
   render() {
+    socket.on('timer',data=>{this.startTimer()})
     return(
       <div>
       <div className='buttonContainer'>
-        <button className='testButtons' type='submit' onClick={this.startTimer}>Start</button>
+        <button className='testButtons' type='submit' onClick={this.checkTime}>Start</button>
         MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points} USERPOINTS: {this.state.userPoints}
       </div>
       <Chatbox points={this.state.points} roomNum={this.props.roomNum} />

@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-
+let USER = null;
+if (localStorage.getItem('user') !== null){
+  USER = JSON.parse(localStorage.getItem('user')).handle
+} else {
+  USER = 'Default'
+}
 
 class Scoreboard extends Component {
   constructor(){
     super();
     this.state = {
-      handle: JSON.parse(localStorage.getItem('user') || 'john').handle
+      handle: USER
     }
   }
 
@@ -15,7 +20,6 @@ class Scoreboard extends Component {
 
   render(){
     const users = this.props.users || [];
-
 
      return (
     <div id='scoreboard'>
@@ -40,6 +44,7 @@ class Scoreboard extends Component {
 }
 
 const mapState = state => {
+  console.log(localStorage.getItem('user'))
   return {
     users: state.game.users,
   }
