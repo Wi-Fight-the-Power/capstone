@@ -12,7 +12,9 @@ class Timer extends React.Component {
       seconds: this.props.seconds,
       points: 900,
     };
+    socket.on('timer',data=>{this.startTimer()})
     this.timer = 0;
+    this.countingDown = false
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
     this.checkTime = this.checkTime.bind(this);
@@ -47,7 +49,8 @@ class Timer extends React.Component {
 
 
   startTimer() {
-    if (this.timer === 0 && this.state.seconds > 0) {
+    this.countingDown = true;
+    if (this.countingDown) {
       this.timer = setInterval(this.countDown, 1000);
     }
   }
@@ -64,19 +67,24 @@ class Timer extends React.Component {
 
     // Check if we're at zero.
     if (seconds == 0) {
-      socket.emit('rotation', this.props.roomNum)
       clearInterval(this.timer);
-      this.setState({seconds: this.props.seconds})
+      this.timer = 0;
+      this.countingDown = false;
+      this.setState({seconds: this.props.seconds, time: this.secondsToTime(this.props.seconds), points: 900}
+      )
+      if(this.props.isDrawer){
+        socket.emit('rotation', this.props.roomNum)
+      }
     }
   }
 
   render() {
-    socket.on('timer',data=>{this.startTimer()})
+
     return(
       <div>
       <div className='buttonContainer'>
         <button className='testButtons' type='submit' onClick={this.checkTime}>Start</button>
-        MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points} USERPOINTS: {this.state.userPoints}
+        MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}
       </div>
       <Chatbox points={this.state.points} roomNum={this.props.roomNum} />
       </div>

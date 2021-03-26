@@ -68,6 +68,7 @@ class Chatbox extends React.Component {
       message: '',
       score: 0
     })
+
   }
 
 
@@ -85,8 +86,9 @@ class Chatbox extends React.Component {
   };
 
   render() {
-    const messages = this.props.game.messages || []
-    //console.log(this.props.game.users)
+
+    const messages = this.props.chat.messages || []
+
     return (
 
       <div id="chat-box">
@@ -126,7 +128,6 @@ class Chatbox extends React.Component {
 }
 
 const mapState = state => {
-  console.log(state)
   return {
     game: state.game,
   }
