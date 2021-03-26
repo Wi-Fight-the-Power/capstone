@@ -67,7 +67,7 @@ class Chatbox extends React.Component {
     this.setState({
       message: ''
     })
-    console.log(this.state.score, 'inside the function')
+
   }
 
 
@@ -86,8 +86,6 @@ class Chatbox extends React.Component {
 
   render() {
     const messages = this.props.chat.messages || []
-    // console.log(this.state.score, 'inside the render')
-    console.log('chatbox re-render')
     return (
 
       <div id="chat-box">
@@ -134,7 +132,6 @@ class Chatbox extends React.Component {
 }
 
 const mapState = state => {
-  console.log(state)
   return {
     chat: state.chatbox
   }

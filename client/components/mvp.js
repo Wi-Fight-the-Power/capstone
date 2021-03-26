@@ -11,8 +11,9 @@ class Mvp extends React.Component{
     this.state= {
       view: true, // changing on rotation
       currentRotation: 1,
-      seconds: 5,
+      seconds: 90,
     }
+    socket.on('rotation', isViewer => {this.rotation(isViewer)} )
     this.changeView = this.changeView.bind(this)
     this.rotation = this.rotation.bind(this)
   }
@@ -25,15 +26,15 @@ class Mvp extends React.Component{
     socket.emit('leaveRoom', )
   }
 
-  rotation(isDrawer){
+  rotation(isViewer){
     let rotationNum = this.state.currentRotation
-
-      if(isDrawer){
-        this.setState({view: false, currentRotation: rotationNum++})
-        console.log(this.state)
-      } else {
+    console.log(isViewer)
+      if(isViewer){
         this.setState({view: true, currentRotation: rotationNum++})
-        console.log(this.state)
+        console.log('should not be drawering')
+      } else if (!isViewer) {
+        this.setState({view: false, currentRotation: rotationNum++})
+        console.log('should be drwaing')
       }
 
   }
@@ -45,7 +46,7 @@ class Mvp extends React.Component{
 
   render(){
     const roomNum = this.props.match.params.id
-     socket.on('rotation', isDrawer => {this.rotation(isDrawer)} )
+
   if(this.state.view){
     return (
       <div className="drawinggame">
@@ -53,7 +54,7 @@ class Mvp extends React.Component{
         <h1>Viewer</h1>
         <ViewBoard roomNum={roomNum} />
         <Scoreboard />
-      <Timer roomNum={roomNum} seconds={5}/>
+      <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={!this.state.view}/>
         <button type="submit" id="room num" onClick={() => {this.changeView()}}>View/Draw</button>
       </div>
     )
@@ -65,7 +66,7 @@ class Mvp extends React.Component{
         <h1>Drawer</h1>
         <Board roomNum={roomNum}/>
         <Scoreboard />
-      <Timer roomNum={roomNum} seconds={this.state.seconds}/>
+      <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={!this.state.view}/>
         <button type="submit" id="room num" onClick={() => {this.changeView()}}>View/Draw</button>
       </div>
     )
