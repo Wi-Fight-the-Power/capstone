@@ -5,6 +5,14 @@ import Timer from './timer'
 import Scoreboard from './scoreboard'
 import CreateUser from './createUser';
 import ViewBoard from './whiteBoardViewer'
+import {nouns} from './gameFunctions';
+
+let word = () => {
+  let index = Math.floor(Math.random() * nouns.length);
+  return nouns[index];
+}
+
+const exists = JSON.parse(localStorage.getItem('user'));
 
 class Mvp extends React.Component{
   constructor(props){
@@ -48,11 +56,13 @@ class Mvp extends React.Component{
   render(){
     const roomNum = this.props.match.params.id
 
+
   if(this.state.view){
     return (
       <div className="drawinggame">
         <h1>Room code:{roomNum}</h1>
         <h1>Viewer</h1>
+        {/* {exists === null ? (<CreateUser roomNum={roomNum}/>) : (<h3>Handle: {exists.handle}</h3>)} */}
         <CreateUser roomNum={roomNum} />
         <ViewBoard roomNum={roomNum} />
         <Scoreboard />
@@ -66,7 +76,9 @@ class Mvp extends React.Component{
       <div className="drawinggame">
         <h1>Room code:{roomNum}</h1>
         <h1>Drawer</h1>
-        <CreateUser roomNum={roomNum} />
+        <h2>YOUR WORD IS: <span className='word'>{word().toUpperCase()}</span></h2>
+        {/* {exists === null ? (<CreateUser roomNum={roomNum}/>) : (<h3>Handle: {exists.handle}</h3>)} */}
+        <CreateUser roomNum={roomNum}/>
         <Board roomNum={roomNum}/>
         <Scoreboard />
       <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={!this.state.view}/>
