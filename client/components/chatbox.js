@@ -87,7 +87,7 @@ class Chatbox extends React.Component {
 
   render() {
 
-    const messages = this.props.chat.messages || []
+    const messages = this.props.game.messages || []
 
     return (
 
