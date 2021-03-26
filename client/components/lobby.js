@@ -15,13 +15,11 @@ class LobbyRoom extends React.Component{
     this.setState({
       room : event.target.value
     })
-    console.log(this.state)
   }
   handleSubmit(event) {
     event.preventDefault()
     socket.emit("exist",this.state.room)
     socket.on('exist', state => {
-      console.log(state)
       if(!state){alert('room doesnt exist')}
       else{this.props.history.push({pathname: `/mvp/${this.state.room}`})}
     })
