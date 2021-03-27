@@ -36,7 +36,7 @@ class LobbyRoom extends React.Component{
     return (
     <div >
     <h1>Lobby</h1>
-    <Link to="/createlobby"><button>Create Room</button></Link>
+    <Link to="/createlobby"><button type='button'>Create Room</button></Link>
     <input
           id="room num"
           type="number"

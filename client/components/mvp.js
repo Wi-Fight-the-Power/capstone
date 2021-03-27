@@ -12,7 +12,7 @@ let word = () => {
   return nouns[index];
 }
 
-const exists = JSON.parse(localStorage.getItem('user'));
+//const exists = JSON.parse(localStorage.getItem('user'));
 
 class Mvp extends React.Component{
   constructor(props){

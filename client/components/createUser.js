@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {sendUser} from '../store/game'
+import {sendUser, sendMe} from '../store/game'
 
 //const exists = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -11,6 +11,7 @@ class CreateUser extends React.Component {
       handle: '',
       isDrawing: false,
       score: 0,
+      word: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -27,15 +28,16 @@ class CreateUser extends React.Component {
     const user = JSON.stringify(this.state);
     localStorage.setItem('user', user);
     this.props.sendUser(this.state, this.props.roomNum)
+    this.props.sendMe(this.state)
     this.setState({
       handle: '',
       isDrawing: false,
-      score: 0
+      score: 0,
+      word: ''
     })
   }
   render() {
     const {handle} = this.state
-    console.log(this.props.roomNum)
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -52,7 +54,8 @@ class CreateUser extends React.Component {
 
 const mapDispatch = dispatch => {
   return {
-   sendUser: (user, room) => dispatch(sendUser(user, room))
+   sendUser: (user, room) => dispatch(sendUser(user, room)),
+   sendMe: (me) => dispatch(sendMe(me)),
   }
 }
 
