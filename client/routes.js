@@ -7,8 +7,8 @@ import Chatbox from './components/chatbox'
 import Lobby from './components/lobby'
 import BoardLauncher from './components/whiteboardLauncher'
 import Mvp from './components/mvp'
-import Mvp2 from './components/mvp2'
 import {me} from './store'
+import CreateUser from './components/createUser'
 //import HomePage from './components/homepage'
 import Createlobby from './components/createlobby'
 
@@ -32,11 +32,11 @@ class Routes extends Component {
         <Route path="/chatbox" component={Chatbox} />
         <Route path="/w" component={BoardLauncher} />
         <Route path="/mvp/:id" component={Mvp} />
-        <Route path="/mvp2" component={Mvp2} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/lobby" component={Lobby} />
         <Route path="/createlobby" component={Createlobby} />
+        <Route path='/createuser' component={CreateUser} />
 
         {isLoggedIn && (
           <Switch>
