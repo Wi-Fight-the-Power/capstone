@@ -41,7 +41,6 @@ const Board = props => {
     setLines(lines.concat())
   }
 
-  // props.io.on('drawing', drawn => console.log(drawn))
 
   socket.on('drawing', drawn => setLines(drawn))
 

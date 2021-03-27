@@ -4,21 +4,18 @@ import {sendMessage, sendScore} from '../store/game'
 import {nouns} from './gameFunctions'
 
 
-let USER = null;
-if (localStorage.getItem('user') !== null){
-  USER = JSON.parse(localStorage.getItem('user')).handle
-} else {
-  USER = 'Default'
-}
+
+
 
 class Chatbox extends React.Component {
   constructor(props) {
     super(props)
+
     this.chatContainer = React.createRef();
 
     this.state = {
       message: '',
-      handle: USER,
+      handle: this.props.me ? this.props.me.handle : 'john',
       score: 0
     }
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -88,7 +85,7 @@ class Chatbox extends React.Component {
   render() {
 
     const messages = this.props.game.messages || []
-
+    console.log(this.props.game.users)
     return (
 
       <div id="chat-box">
@@ -130,6 +127,7 @@ class Chatbox extends React.Component {
 const mapState = state => {
   return {
     game: state.game,
+    me: state.game.me
   }
 }
 

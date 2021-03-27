@@ -5,6 +5,7 @@ import socket from '../socket'
 const NEW_MESSAGE = 'GOT_MESSAGE'
 const UPDATE_SCORE = 'UPDATE_SCORE';
 const NEW_USER = 'NEW_USER';
+const ME = 'ME';
 
 
 //action creators
@@ -27,6 +28,13 @@ export const newUser = (user) => {
   return {
     type: NEW_USER,
     user,
+  }
+}
+
+export const setMe = (me) => {
+  return {
+    type: ME,
+    me,
   }
 }
 
@@ -53,7 +61,6 @@ export const sendScore = (score, room) => dispatch => {
 
 export const sendUser = (user, room) => dispatch => {
   try {
-    console.log(user, 'inside the thunk')
     dispatch(newUser(user));
     socket.emit('user', user, room)
   } catch (error){
@@ -61,9 +68,18 @@ export const sendUser = (user, room) => dispatch => {
   }
 }
 
+export const sendMe = (me) => dispatch => {
+  try {
+    dispatch(setMe(me));
+  } catch (error) {
+  console.log(error);
+  }
+}
+
 const initialState = {
   messages: [],
-  users: []
+  users: [],
+  me: {}
 }
 
 //reducer
@@ -91,6 +107,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         users: [...state.users, action.user]
+      }
+    case ME:
+      return {
+        ...state,
+        me: action.me
       }
     default:
       return state
