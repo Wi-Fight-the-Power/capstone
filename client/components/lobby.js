@@ -8,6 +8,17 @@ class LobbyRoom extends React.Component{
     this.state = {
       room:'',
     }
+        //checking if 'room' to join exist
+        socket.on('exist', state => {
+          //doesn't exist
+      if(!state){
+        alert('room doesnt exist')
+      }
+          // room does exist
+      else{
+        this.props.history.push({pathname: `/mvp/${this.state.room}`
+      })}
+    })
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -19,10 +30,6 @@ class LobbyRoom extends React.Component{
   handleSubmit(event) {
     event.preventDefault()
     socket.emit("exist",this.state.room)
-    socket.on('exist', state => {
-      if(!state){alert('room doesnt exist')}
-      else{this.props.history.push({pathname: `/mvp/${this.state.room}`})}
-    })
   }
 
   render(){

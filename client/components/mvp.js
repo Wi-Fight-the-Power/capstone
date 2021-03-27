@@ -32,7 +32,8 @@ class Mvp extends React.Component{
   }
 
   componentWillUnmount(){
-    socket.emit('leaveRoom', )
+    const roomNum = this.props.match.params.id
+    socket.emit('Leave Room', roomNum)
   }
 
   rotation(isViewer){

@@ -1,10 +1,28 @@
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
+
      //creates the room
-    socket.on('Join Room', room => {socket.join(room)})
+    socket.on('Join Room', room => {
+      socket.join(room)
+    })
+
+    //leave the room
+    socket.on('Leave Room', room => {
+      socket.leave(room)
+
+      const roominfo = io.sockets.adapter.rooms[room] || []
+
+      //checking room size
+      if(roominfo.length <= 0){
+        //delete room with 0 players
+         delete io.sockets.adapter.rooms[room];
+      }
+
+    })
+
     //checks to see if room exist or not
-    socket.on('exist', (room ) => {
+    socket.on('exist', room => {
       const roominfo = io.sockets.adapter.rooms[room] || []
       if(roominfo.length > 0){
         console.log(roominfo)
@@ -14,6 +32,7 @@ module.exports = io => {
         socket.emit('exist',false)
         console.log("room doesnt exist")}
         })
+
     //sends message data to room
     socket.on('message', (message, room ) => {
       socket.to(room).emit("message", message)
