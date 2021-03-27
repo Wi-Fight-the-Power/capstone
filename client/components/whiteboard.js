@@ -49,11 +49,22 @@ const Board = props => {
     isDrawing.current = false
   }
 
+  const undoLast = () => {
+    lines.pop()
+    socket.emit('drawing', lines.concat(),props.roomNum)
+    setLines(lines.concat())
+
+  }
+
   return (
     <div>
+        {/* undo */}
+        <button onClick={() => undoLast()}>UNDO</button>
 
+        {/* stroke size */}
         <input type="range" min='1' max='25'  className='strokeScale drawTools' onChange={e => changeStroke(e.target.value)}/>
 
+        {/* change colors */}
         <select
         className="drawTools"
         value={color}
@@ -65,6 +76,7 @@ const Board = props => {
         <option className="Yellow colorOptions" value="#FBE7C6">Yellow</option>
       </select>
 
+      {/* tool selection */}
       <select
         className="drawTools"
         value={tool}
