@@ -88,6 +88,8 @@ form div {
 
 body {
   font-family: 'Nunito';
+  background-image: url(/greenstuff.png)
+  /* background-color: #A0E7E5; */
 }
 
 h2 {
