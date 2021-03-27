@@ -1,6 +1,9 @@
 import React from 'react'
 import socket from '../socket'
 import {Link} from 'react-router-dom'
+import TextField from '@material-ui/core/TextField';
+
+
 
 class LobbyRoom extends React.Component{
   constructor() {
@@ -44,6 +47,15 @@ class LobbyRoom extends React.Component{
           value={this.state.handle}
           placeholder="4 Digit Number"
         />
+    <TextField
+    id="room num"
+    label="RoomNumber"
+    variant="filled"
+    type="number"
+    onChange={this.handleChange}
+    value={this.state.handle}
+    helperText="Room doesnt exist"
+    />
     <button type="submit" id="room num" onClick={this.handleSubmit} >
       Join Game
     </button>
