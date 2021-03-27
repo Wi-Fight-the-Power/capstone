@@ -2,7 +2,17 @@ module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
      //creates the room
-    socket.on('Join Room', room => {socket.join(room)})
+    socket.on('Join Room', room => {
+      console.log('joining room')
+      socket.join(room)
+    })
+
+    //leave the room
+    socket.on('Leave Room', room => {
+      console.log('leaving room')
+      socket.leave(room)
+    })
+
     //checks to see if room exist or not
     socket.on('exist', (room ) => {
       const roominfo = io.sockets.adapter.rooms[room] || []
