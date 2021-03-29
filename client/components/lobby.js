@@ -1,6 +1,7 @@
 import React from 'react'
 import socket from '../socket'
 import {Link} from 'react-router-dom'
+import {Button} from '@material-ui/core'
 
 class LobbyRoom extends React.Component{
   constructor() {
@@ -36,7 +37,7 @@ class LobbyRoom extends React.Component{
     return (
     <div >
     <h1>Lobby</h1>
-    <Link to="/createlobby"><button type='button'>Create Room</button></Link>
+    <Link to="/createlobby"><Button color="primary" variant="contained">Create Room</Button></Link>
     <input
           id="room num"
           type="number"
@@ -44,9 +45,9 @@ class LobbyRoom extends React.Component{
           value={this.state.handle}
           placeholder="4 Digit Number"
         />
-    <button type="submit" id="room num" onClick={this.handleSubmit} >
+    <Button color="primary" id="room num" variant="contained" onClick={this.handleSubmit} >
       Join Game
-    </button>
+    </Button>
     </div>
   )
   }

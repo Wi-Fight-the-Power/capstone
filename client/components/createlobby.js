@@ -1,6 +1,6 @@
 import React from 'react'
 import Game from './game'
-
+import {Button} from '@material-ui/core'
 
 class CreateLobby extends React.Component {
   constructor() {
@@ -15,7 +15,7 @@ class CreateLobby extends React.Component {
   render(){
     return(
       <div>
-        <button type="submit" id="create lobby" onClick={this.handleSubmit} >Create Lobby</button>
+        <Button color="primary" id="create lobby" variant="contained" onClick={this.handleSubmit} >Create Lobby</Button>
       </div>
     )
   }

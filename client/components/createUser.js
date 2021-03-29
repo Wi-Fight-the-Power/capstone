@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {sendUser, sendMe} from '../store/game'
 import {Link} from 'react-router-dom';
+import {Button} from '@material-ui/core'
 
 
 class CreateUser extends React.Component {
@@ -42,12 +43,15 @@ class CreateUser extends React.Component {
       <div>
         <form onSubmit={this.handleSubmit}>
         <h2>
+        <Textfield required id="standard-required" label="required" defaultValue="Enter Username Here"/>
           <label htmlFor='username'>Create Username:</label>
         </h2>
           <input type='text' name='username' value={handle} onChange={this.handleChange}/>
-        <button type="submit" >Create</button>
+        <Button type="submit" color="primary" variant="contained" >Create</Button>
         </form>
-        <Link to='/lobby'>Lobby</Link>
+        <Link to='/lobby'>
+        <Button color="secondary" variant="contained">Back to Lobby</Button>
+        </Link>
       </div>
     )
   }

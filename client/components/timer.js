@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {nouns} from './gameFunctions'
 import Chatbox from './chatbox';
 import socket from '../socket'
+import {Button} from '@material-ui/core'
 
 class Timer extends React.Component {
   constructor(props) {
@@ -83,7 +84,7 @@ class Timer extends React.Component {
     return(
       <div>
       <div className='buttonContainer'>
-        <button className='testButtons' type='submit' onClick={this.checkTime}>Start</button>
+        <Button className='testButtons' color="secondary" variant="contained" onClick={this.checkTime}>Start</Button>
         MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}
       </div>
       <Chatbox points={this.state.points} roomNum={this.props.roomNum} />
