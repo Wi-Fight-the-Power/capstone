@@ -1,11 +1,19 @@
 import socket from '../socket'
 
+const initialState = {
+  messages: [],
+  users: [],
+  me: {},
+  order: []
+}
+
 //action types
 
 const NEW_MESSAGE = 'GOT_MESSAGE'
 const UPDATE_SCORE = 'UPDATE_SCORE';
 const NEW_USER = 'NEW_USER';
 const ME = 'ME';
+const UPDATE_ORDER = 'UPDATE_ORDER';
 
 
 //action creators
@@ -37,6 +45,16 @@ export const setMe = (me) => {
     me,
   }
 }
+
+
+
+export const updateOrder = order => {
+  return {
+    type: UPDATE_ORDER,
+    order,
+  }
+}
+
 
 //thunks
 
@@ -76,11 +94,17 @@ export const sendMe = (me) => dispatch => {
   }
 }
 
-const initialState = {
-  messages: [],
-  users: [],
-  me: {}
+export const sendOrder = (order, room) => dispatch => {
+  try {
+    dispatch(updateOrder(order));
+    socket.emit('order', order, room)
+  } catch (error) {
+    console.log(error);
+  }
 }
+
+
+
 
 //reducer
 
@@ -113,6 +137,12 @@ export default (state = initialState, action) => {
         ...state,
         me: action.me
       }
+    case UPDATE_ORDER:
+      return {
+        ...state,
+        order: action.order
+      }
+
     default:
       return state
   }
