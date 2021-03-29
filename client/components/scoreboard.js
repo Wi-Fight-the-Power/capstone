@@ -15,9 +15,6 @@ class Scoreboard extends Component {
     socket.on('userJoined', () => {
       socket.emit('sendingUserInfo', this.props.me, this.props.roomNum)
     })
-    socket.on('recievingUserInfo', info => {
-      console.log(info)
-    })
   }
 
 componentDidMount(){
@@ -27,9 +24,6 @@ componentDidMount(){
 
   render(){
     const users = this.props.users || [];
-    console.log(users, 'from the scoreboard')
-
-
      return (
     <div id='scoreboard'>
       <h2>Scoreboard</h2>

@@ -72,8 +72,11 @@ class Timer extends React.Component {
       this.countingDown = false;
       this.setState({seconds: this.props.seconds, time: this.secondsToTime(this.props.seconds), points: 900}
       )
+      // sending rotation to socket
       if(this.props.isDrawer){
-        socket.emit('rotation', this.props.roomNum)
+        let rotNum = this.props.curRot
+        rotNum += 1
+        socket.emit('rotation', rotNum, this.props.roomNum)
       }
     }
   }
