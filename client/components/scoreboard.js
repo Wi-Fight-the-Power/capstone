@@ -17,7 +17,6 @@ class Scoreboard extends Component {
 
   render(){
     const users = this.props.users || [];
-    console.log(users, 'from the scoreboard')
      return (
     <div id='scoreboard'>
       <h2>Scoreboard</h2>

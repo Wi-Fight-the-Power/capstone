@@ -56,21 +56,51 @@ module.exports = io => {
     socket.to(room).emit("timer",time)
   });
     //rotation
-    socket.on('rotation', (room) => {
-      const roominfo = io.sockets.adapter.rooms[room].sockets
+    // socket.on('rotation', (room) => {
+    //   const roominfo = io.sockets.adapter.rooms[room].sockets
+
+    //   // All player SocketIDs
+    //   const playerArr = Object.keys(roominfo)
+
+    //   // All player ( not including drawer )
+    //   const withoutDrawerArr = playerArr.filter(IDs => IDs !== socket.id)
+
+    //   // change drawer to viewer
+    //   io.to(socket.id).emit('rotation', true)
+
+    //   // change viewer to drawer
+    //   const viewerIndx = [Math.floor(Math.random() * withoutDrawerArr.length)]
+    //   socket.to(withoutDrawerArr[viewerIndx]).emit('rotation', false)
+    // })
+
+    socket.on('rotation', (curRot, room) => {
+
+      let newRot =  curRot
 
       // All player SocketIDs
+      const roominfo = io.sockets.adapter.rooms[room].sockets
+      // all players array
       const playerArr = Object.keys(roominfo)
 
-      // All player ( not including drawer )
-      const withoutDrawerArr = playerArr.filter(IDs => IDs !== socket.id)
+      if(newRot > playerArr.length -1){
+        newRot = 0;
+      }
 
-      // change drawer to viewer
-      io.to(socket.id).emit('rotation', true)
+      let drawer = playerArr[newRot]
 
-      // change viewer to drawer
-      const viewerIndx = [Math.floor(Math.random() * withoutDrawerArr.length)]
-      socket.to(withoutDrawerArr[viewerIndx]).emit('rotation', false)
+      let viewers = playerArr.filter(player => player !== drawer)
+
+      io.to(drawer).emit('rotate', true, newRot);
+
+      viewers.forEach(player => {
+      io.to(player).emit('rotate',
+      false, newRot)
+
+      console.log('drawer', drawer)
+      console.log('viewers', viewers)
+
+
+    })
     })
 
     //disconnect
