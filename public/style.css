@@ -9,6 +9,14 @@ body {
   font-size: 50px
 }
 
+.logo{
+  font-family: 'Caveat', cursive;
+  font-size: 20px
+  /* text-align: center;
+  justify-content: center;
+  align-items: center; */
+
+}
 
 .word {
   color: red
@@ -88,7 +96,7 @@ form div {
 
 body {
   font-family: 'Nunito';
-  background-image: url(/greentile.png)
+  background-image: url(/whitetile.png)
   /* background-color: #A0E7E5; */
 }
 
