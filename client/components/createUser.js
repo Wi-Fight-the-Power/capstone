@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {sendUser, sendMe} from '../store/game'
+import {Link} from 'react-router-dom';
 
-//const exists = JSON.parse(localStorage.getItem('user') || '{}');
 
 class CreateUser extends React.Component {
   constructor() {
@@ -10,8 +10,7 @@ class CreateUser extends React.Component {
     this.state = {
       handle: '',
       isDrawing: false,
-      score: 0,
-      word: ''
+      score: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -36,6 +35,7 @@ class CreateUser extends React.Component {
       word: ''
     })
   }
+
   render() {
     const {handle} = this.state
     return (
@@ -47,6 +47,7 @@ class CreateUser extends React.Component {
           <input type='text' name='username' value={handle} onChange={this.handleChange}/>
         <button type="submit" >Create</button>
         </form>
+        <Link to='/lobby'>Lobby</Link>
       </div>
     )
   }

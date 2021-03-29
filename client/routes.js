@@ -6,7 +6,7 @@ import {Login, Signup, UserHome} from './components'
 import Chatbox from './components/chatbox'
 import Lobby from './components/lobby'
 import BoardLauncher from './components/whiteboardLauncher'
-import Mvp from './components/mvp'
+import Game from './components/game'
 import {me} from './store'
 import CreateUser from './components/createUser'
 //import HomePage from './components/homepage'
@@ -31,7 +31,7 @@ class Routes extends Component {
         {/* <Route exact path="/home" component={HomePage} /> */}
         <Route path="/chatbox" component={Chatbox} />
         <Route path="/w" component={BoardLauncher} />
-        <Route path="/mvp/:id" component={Mvp} />
+        <Route path="/game/:id" component={Game} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/lobby" component={Lobby} />

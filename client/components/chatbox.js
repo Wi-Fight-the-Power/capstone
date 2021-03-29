@@ -85,7 +85,6 @@ class Chatbox extends React.Component {
   render() {
 
     const messages = this.props.game.messages || []
-    console.log(this.props.game.users)
     return (
 
       <div id="chat-box">

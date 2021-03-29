@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import socket from '../socket';
 
 
 
@@ -11,8 +12,14 @@ class Scoreboard extends Component {
     this.state = {
       handle: this.props.me ? this.props.me.handle : 'john'
     }
+    socket.on('userJoined', () => {
+      socket.emit('sendingUserInfo', this.props.me, this.props.roomNum)
+    })
   }
 
+componentDidMount(){
+  socket.emit('userJoined', this.props.roomNum);
+}
 
 
   render(){
@@ -43,6 +50,12 @@ const mapState = state => {
   return {
     users: state.game.users,
     me: state.game.me
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    getUsers: () => dispatch()
   }
 }
 

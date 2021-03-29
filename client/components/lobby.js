@@ -16,7 +16,8 @@ class LobbyRoom extends React.Component{
       }
           // room does exist
       else{
-        this.props.history.push({pathname: `/mvp/${this.state.room}`
+        this.props.history.push({
+          pathname: `/game/${this.state.room}`
       })}
     })
     this.handleChange = this.handleChange.bind(this)

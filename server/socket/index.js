@@ -7,6 +7,23 @@ module.exports = io => {
       socket.join(room)
     })
 
+    //user joined
+
+    socket.on('userJoined', room => {
+      socket.to(room).emit('userJoined');
+    })
+
+    //sending user info
+
+    socket.on('sendingUserInfo', (info, room) => {
+      // All player SocketIDs
+      const roominfo = io.sockets.adapter.rooms[room].sockets
+      // all players array
+      const playerArr = Object.keys(roominfo)
+      const newUser = playerArr[playerArr.length - 1];
+      socket.to(newUser).emit('recievingUserInfo', info)
+    })
+
     //leave the room
     socket.on('Leave Room', room => {
       socket.leave(room)
@@ -25,7 +42,6 @@ module.exports = io => {
     socket.on('exist', room => {
       const roominfo = io.sockets.adapter.rooms[room] || []
       if(roominfo.length > 0){
-        console.log(roominfo)
         socket.emit('exist',true)
       }
       else {
@@ -35,11 +51,18 @@ module.exports = io => {
 
     //sends message data to room
     socket.on('message', (message, room ) => {
+
       socket.to(room).emit("message", message)
     })
     //sends user data to room
+
     socket.on('user', (user, room) => {
       socket.to(room).emit('user', user)
+    })
+
+    //update order
+     socket.on('order', (order, room ) => {
+      socket.to(room).emit("order", order)
     })
 
     //sends drawing data to room
@@ -55,33 +78,29 @@ module.exports = io => {
     socket.on('countdown', (time,room) => {
     socket.to(room).emit("timer",time)
   });
+
+    //room length
+    socket.on('getRoomLength', room => {
+      // All player SocketIDs
+      const roominfo = io.sockets.adapter.rooms[room].length
+
+      console.log(roominfo)
+      if(roominfo < 2){
+        console.log(room)
+        io.to(socket.id).emit('getRoomLength', true)
+      } else {
+        io.to(socket.id).emit('getRoomLength', false)
+      }
+    })
+
     //rotation
-    // socket.on('rotation', (room) => {
-    //   const roominfo = io.sockets.adapter.rooms[room].sockets
-
-    //   // All player SocketIDs
-    //   const playerArr = Object.keys(roominfo)
-
-    //   // All player ( not including drawer )
-    //   const withoutDrawerArr = playerArr.filter(IDs => IDs !== socket.id)
-
-    //   // change drawer to viewer
-    //   io.to(socket.id).emit('rotation', true)
-
-    //   // change viewer to drawer
-    //   const viewerIndx = [Math.floor(Math.random() * withoutDrawerArr.length)]
-    //   socket.to(withoutDrawerArr[viewerIndx]).emit('rotation', false)
-    // })
-
     socket.on('rotation', (curRot, room) => {
-
       let newRot =  curRot
-
       // All player SocketIDs
       const roominfo = io.sockets.adapter.rooms[room].sockets
       // all players array
       const playerArr = Object.keys(roominfo)
-
+      socket.to(room).emit('users', playerArr, room);
       if(newRot > playerArr.length -1){
         newRot = 0;
       }
@@ -95,11 +114,6 @@ module.exports = io => {
       viewers.forEach(player => {
       io.to(player).emit('rotate',
       false, newRot)
-
-      console.log('drawer', drawer)
-      console.log('viewers', viewers)
-
-
     })
     })
 
