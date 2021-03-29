@@ -1,5 +1,5 @@
 import React from 'react'
-import Mvp from './mvp'
+import Game from './game'
 
 
 class CreateLobby extends React.Component {
@@ -10,7 +10,7 @@ class CreateLobby extends React.Component {
   handleSubmit(event) {
     const randomnumber =Math.floor(100000 + Math.random() * 900000);
     event.preventDefault()
-    this.props.history.push({pathname: `/mvp/${randomnumber}`})
+    this.props.history.push({pathname: `/game/${randomnumber}`})
   }
   render(){
     return(
