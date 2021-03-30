@@ -9,6 +9,7 @@ import ViewBoard from './whiteBoardViewer'
 import {nouns} from './gameFunctions';
 import {sendOrder} from '../store/game'
 
+
 let word = () => {
   let index = Math.floor(Math.random() * nouns.length);
   return nouns[index];
@@ -21,9 +22,14 @@ class Game extends React.Component {
       me: this.props.me,
       seconds: 3,
       currentRotation: 0,
+      joined: false,
     }
     socket.on('rotate', (isDrawer, curRot) => {
       this.rotation(isDrawer, curRot)
+    })
+
+        socket.on('userJoined', () => {
+      socket.emit('sendingUserInfo', this.props.me, this.props.roomNum)
     })
 
                 let newState = this.state
@@ -40,12 +46,21 @@ class Game extends React.Component {
   }
 
   componentDidMount(){
+
+      if(!this.state.joined){
+    socket.emit('userJoined', this.props.roomNum);
+  }
+  this.setState({joined:true})
+
     const roomNum = this.props.match.params.id
     socket.emit('Join Room', roomNum);
 
     console.log('about to get room length')
     socket.emit('getRoomLength', roomNum)
 
+        socket.on('userJoined', () => {
+      socket.emit('sendingUserInfo', this.props.me, this.props.roomNum)
+    })
 
     }
 
@@ -117,6 +132,7 @@ const mapState = state => {
     me: state.game.me,
   }
 }
+
 
 const mapDispatch = dispatch => {
   return {

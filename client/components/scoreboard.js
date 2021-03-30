@@ -10,16 +10,11 @@ class Scoreboard extends Component {
   constructor(props){
     super(props);
     this.state = {
-      handle: this.props.me ? this.props.me.handle : 'john'
+      handle: this.props.me ? this.props.me.handle : 'john',
     }
-    socket.on('userJoined', () => {
-      socket.emit('sendingUserInfo', this.props.me, this.props.roomNum)
-    })
+
   }
 
-componentDidMount(){
-  socket.emit('userJoined', this.props.roomNum);
-}
 
 
   render(){
