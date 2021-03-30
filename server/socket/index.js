@@ -42,7 +42,6 @@ module.exports = io => {
     socket.on('exist', room => {
       const roominfo = io.sockets.adapter.rooms[room] || []
       if(roominfo.length > 0){
-        console.log(roominfo)
         socket.emit('exist',true)
       }
       else {
@@ -79,23 +78,43 @@ module.exports = io => {
     socket.on('countdown', (time,room) => {
     socket.to(room).emit("timer",time)
   });
-    //rotation
-    socket.on('rotation', (room) => {
-      const roominfo = io.sockets.adapter.rooms[room].sockets
 
+    //room length
+    socket.on('getRoomLength', room => {
       // All player SocketIDs
+      const roominfo = io.sockets.adapter.rooms[room].length
+
+      console.log(roominfo)
+      if(roominfo < 2){
+        console.log(room)
+        io.to(socket.id).emit('getRoomLength', true)
+      } else {
+        io.to(socket.id).emit('getRoomLength', false)
+      }
+    })
+
+    //rotation
+    socket.on('rotation', (curRot, room) => {
+      let newRot =  curRot
+      // All player SocketIDs
+      const roominfo = io.sockets.adapter.rooms[room].sockets
+      // all players array
       const playerArr = Object.keys(roominfo)
       socket.to(room).emit('users', playerArr, room);
+      if(newRot > playerArr.length -1){
+        newRot = 0;
+      }
 
-      // All player ( not including drawer )
-      const withoutDrawerArr = playerArr.filter(IDs => IDs !== socket.id)
+      let drawer = playerArr[newRot]
 
-      // change drawer to viewer
-      io.to(socket.id).emit('rotation', true)
+      let viewers = playerArr.filter(player => player !== drawer)
 
-      // change viewer to drawer
-      const viewerIndx = [Math.floor(Math.random() * withoutDrawerArr.length)]
-      socket.to(withoutDrawerArr[viewerIndx]).emit('rotation', false)
+      io.to(drawer).emit('rotate', true, newRot);
+
+      viewers.forEach(player => {
+      io.to(player).emit('rotate',
+      false, newRot)
+    })
     })
 
     //disconnect

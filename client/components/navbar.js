@@ -48,6 +48,9 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             SKETCHI
           </Typography>
+          <h1 className='logo'>
+            SKETCHI
+          </h1>
           {/* <Button color="inherit">Login</Button> */}
         </Toolbar>
       </AppBar>
