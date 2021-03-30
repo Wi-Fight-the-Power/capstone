@@ -86,7 +86,7 @@ class CreateUser extends React.Component {
       handle: '',
       isDrawing: false,
       score: 0,
-      open: false,
+      open: true,
       roomErrormessage:'',
       error:false,
 
@@ -136,7 +136,7 @@ handleClose = () => {
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Open form dialog
       </Button> */}
-      <Dialog open={this.handleClickOpen} onClose={this.handleClose}/**/aria-labelledby="form-dialog-title">
+      <Dialog open={this.state.open} onClose={this.handleClose}/**/aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create User Name</DialogTitle>
         <DialogContent>
           <DialogContentText>
