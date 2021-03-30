@@ -79,6 +79,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 
+
 class CreateUser extends React.Component {
   constructor() {
     super()
@@ -125,9 +126,13 @@ handleClose = () => {
     this.setState({open:false})
   };
 
+
+
   render() {
     const {handle} = this.state
+
     return (
+
       <div>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Open form dialog
@@ -171,7 +176,6 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(null, mapDispatch)(CreateUser)
-
 
 
 

@@ -9,7 +9,7 @@ import BoardLauncher from './components/whiteboardLauncher'
 import Game from './components/game'
 import {me} from './store'
 import CreateUser from './components/createUser'
-//import HomePage from './components/homepage'
+import Homepage from './components/homepage'
 import Createlobby from './components/createlobby'
 
 
@@ -28,7 +28,7 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
 
-        {/* <Route exact path="/home" component={HomePage} /> */}
+        <Route exact path="/home" component={Homepage} />
         <Route path="/chatbox" component={Chatbox} />
         <Route path="/w" component={BoardLauncher} />
         <Route path="/game/:id" component={Game} />

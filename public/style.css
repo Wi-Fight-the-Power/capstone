@@ -96,9 +96,12 @@ form div {
 
 body {
   font-family: 'Nunito';
+  /* font-family: 'Caveat', cursive; */
   background-image: url(/whitetile.png)
   /* background-color: #A0E7E5; */
+
 }
+
 
 h2 {
   font-size: 18px;
@@ -248,4 +251,34 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+/* board */
+.board {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.allthingscenter{
+  display: flex;
+  flex-direction: column  ;
+  justify-content: center;
+  align-items: center;
+}
+/* fonts */
+.roboto{
+font-family: 'Roboto', sans-serif;
+font-size: 25px;
+/* padding: 50px; */
+margin: 10px;
+}
+.disclaimer{
+  font-family: 'Roboto', sans-serif;
+  font-size: 10px
+}
+
+.buttonMargin{
+  margin: 20px;
 }

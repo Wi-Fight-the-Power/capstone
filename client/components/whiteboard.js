@@ -58,6 +58,7 @@ const Board = props => {
 
   return (
     <div>
+      <div className='board'>
         {/* undo */}
         <button onClick={() => undoLast()}>UNDO</button>
 
@@ -75,7 +76,6 @@ const Board = props => {
         <option className="Mint colorOptions" value="#B4F8C8">Mint</option>
         <option className="Yellow colorOptions" value="#FBE7C6">Yellow</option>
       </select>
-
       {/* tool selection */}
       <select
         className="drawTools"
@@ -88,6 +88,7 @@ const Board = props => {
         <option value="eraser">Eraser</option>
         {/* <option value="fill">Fill</option> */}
       </select>
+      </div>
       <Stage
         width={500}
         height={500}

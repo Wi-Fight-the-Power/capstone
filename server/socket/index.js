@@ -5,6 +5,8 @@ module.exports = io => {
      //creates the room
     socket.on('Join Room', room => {
       socket.join(room)
+      //for listing the lobby
+      socket.emit('roomNum',room)
     })
 
     //user joined
