@@ -16,9 +16,9 @@ socket.on('score', score => {
   store.dispatch(updateScore(score))
 })
 
-// socket.on('user', user => {
-//   store.dispatch(sendUser(user))
-// })
+socket.on('user', user => {
+  store.dispatch(sendUser(user))
+})
 
 socket.on('recievingUserInfo', info => {
       store.dispatch(sendUser(info))
