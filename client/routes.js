@@ -51,7 +51,7 @@ class Routes extends Component {
   }
 }
 
-/**
+/*
  * CONTAINER
  */
 const mapState = state => {
