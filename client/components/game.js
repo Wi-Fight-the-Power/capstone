@@ -36,15 +36,13 @@ class Game extends React.Component {
         this.setState(newState)
       }
     })
-
-
     this.rotation = this.rotation.bind(this)
   }
 
   componentDidMount(){
   const roomNum = this.props.match.params.id
    const word = randomWord();
-   console.log(word)
+   console.log(word, 'from didMount');
    this.props.sendWord(word, roomNum);
 
   if(!this.state.joined){
@@ -72,13 +70,16 @@ class Game extends React.Component {
       newState.me.isDrawer = true;
       newState.currentRotation = curRot
       this.setState(newState)
+      const word = randomWord();
+      const roomNum = this.props.match.params.id
+      this.props.sendWord(word, roomNum);
     }
     if(!isDrawer){
       newState.me.isDrawer = false;
       newState.currentRotation = curRot
       this.setState(newState)
     }
-    this.props.sendWord(randomWord(), this.props.roomNum);
+
   }
 
 

@@ -17,7 +17,8 @@ class Winner extends React.Component {
       }
       this.props.sendScore(score, this.props.roomNum);
     })
-    this.props.sendWord(randomWord(), this.props.roomNum);
+    const word = randomWord();
+    this.props.sendWord(word, this.props.roomNum);
   }
 
   render(){
