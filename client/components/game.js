@@ -4,7 +4,8 @@ import Board from './whiteboard'
 import socket from '../socket'
 import Timer from './timer'
 import Scoreboard from './scoreboard'
-import CreateUser from './createUser';
+import CreateUser from './createUser'
+import Winner from './winner'
 import ViewBoard from './whiteBoardViewer'
 import {sendOrder, sendWord} from '../store/game'
 import {randomWord} from '../components/gameFunctions'
@@ -86,8 +87,17 @@ class Game extends React.Component {
 render(){
   const roomNum = this.props.match.params.id;
 
+  const winner = this.props.users.filter(user => {
+    return user.score > 5000
+  })
+
+
   return this.props.me.handle ? (
-   this.state.me.isDrawer ? (
+   winner.length === 1
+   ? (
+     <Winner roomNum={roomNum} />
+   ) : (
+     this.state.me.isDrawer ? (
      <div className="drawinggame">
          <h1>Room code: {roomNum}</h1>
          <h1>Get Sketchi!</h1>
@@ -96,8 +106,7 @@ render(){
          <Scoreboard roomNum={roomNum}/>
          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation}/>
        </div>
-   )
-   : (
+   ) : (
      <div className="drawinggame">
          <h1>Room code: {roomNum}</h1>
          <h1>{this.props.users[this.state.currentRotation].handle} is Sketchi!</h1>
@@ -105,6 +114,7 @@ render(){
          <Scoreboard roomNum={roomNum}/>
          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
        </div>
+    )
    )
   )
   : (
