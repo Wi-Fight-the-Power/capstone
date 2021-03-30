@@ -19,6 +19,11 @@ class Game extends React.Component {
       currentRotation: 0,
       joined: false,
     }
+
+    socket.on('playerHasLeft', name => {
+      console.log(name + ' Has left the game')
+    })
+
     socket.on('rotate', (isDrawer, curRot) => {
       this.rotation(isDrawer, curRot)
     })
@@ -29,7 +34,6 @@ class Game extends React.Component {
 
     let newState = this.state
     socket.on('getRoomLength', isLength => {
-    console.log(isLength)
       if(isLength){
         newState.me.isDrawer = true
         this.setState(newState)
@@ -58,11 +62,6 @@ class Game extends React.Component {
 
     socket.emit('getRoomLength', roomNum);
     }
-
-  componentWillUnmount(){
-    const roomNum = this.props.match.params.id
-    socket.emit('leaveRoom', roomNum);
-  }
 
   rotation(isDrawer, curRot){
     let newState = this.state
