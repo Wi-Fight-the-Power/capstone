@@ -21,8 +21,8 @@ socket.on('user', user => {
 })
 
 socket.on('recievingUserInfo', info => {
-      store.dispatch(sendUser(info))
-    })
+  store.dispatch(sendUser(info))
+})
 
 socket.on('order', order => {
   store.dispatch(updateOrder(order));

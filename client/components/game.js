@@ -15,46 +15,71 @@ class Game extends React.Component {
     super(props);
     this.state = {
       me: this.props.me,
-      rotation: this.props.users,
-      seconds: 90,
-      currentRotation: 1,
-      view: true,
+      seconds: 3,
+      currentRotation: 0,
+      joined: false,
     }
-    this.changeView = this.changeView.bind(this)
+    socket.on('rotate', (isDrawer, curRot) => {
+      this.rotation(isDrawer, curRot)
+    })
+
+    socket.on('userJoined', (room) => {
+      socket.emit('sendingUserInfo', this.props.me, room)
+    })
+
+    let newState = this.state
+    socket.on('getRoomLength', isLength => {
+    console.log(isLength)
+      if(isLength){
+        newState.me.isDrawer = true
+        this.setState(newState)
+      }
+    })
+
+
     this.rotation = this.rotation.bind(this)
   }
 
   componentDidMount(){
-    const roomNum = this.props.match.params.id
+  const roomNum = this.props.match.params.id
+   const word = randomWord();
+   console.log(word)
+   this.props.sendWord(word, roomNum);
+
+  if(!this.state.joined){
+  this.setState({joined:true})
+  socket.emit('userJoined', roomNum);
+  console.log('hit or something');
+  }
+
+  this.setState({joined:true})
+
     socket.emit('Join Room', roomNum);
 
-    const word = randomWord();
-    console.log(word)
-    this.props.sendWord(word, roomNum);
-
-  }
+    socket.emit('getRoomLength', roomNum);
+    }
 
   componentWillUnmount(){
-    socket.emit('leaveRoom');
+    const roomNum = this.props.match.params.id
+    socket.emit('leaveRoom', roomNum);
   }
 
-  rotation(isViewer){
-    let rotationNum = this.state.currentRotation
-    console.log(isViewer)
-      if(isViewer){
-        this.setState({view: true, currentRotation: rotationNum++})
-        console.log('should not be drawering')
-      } else if (!isViewer) {
-        this.setState({view: false, currentRotation: rotationNum++})
-        console.log('should be drwaing')
-      }
-
+  rotation(isDrawer, curRot){
+    let newState = this.state
+    if(isDrawer){
+      console.log(curRot)
+      newState.me.isDrawer = true;
+      newState.currentRotation = curRot
+      this.setState(newState)
+    }
+    if(!isDrawer){
+      newState.me.isDrawer = false;
+      newState.currentRotation = curRot
+      this.setState(newState)
+    }
+    this.props.sendWord(randomWord(), this.props.roomNum);
   }
 
-  changeView(){
-    const currentView = this.state.view
-    this.setState({view: !currentView})
-  }
 
 
 
@@ -65,22 +90,20 @@ render(){
    this.state.me.isDrawer ? (
      <div className="drawinggame">
          <h1>Room code: {roomNum}</h1>
-         <h1>You are the Drawer!!</h1>
+         <h1>Get Sketchi!</h1>
          <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
          <Board roomNum={roomNum}/>
          <Scoreboard roomNum={roomNum}/>
-       <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={!this.state.view}/>
-         {/* <button type="submit" id="room num" onClick={() => {this.changeView()}}>View/Draw</button> */}
+         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation}/>
        </div>
    )
    : (
      <div className="drawinggame">
          <h1>Room code: {roomNum}</h1>
-         <h1>{this.state.rotation[0]} is Drawing!</h1>
+         <h1>{this.props.users[this.state.currentRotation].handle} is Sketchi!</h1>
          <ViewBoard roomNum={roomNum} />
          <Scoreboard roomNum={roomNum}/>
-       <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={!this.state.view}/>
-         {/* <button type="submit" id="room num" onClick={() => {this.changeView()}}>View/Draw</button> */}
+         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
        </div>
    )
   )
@@ -100,6 +123,7 @@ const mapState = state => {
     word: state.game.word,
   }
 }
+
 
 const mapDispatch = dispatch => {
   return {

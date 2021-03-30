@@ -100,7 +100,11 @@ class Chatbox extends React.Component {
           <div id="feedback" />
         </div>
         <form>
-        <input
+          {this.props.isDrawer
+          ? (
+            null
+            ) : (
+              <input
           id="message"
           type="text"
           onChange={this.handleChangeMessage}
@@ -108,6 +112,7 @@ class Chatbox extends React.Component {
           value={this.state.message}
           placeholder="Message"
         />
+            )}
         <button type="submit" id="send" onClick={this.handleSubmit} >
           Send
         </button>
