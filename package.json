@@ -20,7 +20,8 @@
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
-    "test": "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register"
+    "test": "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register",
+    "dev": "concurrently --kill-others \"npm run build-client-watch\" \"npm run start-server\""
   },
   "lint-staged": {
     "*.{js,jsx}": [
@@ -40,6 +41,7 @@
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "compression": "^1.7.3",
+    "concurrently": "^6.0.0",
     "connect-session-sequelize": "^6.1.1",
     "express": "^4.16.4",
     "express-session": "^1.17.1",
