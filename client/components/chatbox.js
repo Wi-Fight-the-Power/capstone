@@ -16,7 +16,6 @@ class Chatbox extends React.Component {
     this.state = {
       message: '',
       handle: this.props.me ? this.props.me.handle : 'john',
-      score: 0
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
@@ -40,13 +39,9 @@ class Chatbox extends React.Component {
 
     let message = this.state.message
     const handle = this.state.handle
-    let score = this.state.score
+    let score = this.props.points
 
       if (nouns.includes(message.toLowerCase())){
-      this.setState({
-        score: this.state.score += this.props.points
-      })
-      score = this.state.score
       message = `GOT THE ANSWER +${this.props.points} points`
     }
 
@@ -63,7 +58,6 @@ class Chatbox extends React.Component {
     this.props.sendMessage(newMessage,this.props.roomNum);
     this.setState({
       message: '',
-      score: 0
     })
 
   }

@@ -15,15 +15,18 @@ class Scoreboard extends Component {
     socket.on('userJoined', () => {
       socket.emit('sendingUserInfo', this.props.me, this.props.roomNum)
     })
+
   }
 
 componentDidMount(){
   socket.emit('userJoined', this.props.roomNum);
+  console.log('mountain lion')
 }
 
 
   render(){
     const users = this.props.users || [];
+
      return (
     <div id='scoreboard'>
       <h2>Scoreboard</h2>
@@ -50,12 +53,6 @@ const mapState = state => {
   return {
     users: state.game.users,
     me: state.game.me
-  }
-}
-
-const mapDispatch = dispatch => {
-  return {
-    getUsers: () => dispatch()
   }
 }
 

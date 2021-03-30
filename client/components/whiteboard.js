@@ -59,7 +59,7 @@ const Board = props => {
   return (
     <div>
         {/* undo */}
-        <button onClick={() => undoLast()}>UNDO</button>
+        <button type='button' onClick={() => undoLast()}>UNDO</button>
 
         {/* stroke size */}
         <input type="range" min='1' max='25'  className='strokeScale drawTools' onChange={e => changeStroke(e.target.value)}/>
