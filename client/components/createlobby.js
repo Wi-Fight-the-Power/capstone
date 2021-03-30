@@ -9,7 +9,7 @@ class CreateLobby extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleSubmit(event) {
-    const randomnumber =Math.floor(100000 + Math.random() * 900000);
+    const randomnumber = Math.floor(100000 + Math.random() * 900000);
     event.preventDefault()
     this.props.history.push({pathname: `/game/${randomnumber}`})
   }

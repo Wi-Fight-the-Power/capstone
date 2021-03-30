@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {sendMessage, sendScore} from '../store/game'
-import {nouns} from './gameFunctions'
 
 
 
@@ -16,7 +15,6 @@ class Chatbox extends React.Component {
     this.state = {
       message: '',
       handle: this.props.me ? this.props.me.handle : 'john',
-      score: 0
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
@@ -40,14 +38,11 @@ class Chatbox extends React.Component {
 
     let message = this.state.message
     const handle = this.state.handle
-    let score = this.state.score
+    let score = 0
 
-      if (nouns.includes(message.toLowerCase())){
-      this.setState({
-        score: this.state.score += this.props.points
-      })
-      score = this.state.score
+      if (this.props.word === message.toLowerCase()){
       message = `GOT THE ANSWER +${this.props.points} points`
+      score = this.props.points;
     }
 
     const newScore = {
@@ -63,7 +58,6 @@ class Chatbox extends React.Component {
     this.props.sendMessage(newMessage,this.props.roomNum);
     this.setState({
       message: '',
-      score: 0
     })
 
   }
@@ -106,7 +100,11 @@ class Chatbox extends React.Component {
           <div id="feedback" />
         </div>
         <form>
-        <input
+          {this.props.isDrawer
+          ? (
+            null
+            ) : (
+              <input
           id="message"
           type="text"
           onChange={this.handleChangeMessage}
@@ -114,6 +112,7 @@ class Chatbox extends React.Component {
           value={this.state.message}
           placeholder="Message"
         />
+            )}
         <button type="submit" id="send" onClick={this.handleSubmit} >
           Send
         </button>
@@ -126,7 +125,8 @@ class Chatbox extends React.Component {
 const mapState = state => {
   return {
     game: state.game,
-    me: state.game.me
+    me: state.game.me,
+    word: state.game.word,
   }
 }
 
