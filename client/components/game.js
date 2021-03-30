@@ -87,34 +87,6 @@ render(){
   const roomNum = this.props.match.params.id;
 
   return this.props.me.handle ? (
-<<<<<<< HEAD
-  this.state.me.isDrawer ? (
-    <div className="drawinggame">
-      <h1>Room code:<span className='word'>{roomNum}</span></h1>
-      {/* <h1>You are the Drawer!!</h1> */}
-      <h2>You are the Drawer!!YOUR WORD IS: <span className='word'>{word().toUpperCase()}</span></h2>
-      <Board roomNum={roomNum}/>
-      <Scoreboard roomNum={roomNum}/>
-      <Timer
-      roomNum={roomNum}
-      seconds={this.state.seconds}
-      isDrawer={true}
-      curRot={this.state.currentRotation}
-  />
-      </div>
-      )
-    : (
-      <div className="drawinggame">
-      <h1>Room code: {roomNum}</h1>
-      <h1>You are the Guesser</h1>
-      <ViewBoard roomNum={roomNum} />
-      <Scoreboard roomNum={roomNum}/>
-      <Timer
-      roomNum={roomNum}
-      seconds={this.state.seconds}/>
-      </div>
-  )
-=======
    this.state.me.isDrawer ? (
      <div className="drawinggame">
          <h1>Room code: {roomNum}</h1>
@@ -134,7 +106,6 @@ render(){
          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
        </div>
    )
->>>>>>> db5bb5a899edb22cb98e2fccface83512eb1d7c3
   )
   : (
   <div>
