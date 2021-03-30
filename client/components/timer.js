@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {nouns} from './gameFunctions'
 import Chatbox from './chatbox';
 import socket from '../socket'
 
@@ -12,7 +11,7 @@ class Timer extends React.Component {
       seconds: this.props.seconds,
       points: 900,
     };
-    socket.on('timer',data=>{this.startTimer()})
+    socket.on('timer', data=>{this.startTimer()})
     this.timer = 0;
     this.countingDown = false
     this.startTimer = this.startTimer.bind(this);
@@ -86,10 +85,17 @@ class Timer extends React.Component {
     return(
       <div>
       <div className='buttonContainer'>
-        <button className='testButtons' type='submit' onClick={this.checkTime}>Start</button>
-        MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}
+        {this.props.isDrawer
+        ? (
+        <div>
+          <button className='testButtons' type='submit' onClick={this.checkTime}>Start</button>
+          <h2>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>
+        </div>
+        )
+        : (
+        <h2>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>)}
       </div>
-      <Chatbox points={this.state.points} roomNum={this.props.roomNum} />
+      <Chatbox points={this.state.points} roomNum={this.props.roomNum} isDrawer={this.props.isDrawer}/>
       </div>
     );
   }

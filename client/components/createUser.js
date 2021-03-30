@@ -68,7 +68,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {sendUser, sendMe} from '../store/game'
-// import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -76,6 +75,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
 
 
 
@@ -125,9 +125,13 @@ handleClose = () => {
     this.setState({open:false})
   };
 
+
+
   render() {
     const {handle} = this.state
+
     return (
+
       <div>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Open form dialog
@@ -171,7 +175,6 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(null, mapDispatch)(CreateUser)
-
 
 
 

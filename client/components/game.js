@@ -6,14 +6,10 @@ import Timer from './timer'
 import Scoreboard from './scoreboard'
 import CreateUser from './createUser';
 import ViewBoard from './whiteBoardViewer'
-import {nouns} from './gameFunctions';
-import {sendOrder} from '../store/game'
 import {Button} from '@material-ui/core'
+import {sendOrder, sendWord} from '../store/game'
+import {randomWord} from '../components/gameFunctions'
 
-let word = () => {
-  let index = Math.floor(Math.random() * nouns.length);
-  return nouns[index];
-}
 
 class Game extends React.Component {
   constructor(props){
@@ -22,37 +18,51 @@ class Game extends React.Component {
       me: this.props.me,
       seconds: 3,
       currentRotation: 0,
+      joined: false,
     }
     socket.on('rotate', (isDrawer, curRot) => {
       this.rotation(isDrawer, curRot)
     })
 
-                let newState = this.state
-        socket.on('getRoomLength', isLength => {
-      console.log(isLength)
-        if(isLength){
-          newState.me.isDrawer = true
-          this.setState(newState)
-        }
-      })
+    socket.on('userJoined', (room) => {
+      socket.emit('sendingUserInfo', this.props.me, room)
+    })
+
+    let newState = this.state
+    socket.on('getRoomLength', isLength => {
+    console.log(isLength)
+      if(isLength){
+        newState.me.isDrawer = true
+        this.setState(newState)
+      }
+    })
 
 
     this.rotation = this.rotation.bind(this)
   }
 
   componentDidMount(){
-    const roomNum = this.props.match.params.id
+  const roomNum = this.props.match.params.id
+   const word = randomWord();
+   console.log(word)
+   this.props.sendWord(word, roomNum);
+
+  if(!this.state.joined){
+  this.setState({joined:true})
+  socket.emit('userJoined', roomNum);
+  console.log('hit or something');
+  }
+
+  this.setState({joined:true})
+
     socket.emit('Join Room', roomNum);
 
-    console.log('about to get room length')
-    socket.emit('getRoomLength', roomNum)
-
-
+    socket.emit('getRoomLength', roomNum);
     }
 
   componentWillUnmount(){
     const roomNum = this.props.match.params.id
-    socket.emit('Leave Room', roomNum)
+    socket.emit('leaveRoom', roomNum);
   }
 
   rotation(isDrawer, curRot){
@@ -68,44 +78,38 @@ class Game extends React.Component {
       newState.currentRotation = curRot
       this.setState(newState)
     }
+    this.props.sendWord(randomWord(), this.props.roomNum);
   }
+
 
 
 
 render(){
   const roomNum = this.props.match.params.id;
-
   return this.props.me.handle ? (
    this.state.me.isDrawer ? (
      <div className="drawinggame">
          <h1>Room code: {roomNum}</h1>
-         <h1>You are the Drawer!!</h1>
-         <h2>YOUR WORD IS: <span className='word'>{word().toUpperCase()}</span></h2>
+         <h1>Get Sketchi!</h1>
+         <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
          <div className='chatlayout'>
           <div className='board'>
          <Board roomNum={roomNum}/>
          </div>
          <Scoreboard roomNum={roomNum}/>
-       <Timer
-       roomNum={roomNum}
-       seconds={this.state.seconds}
-       isDrawer={true}
-       curRot={this.state.currentRotation}
-       />
-        </div>
+         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation}/>
+       </div>
        </div>
    ) : (
      <div className="drawinggame">
          <h1>Room code: {roomNum}</h1>
-         <h1>You aren't: is Drawing!</h1>
-         <div className='chatlayout'>
+         <h1>{this.props.users[this.state.currentRotation].handle} is Sketchi!</h1>
+      <div className='chatlayout'>
           <div className='board'>
          <ViewBoard roomNum={roomNum} />
           </div>
          <Scoreboard roomNum={roomNum}/>
-       <Timer
-       roomNum={roomNum}
-       seconds={this.state.seconds}/>
+         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
        </div>
        </div>
    )
@@ -115,19 +119,21 @@ render(){
   </div>
   )
 }
-
 }
 
 const mapState = state => {
   return {
     users: state.game.users,
     me: state.game.me,
+    word: state.game.word,
   }
 }
 
+
 const mapDispatch = dispatch => {
   return {
-    sendOrder: (order, room) => dispatch(sendOrder(order, room))
+    sendOrder: (order, room) => dispatch(sendOrder(order, room)),
+    sendWord: (word, room) => dispatch(sendWord(word, room))
   }
 }
 

@@ -105,6 +105,7 @@
     "lint-staged": "^8.1.5",
     "mocha": "^6.2.3",
     "nodemon": "^1.19.4",
+    "noun-json": "^1.0.1",
     "npm-merge-driver": "^2.3.6",
     "prettier": "1.11.1",
     "react-test-renderer": "^16.14.0",

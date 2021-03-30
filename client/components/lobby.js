@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
 // import IsUser from './createUserName'
 import Button from '@material-ui/core/Button';
+import Rooms from './rooms'
 
 
 class LobbyRoom extends React.Component{
@@ -49,9 +50,13 @@ class LobbyRoom extends React.Component{
 
   render(){
     return (
-    <div >
-    <h1>Lobby</h1>
-    <Link to="/createlobby">
+    <div className='allthingscenter'>
+    <div>
+      <p>
+
+      </p>
+      <div>
+        <Link to="/createlobby">
       <Button
       size="large"
       variant="contained"
@@ -59,8 +64,10 @@ class LobbyRoom extends React.Component{
           Create Room
         </Button>
     </Link>
-
-    <TextField
+      </div>
+    </div>
+    <div className='roboto'>
+      <TextField
     error={this.state.error}
     id="room num"
     label="RoomNumber"
@@ -70,7 +77,7 @@ class LobbyRoom extends React.Component{
     value={this.state.handle}
     helperText={this.state.roomErrormessage}
     />
-
+    <div className = 'buttonMargin'>
     <Button
       id="room num"
       type="submit"
@@ -80,9 +87,13 @@ class LobbyRoom extends React.Component{
       onClick={this.handleSubmit} >
           Join Game
         </Button>
+        </div>
+    </div>
+    <Rooms/>
     </div>
   )
   }
+
 }
 
 
