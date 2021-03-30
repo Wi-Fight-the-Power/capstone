@@ -63,6 +63,11 @@ class Game extends React.Component {
     socket.emit('getRoomLength', roomNum);
     }
 
+    componentWillUnmount(){
+    const roomNum = this.props.match.params.id;
+    socket.emit('leaveRoom', roomNum);
+    }
+
   rotation(isDrawer, curRot){
     let newState = this.state
     if(isDrawer){

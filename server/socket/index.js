@@ -16,7 +16,20 @@ module.exports = io => {
       socket.username = name;
       socket.room = room;
     })
+    //leaving a room
+     socket.on('leaveRoom', room => {
 
+      socket.leave(room)
+
+      const roominfo = io.sockets.adapter.rooms[room] || []
+
+      //checking room size
+      if(roominfo.length <= 0){
+        //delete room with 0 players
+         delete io.sockets.adapter.rooms[room];
+      }
+
+    })
     //sending user info
     socket.on('sendingUserInfo', (info, room) => {
       // All player SocketIDs
@@ -89,6 +102,8 @@ module.exports = io => {
         newRot = 0;
       }
       let drawer = playerArr[newRot]
+      console.log(io.sockets.adapter.rooms[room])
+      console.log(io.sockets.adapter[drawer])
       let viewers = playerArr.filter(player => player !== drawer)
       io.to(drawer).emit('rotate', true, newRot);
       viewers.forEach(player => {
