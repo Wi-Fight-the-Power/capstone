@@ -19,7 +19,7 @@ body {
 }
 
 .word {
-  color: blue;
+  color: Red;
 }
 
 .navbar {
@@ -48,7 +48,7 @@ body {
   /* max-width: 600px; */
   margin: 30px auto;
   font-family: fantasy;
-  border: 1px solid black;
+  border: 1px solid #3f51b5;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
   border-radius: 2px;
 }
@@ -104,13 +104,13 @@ body {
 h2 {
   font-size: 18px;
   padding: 10px 20px;
-  color: green;
+  color: #3f51b5;
 }
 
 #chat-box {
   max-width: 600px;
   margin: 30px auto;
-  border: 2px solid green;
+  border: 2px solid #3f51b5;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
   border-radius: 2px;
   font-family: fantasy;
@@ -161,7 +161,7 @@ input {
 }
 
 #send {
-  background: Green;
+  background: #3f51b5;
   color: #fff;
   font-size: 18px;
   font-family: fantasy;
@@ -255,4 +255,14 @@ input {
   align-items: center;
   font-family: fantasy;
   font-weight: bolder;
+}
+
+.chatlayout {
+  display: flex;
+  flex-direction: row;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
 }
