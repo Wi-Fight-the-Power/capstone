@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {sendMessage, sendScore} from '../store/game'
-import {nouns} from './gameFunctions'
 
 
 
@@ -39,10 +38,11 @@ class Chatbox extends React.Component {
 
     let message = this.state.message
     const handle = this.state.handle
-    let score = this.props.points
+    let score = 0
 
-      if (nouns.includes(message.toLowerCase())){
+      if (this.props.word === message.toLowerCase()){
       message = `GOT THE ANSWER +${this.props.points} points`
+      score = this.props.points;
     }
 
     const newScore = {
@@ -120,7 +120,8 @@ class Chatbox extends React.Component {
 const mapState = state => {
   return {
     game: state.game,
-    me: state.game.me
+    me: state.game.me,
+    word: state.game.word,
   }
 }
 

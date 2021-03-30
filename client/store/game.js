@@ -4,7 +4,8 @@ const initialState = {
   messages: [],
   users: [],
   me: {},
-  order: []
+  order: [],
+  word: ''
 }
 
 //action types
@@ -14,6 +15,7 @@ const UPDATE_SCORE = 'UPDATE_SCORE';
 const NEW_USER = 'NEW_USER';
 const ME = 'ME';
 const UPDATE_ORDER = 'UPDATE_ORDER';
+const GET_WORD = 'GET_WORD';
 
 
 //action creators
@@ -52,6 +54,13 @@ export const updateOrder = order => {
   return {
     type: UPDATE_ORDER,
     order,
+  }
+}
+
+export const getWord = word => {
+  return {
+    type: GET_WORD,
+    word,
   }
 }
 
@@ -103,6 +112,14 @@ export const sendOrder = (order, room) => dispatch => {
   }
 }
 
+export const sendWord = (word, room) => dispatch => {
+  try {
+    dispatch(getWord(word));
+    socket.emit('word', word, room);
+  } catch (error){
+    console.log(error)
+  }
+}
 
 
 
@@ -142,7 +159,11 @@ export default (state = initialState, action) => {
         ...state,
         order: action.order
       }
-
+    case GET_WORD:
+      return {
+        ...state,
+        word: action.word
+      }
     default:
       return state
   }

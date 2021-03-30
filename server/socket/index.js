@@ -60,6 +60,11 @@ module.exports = io => {
       socket.to(room).emit('user', user)
     })
 
+   //sends word to users
+   socket.on('word', (word, room) => {
+     socket.to(room).emit('word', word)
+   })
+
     //update order
      socket.on('order', (order, room ) => {
       socket.to(room).emit("order", order)
