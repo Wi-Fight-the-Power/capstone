@@ -9,6 +9,11 @@ module.exports = io => {
     socket.on('userJoined', room => {
       socket.to(room).emit('userJoined', room);
     })
+    //attaching player handle to socket id
+    socket.on('userToSocket', (name, room) => {
+      socket.username = name;
+      socket.room = room;
+    })
     //sending user info
     socket.on('sendingUserInfo', (info, room) => {
       // All player SocketIDs
@@ -54,6 +59,10 @@ module.exports = io => {
    socket.on('word', (word, room) => {
      socket.to(room).emit('word', word)
    })
+   //sends drawer to users
+   socket.on('drawer', (drawer, room) => {
+     socket.to(room).emit('drawer', drawer)
+   })
     //sends drawing data to room
     socket.on('drawing', (data, room) => {
       socket.to(room).emit("drawing", data)
@@ -90,11 +99,13 @@ module.exports = io => {
         newRot = 0;
       }
       let drawer = playerArr[newRot]
+      let drawerHandle = io.sockets.connected[drawer].username
       let viewers = playerArr.filter(player => player !== drawer)
-      io.to(drawer).emit('rotate', true, newRot);
+      io.to(drawer).emit('rotate', true, newRot, drawerHandle);
       viewers.forEach(player => {
       io.to(player).emit('rotate',
-      false, newRot)
+      false, newRot, drawerHandle);
+
     })
     })
     //disconnect
