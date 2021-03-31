@@ -20,7 +20,7 @@ body {
 }
 
 .word {
-  color: red
+  color: Red;
 }
 
 .navbar {
@@ -48,7 +48,8 @@ body {
   width: 400px;
   /* max-width: 600px; */
   margin: 30px auto;
-  border: 1px solid #ddd;
+  font-family: fantasy;
+  border: 1px solid #3f51b5;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
   border-radius: 2px;
 }
@@ -56,7 +57,7 @@ body {
 #scorewindow {
   height: 100px;
   overflow: auto;
-  background: #f9f9f9;
+  background-image: 'public/whitetile.png';
 }
 
 /* this is the chat box stuff */
@@ -97,28 +98,34 @@ form div {
 
 body {
   font-family: 'Nunito';
+  /* font-family: 'Caveat', cursive; */
   background-image: url(/whitetile.png)
   /* background-color: #A0E7E5; */
+
 }
+
 
 h2 {
   font-size: 18px;
   padding: 10px 20px;
-  color: green;
+  color: #3f51b5;
 }
 
 #chat-box {
   max-width: 600px;
   margin: 30px auto;
-  border: 1px solid #ddd;
+  border: 2px solid #3f51b5;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
   border-radius: 2px;
+  font-family: fantasy;
+  font-weight: bolder;
 }
 
 #chat-window {
   height: 100px;
   overflow: auto;
-  background: #f9f9f9;
+  font-weight: bolder;
+  background-image: 'public/whitetile.png';
 }
 
 #output p {
@@ -149,18 +156,19 @@ input {
   box-sizing: border-box;
   background: #eee;
   border: 0;
-  display: block;
+  display: flex;
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #eee;
-  font-family: Nunito;
+  font-family: fantasy;
   font-size: 16px;
 }
 
 #send {
-  background: Green;
+  background: #3f51b5;
   color: #fff;
   font-size: 18px;
+  font-family: fantasy;
   border: 0;
   padding: 12px 0;
   width: 100%;
@@ -187,7 +195,6 @@ input {
 .konvajs-content {
   margin-top: 5em;
   margin-left: 0;
-  background-color: grey;
 }
 
 .HotPink{
@@ -207,7 +214,7 @@ input {
 
 
 .drawTools{
-
+  display: inline-flex;
 }
 
 .strokeScale{
@@ -249,4 +256,46 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: fantasy;
+  font-weight: bolder;
+}
+
+.chatlayout {
+  display: flex;
+  flex-direction: row;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+}
+/* board */
+.board {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.allthingscenter{
+  display: flex;
+  flex-direction: column  ;
+  justify-content: center;
+  align-items: center;
+}
+/* fonts */
+.roboto{
+font-family: 'Roboto', sans-serif;
+font-size: 25px;
+/* padding: 50px; */
+margin: 10px;
+}
+.disclaimer{
+  font-family: 'Roboto', sans-serif;
+  font-size: 10px
+}
+
+.buttonMargin{
+  margin: 20px;
 }

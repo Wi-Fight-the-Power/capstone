@@ -1,4 +1,5 @@
 import React from 'react'
+import socket from '../socket'
 import {connect} from 'react-redux'
 import {sendUser, sendMe} from '../store/game'
 import Button from '@material-ui/core/Button';
@@ -9,6 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import socket from '../socket';
+
 
 
 
@@ -39,7 +41,10 @@ class CreateUser extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    
+    //Sending name to socket to create a Key:Value
     socket.emit('userToSocket', this.state.handle, this.props.roomNum)
+    
     const user = JSON.stringify(this.state);
     localStorage.setItem('user', user);
     this.props.sendUser(this.state, this.props.roomNum)
@@ -59,9 +64,13 @@ handleClose = () => {
     this.setState({open:false})
   };
 
+
+
   render() {
     const {handle} = this.state
+
     return (
+
       <div>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Open form dialog
@@ -107,7 +116,6 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(null, mapDispatch)(CreateUser)
-
 
 
 

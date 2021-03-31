@@ -1,9 +1,10 @@
 import React, {useRef} from 'react'
 // import { render } from "react-dom";
 import {Stage, Layer, Line, Text} from 'react-konva'
-
 import socket from '../socket'
-
+import {Button} from '@material-ui/core'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 const Board = props => {
   const [stroke, changeStroke] = React.useState(12)
@@ -58,36 +59,32 @@ const Board = props => {
 
   return (
     <div>
-        {/* undo */}
-        <button type='button' onClick={() => undoLast()}>UNDO</button>
-
+        <Button color='primary' variant='contained' onClick={() => undoLast()}>UNDO</Button>
         {/* stroke size */}
         <input type="range" min='1' max='25'  className='strokeScale drawTools' onChange={e => changeStroke(e.target.value)}/>
 
         {/* change colors */}
-        <select
+        <Select
         className="drawTools"
         value={color}
-        onChange={e => changeColor(e.target.value)}
-      >
-        <option className="HotPink colorOptions" value="#FFAEBC">Hot Pink</option>
-        <option className="TiffanyBlue colorOptions" value="#A0E7E5">Tiffany Blue</option>
-        <option className="Mint colorOptions" value="#B4F8C8">Mint</option>
-        <option className="Yellow colorOptions" value="#FBE7C6">Yellow</option>
-      </select>
-
+        onChange={e => changeColor(e.target.value)}>
+        <MenuItem value="#FFAEBC">Hot Pink</MenuItem>
+        <MenuItem value="#A0E7E5">Tiffany Blue</MenuItem>
+        <MenuItem value="#B4F8C8">Mint</MenuItem>
+        <MenuItem value="#FBE7C6">Yellow</MenuItem>
+      </Select>
       {/* tool selection */}
-      <select
+      <Select
         className="drawTools"
         value={tool}
         onChange={e => {
           setTool(e.target.value)
         }}
       >
-        <option value="pen">Pen</option>
-        <option value="eraser">Eraser</option>
+        <MenuItem value="pen">Pen</MenuItem>
+        <MenuItem value="eraser">Eraser</MenuItem>
         {/* <option value="fill">Fill</option> */}
-      </select>
+      </Select>
       <Stage
         width={500}
         height={500}
@@ -97,6 +94,7 @@ const Board = props => {
         onTouchStart={handleMouseDown}
         onTouchMove={handleMouseMove}
         onTouchEnd={handleMouseUp}
+          style={{  backgroundColor: 'pink'}}
         >
         <Layer>
           <Text text="Just start drawing" x={5} y={30} />

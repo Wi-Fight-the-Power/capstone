@@ -20,6 +20,11 @@ class Game extends React.Component {
       currentRotation: 0,
       joined: false,
     }
+
+        socket.on('playerHasLeft', name => {
+      console.log(name + ' Has left the game')
+    })
+    
     socket.on('rotate', (isDrawer, curRot, drawerHandle) => {
       this.rotation(isDrawer, curRot)
       this.props.sendDrawer(drawerHandle, this.props.match.params.id);
@@ -60,10 +65,10 @@ class Game extends React.Component {
   socket.emit('getRoomLength', roomNum);
   }
 
-  componentWillUnmount(){
-    const roomNum = this.props.match.params.id
+    componentWillUnmount(){
+    const roomNum = this.props.match.params.id;
     socket.emit('leaveRoom', roomNum);
-  }
+    }
 
   rotation(isDrawer, curRot){
     let newState = this.state
@@ -107,18 +112,26 @@ render(){
          <h1>Room code: {roomNum}</h1>
          <h1>Get Sketchi!</h1>
          <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
+      <div className='chatlayout'>
+          <div className='board'>
          <Board roomNum={roomNum}/>
+         </div>
          <Scoreboard roomNum={roomNum}/>
          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation}/>
-       </div>
+         </div>
+         </div>
    ) : (
      <div className="drawinggame">
          <h1>Room code: {roomNum}</h1>
          <h1>{drawer} is Sketchi!</h1>
+      <div className='chatlayout'>
+          <div className='board'>
          <ViewBoard roomNum={roomNum} />
+          </div>
          <Scoreboard roomNum={roomNum}/>
          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
        </div>
+     </div>
     )
    )
   )
@@ -128,7 +141,6 @@ render(){
   </div>
   )
 }
-
 }
 
 const mapState = state => {
