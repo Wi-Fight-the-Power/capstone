@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Playernotify from './playerleaving'
+// import Playernotify from './playerleaving'
 
 
 
@@ -18,7 +18,7 @@ class Scoreboard extends Component {
   render(){
     const users = this.props.users || [];
 
-     return (
+    return (
     <div id='scoreboard'>
       <h2>Scoreboard</h2>
       <div id='scorewindow'>
@@ -35,7 +35,7 @@ class Scoreboard extends Component {
           })}
         </div>
       </div>
-      <Playernotify/>
+      {/* <Playernotify/> */}
     </div>
     )
   }

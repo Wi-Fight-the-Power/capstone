@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {sendMessage, sendScore} from '../store/game'
 
+
 class Chatbox extends React.Component {
   constructor(props) {
     super(props)
