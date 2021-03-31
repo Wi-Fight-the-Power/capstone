@@ -52,6 +52,7 @@ class Timer extends React.Component {
     if (this.countingDown) {
       this.timer = setInterval(this.countDown, 1000);
     }
+
   }
 
   countDown() {
