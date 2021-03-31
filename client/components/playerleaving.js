@@ -31,7 +31,7 @@ function Snackbar() {
 
 export default function Playernotify() {
   return (
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider maxSnack={10}>
       <Snackbar />
     </SnackbarProvider>
   );
