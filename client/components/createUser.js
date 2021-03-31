@@ -9,6 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import socket from '../socket';
 
 
 
@@ -40,9 +41,10 @@ class CreateUser extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    
     //Sending name to socket to create a Key:Value
     socket.emit('userToSocket', this.state.handle, this.props.roomNum)
-
+    
     const user = JSON.stringify(this.state);
     localStorage.setItem('user', user);
     this.props.sendUser(this.state, this.props.roomNum)
@@ -103,6 +105,8 @@ handleClose = () => {
     )
   }
 }
+
+
 
 const mapDispatch = dispatch => {
   return {

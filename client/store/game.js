@@ -5,7 +5,8 @@ const initialState = {
   users: [],
   me: {},
   order: [],
-  word: ''
+  word: '',
+  drawer: ''
 }
 
 //action types
@@ -16,7 +17,7 @@ const NEW_USER = 'NEW_USER';
 const ME = 'ME';
 const UPDATE_ORDER = 'UPDATE_ORDER';
 const GET_WORD = 'GET_WORD';
-
+const UPDATE_DRAWER = 'UPDATE_DRAWER';
 
 //action creators
 
@@ -63,6 +64,15 @@ export const getWord = word => {
     word,
   }
 }
+
+export const updateDrawer = drawer => {
+  return {
+    type: UPDATE_DRAWER,
+    drawer,
+  }
+}
+
+
 
 
 //thunks
@@ -122,6 +132,16 @@ export const sendWord = (word, room) => dispatch => {
 }
 
 
+export const drawerUpdate = (drawer, room) => dispatch => {
+  try {
+    dispatch (updateDrawer(drawer));
+    socket.emit('drawer', drawer, room);
+  } catch (error){
+    console.log(error)
+  }
+}
+
+
 
 //reducer
 
@@ -163,6 +183,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         word: action.word
+      }
+    case UPDATE_DRAWER:
+      return {
+        ...state,
+        drawer: action.drawer
       }
     default:
       return state

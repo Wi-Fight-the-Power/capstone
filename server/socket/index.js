@@ -17,6 +17,17 @@ module.exports = io => {
     socket.on('userToSocket', (name, room) => {
       socket.username = name;
       socket.room = room;
+
+    })
+    //sending user info
+    socket.on('sendingUserInfo', (info, room) => {
+      // All player SocketIDs
+      const roominfo = io.sockets.adapter.rooms[room].sockets
+      // all players array
+      const playerArr = Object.keys(roominfo)
+      const newUser = playerArr[playerArr.length - 1];
+      io.to(newUser).emit('recievingUserInfo', info)
+
     })
     //leaving a room
      socket.on('leaveRoom', room => {
@@ -68,6 +79,10 @@ module.exports = io => {
    socket.on('word', (word, room) => {
      socket.to(room).emit('word', word)
    })
+   //sends drawer to users
+   socket.on('drawer', (drawer, room) => {
+     socket.to(room).emit('drawer', drawer)
+   })
     //sends drawing data to room
     socket.on('drawing', (data, room) => {
       socket.to(room).emit("drawing", data)
@@ -104,13 +119,15 @@ module.exports = io => {
         newRot = 0;
       }
       let drawer = playerArr[newRot]
-      console.log(io.sockets.adapter.rooms[room])
-      console.log(io.sockets.adapter[drawer])
+
+      let drawerHandle = io.sockets.connected[drawer].username
+
       let viewers = playerArr.filter(player => player !== drawer)
-      io.to(drawer).emit('rotate', true, newRot);
+      io.to(drawer).emit('rotate', true, newRot, drawerHandle);
       viewers.forEach(player => {
       io.to(player).emit('rotate',
-      false, newRot)
+      false, newRot, drawerHandle);
+
     })
     })
     //disconnect
