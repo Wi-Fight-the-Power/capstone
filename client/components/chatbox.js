@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {sendMessage, sendScore} from '../store/game'
 
+
 class Chatbox extends React.Component {
   constructor(props) {
     super(props)
@@ -11,6 +12,7 @@ class Chatbox extends React.Component {
     this.state = {
       message: '',
       handle: this.props.me ? this.props.me.handle : 'john',
+      answer: false,
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
@@ -36,9 +38,14 @@ class Chatbox extends React.Component {
     const handle = this.state.handle
     let score = 0
 
-      if (this.props.word === message.toLowerCase()){
+      if (this.props.word === message.toLowerCase() && !this.state.answer){
       message = `GOT THE ANSWER +${this.props.points} points`
       score = this.props.points;
+      this.setState({
+        answer: true
+      })
+    } else if (this.props.word === message.toLowerCase() && this.state.answer){
+      message = `is being superrrrrr Sketchi`
     }
 
     const newScore = {

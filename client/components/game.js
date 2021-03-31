@@ -9,6 +9,7 @@ import Winner from './winner'
 import ViewBoard from './whiteBoardViewer'
 import {sendOrder, sendWord, drawerUpdate} from '../store/game'
 import {randomWord} from '../components/gameFunctions'
+import Playernotify from './playerleaving'
 
 
 class Game extends React.Component {
@@ -24,7 +25,7 @@ class Game extends React.Component {
         socket.on('playerHasLeft', name => {
       console.log(name + ' Has left the game')
     })
-    
+
     socket.on('rotate', (isDrawer, curRot, drawerHandle) => {
       this.rotation(isDrawer, curRot)
       this.props.sendDrawer(drawerHandle, this.props.match.params.id);
@@ -117,6 +118,7 @@ render(){
          <Board roomNum={roomNum}/>
          </div>
          <Scoreboard roomNum={roomNum}/>
+         <Playernotify/>
          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation}/>
          </div>
          </div>
@@ -129,17 +131,19 @@ render(){
          <ViewBoard roomNum={roomNum} />
           </div>
          <Scoreboard roomNum={roomNum}/>
+         <Playernotify/>
          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
        </div>
      </div>
-    )
    )
+    )
   )
   : (
   <div>
     <CreateUser roomNum={roomNum} />
   </div>
   )
+
 }
 }
 
