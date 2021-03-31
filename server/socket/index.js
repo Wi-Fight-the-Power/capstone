@@ -43,14 +43,9 @@ module.exports = io => {
       }
 
     })
-    //sending user info
-    socket.on('sendingUserInfo', (info, room) => {
-      // All player SocketIDs
-      const roominfo = io.sockets.adapter.rooms[room].sockets
-      // all players array
-      const playerArr = Object.keys(roominfo)
-      const newUser = playerArr[playerArr.length - 1];
-      io.to(newUser).emit('recievingUserInfo', info)
+    //background color change
+    socket.on('boardColor', (bgcolor, room) => {
+      socket.to(room).emit('boardColor', bgcolor)
     })
 
     //checks to see if room exist or not
