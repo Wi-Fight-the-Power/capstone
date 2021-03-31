@@ -40,6 +40,7 @@ class CreateUser extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
+
     //Sending name to socket to create a Key:Value
     socket.emit('userToSocket', this.state.handle, this.props.roomNum)
 
@@ -103,6 +104,8 @@ handleClose = () => {
     )
   }
 }
+
+
 
 const mapDispatch = dispatch => {
   return {
