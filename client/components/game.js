@@ -110,29 +110,37 @@ render(){
    ) : (
      this.state.me.isDrawer ? (
      <div className="drawinggame">
+       <div className='gameInfo'>
          <h1>Room code: {roomNum}</h1>
          <h1>Get Sketchi!</h1>
          <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
-      <div className='chatlayout'>
-          <div className='board'>
+       </div>
+         <div className='chatlayout'>
+         <div className='board'>
          <Board roomNum={roomNum}/>
          </div>
-         <Scoreboard roomNum={roomNum}/>
          <Playernotify/>
-         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation}/>
+         <div className='scoreChat'>
+         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation} className='scoreChat'/>
+         <Scoreboard roomNum={roomNum}/>
+         </div>
          </div>
          </div>
    ) : (
      <div className="drawinggame">
+       <div className='gameInfo'>
          <h1>Room code: {roomNum}</h1>
          <h1>{drawer} is Sketchi!</h1>
-      <div className='chatlayout'>
-          <div className='board'>
+       </div>
+         <div className='chatlayout'>
+         <div className='board'>
          <ViewBoard roomNum={roomNum} />
-          </div>
-         <Scoreboard roomNum={roomNum}/>
+         </div>
          <Playernotify/>
-         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
+         <div className='scoreChat'>
+         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} className='scoreChat' />
+         <Scoreboard roomNum={roomNum}/>
+         </div>
        </div>
      </div>
    )
