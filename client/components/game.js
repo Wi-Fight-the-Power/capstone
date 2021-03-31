@@ -4,11 +4,12 @@ import Board from './whiteboard'
 import socket from '../socket'
 import Timer from './timer'
 import Scoreboard from './scoreboard'
-import CreateUser from './createUser';
+import CreateUser from './createUser'
+import Winner from './winner'
 import ViewBoard from './whiteBoardViewer'
 import {sendOrder, sendWord} from '../store/game'
 import {randomWord} from '../components/gameFunctions'
-import Playernotify from './playerleaving'
+
 
 
 class Game extends React.Component {
@@ -40,15 +41,13 @@ class Game extends React.Component {
         this.setState(newState)
       }
     })
-
-
     this.rotation = this.rotation.bind(this)
   }
 
   componentDidMount(){
   const roomNum = this.props.match.params.id
    const word = randomWord();
-   console.log(word)
+   console.log(word, 'from didMount');
    this.props.sendWord(word, roomNum);
 
   if(!this.state.joined){
@@ -71,13 +70,16 @@ class Game extends React.Component {
       newState.me.isDrawer = true;
       newState.currentRotation = curRot
       this.setState(newState)
+      const word = randomWord();
+      const roomNum = this.props.match.params.id
+      this.props.sendWord(word, roomNum);
     }
     if(!isDrawer){
       newState.me.isDrawer = false;
       newState.currentRotation = curRot
       this.setState(newState)
     }
-    this.props.sendWord(randomWord(), this.props.roomNum);
+
   }
 
 
@@ -85,35 +87,38 @@ class Game extends React.Component {
 
 render(){
   const roomNum = this.props.match.params.id;
-  console.log("rendering game js")
+
+  const winner = this.props.users.filter(user => {
+    return user.score > 5000
+  })
+
+
   return this.props.me.handle ? (
+  winner.length === 1
+  ? (
+  <Winner roomNum={roomNum} />
+  ) : (
     this.state.me.isDrawer ? (
       <div className="drawinggame">
-          <h1>Room code: {roomNum}</h1>
-          <h1>Get Sketchi!</h1>
-          <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
-          <div className='chatlayout'>
-          <div className='board'>
-          <Board roomNum={roomNum}/>
-          </div>
-          <Scoreboard roomNum={roomNum}/>
-          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation}/>
-        </div>
+        <h1>Room code: {roomNum}</h1>
+        <h1>Get Sketchi!</h1>
+        <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
+        <Board roomNum={roomNum}/>
+        <Scoreboard roomNum={roomNum}/>
+        <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation}/>
         </div>
     ) : (
       <div className="drawinggame">
-          <h1>Room code: {roomNum}</h1>
-          <h1>{this.props.users[this.state.currentRotation].handle} is Sketchi!</h1>
-        <div className='chatlayout'>
-          <div className='board'>
-          <ViewBoard roomNum={roomNum} />
-          </div>
-          <Scoreboard roomNum={roomNum}/>
-          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
+        <h1>Room code: {roomNum}</h1>
+        <h1>{this.props.users[this.state.currentRotation].handle} is Sketchi!</h1>
+        <ViewBoard roomNum={roomNum} />
+        <Scoreboard roomNum={roomNum}/>
+        <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
         </div>
-        </div>
+      )
     )
-  ) : (
+  )
+  : (
   <div>
     <CreateUser roomNum={roomNum} />
   </div>
