@@ -8,6 +8,7 @@ import CreateUser from './createUser';
 import ViewBoard from './whiteBoardViewer'
 import {sendOrder, sendWord} from '../store/game'
 import {randomWord} from '../components/gameFunctions'
+import Playernotify from './playerleaving'
 
 
 class Game extends React.Component {
@@ -20,9 +21,9 @@ class Game extends React.Component {
       joined: false,
     }
 
-    socket.on('playerHasLeft', name => {
-      console.log(name + ' Has left the game')
-    })
+    // socket.on('playerHasLeft', name => {
+    //   console.log(name + ' Has left the game')
+    // })
 
     socket.on('rotate', (isDrawer, curRot) => {
       this.rotation(isDrawer, curRot)
@@ -84,35 +85,40 @@ class Game extends React.Component {
 
 render(){
   const roomNum = this.props.match.params.id;
-
+  console.log("rendering game js")
   return this.props.me.handle ? (
-   this.state.me.isDrawer ? (
-     <div className="drawinggame">
-         <h1>Room code: {roomNum}</h1>
-         <h1>Get Sketchi!</h1>
-         <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
-         <Board roomNum={roomNum}/>
-         <Scoreboard roomNum={roomNum}/>
-         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation}/>
-       </div>
-   )
-   : (
-     <div className="drawinggame">
-         <h1>Room code: {roomNum}</h1>
-         <h1>{this.props.users[this.state.currentRotation].handle} is Sketchi!</h1>
-         <ViewBoard roomNum={roomNum} />
-         <Scoreboard roomNum={roomNum}/>
-         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
-       </div>
-   )
-  )
-  : (
+    this.state.me.isDrawer ? (
+      <div className="drawinggame">
+          <h1>Room code: {roomNum}</h1>
+          <h1>Get Sketchi!</h1>
+          <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
+          <div className='chatlayout'>
+          <div className='board'>
+          <Board roomNum={roomNum}/>
+          </div>
+          <Scoreboard roomNum={roomNum}/>
+          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation}/>
+        </div>
+        </div>
+    ) : (
+      <div className="drawinggame">
+          <h1>Room code: {roomNum}</h1>
+          <h1>{this.props.users[this.state.currentRotation].handle} is Sketchi!</h1>
+        <div className='chatlayout'>
+          <div className='board'>
+          <ViewBoard roomNum={roomNum} />
+          </div>
+          <Scoreboard roomNum={roomNum}/>
+          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
+        </div>
+        </div>
+    )
+  ) : (
   <div>
     <CreateUser roomNum={roomNum} />
   </div>
   )
 }
-
 }
 
 const mapState = state => {

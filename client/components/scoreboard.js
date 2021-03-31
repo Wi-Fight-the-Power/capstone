@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
+import Playernotify from './playerleaving'
 
 
 
@@ -35,6 +35,7 @@ class Scoreboard extends Component {
           })}
         </div>
       </div>
+      <Playernotify/>
     </div>
     )
   }
