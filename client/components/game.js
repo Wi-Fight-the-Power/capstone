@@ -103,18 +103,26 @@ render(){
          <h1>Room code: {roomNum}</h1>
          <h1>Get Sketchi!</h1>
          <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
+      <div className='chatlayout'>
+          <div className='board'>
          <Board roomNum={roomNum}/>
+         </div>
          <Scoreboard roomNum={roomNum}/>
          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation}/>
-       </div>
+         </div>
+         </div>
    ) : (
      <div className="drawinggame">
          <h1>Room code: {roomNum}</h1>
          <h1>{this.props.users[this.state.currentRotation].handle} is Sketchi!</h1>
+      <div className='chatlayout'>
+          <div className='board'>
          <ViewBoard roomNum={roomNum} />
+          </div>
          <Scoreboard roomNum={roomNum}/>
          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} />
        </div>
+     </div>
     )
    )
   )
@@ -124,7 +132,6 @@ render(){
   </div>
   )
 }
-
 }
 
 const mapState = state => {
