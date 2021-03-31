@@ -94,6 +94,7 @@ const Board = props => {
         onTouchStart={handleMouseDown}
         onTouchMove={handleMouseMove}
         onTouchEnd={handleMouseUp}
+          style={{  backgroundColor: 'pink'}}
         >
         <Layer>
           <Text text="Just start drawing" x={5} y={30} />

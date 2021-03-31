@@ -1,6 +1,8 @@
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
+
+
      //creates the room
     socket.on('Join Room', room => {
       socket.join(room)
@@ -11,6 +13,25 @@ module.exports = io => {
     socket.on('userJoined', room => {
       socket.to(room).emit('userJoined', room);
     })
+    //attaching player handle to socket id
+    socket.on('userToSocket', (name, room) => {
+      socket.username = name;
+      socket.room = room;
+    })
+    //leaving a room
+     socket.on('leaveRoom', room => {
+
+      socket.leave(room)
+
+      const roominfo = io.sockets.adapter.rooms[room] || []
+
+      //checking room size
+      if(roominfo.length <= 0){
+        //delete room with 0 players
+         delete io.sockets.adapter.rooms[room];
+      }
+
+    })
     //sending user info
     socket.on('sendingUserInfo', (info, room) => {
       // All player SocketIDs
@@ -20,16 +41,7 @@ module.exports = io => {
       const newUser = playerArr[playerArr.length - 1];
       io.to(newUser).emit('recievingUserInfo', info)
     })
-    //leave the room
-    socket.on('Leave Room', room => {
-      socket.leave(room)
-      const roominfo = io.sockets.adapter.rooms[room] || []
-      //checking room size
-      if(roominfo.length <= 0){
-        //delete room with 0 players
-         delete io.sockets.adapter.rooms[room];
-      }
-    })
+
     //checks to see if room exist or not
     socket.on('exist', room => {
       const roominfo = io.sockets.adapter.rooms[room] || []
@@ -92,6 +104,8 @@ module.exports = io => {
         newRot = 0;
       }
       let drawer = playerArr[newRot]
+      console.log(io.sockets.adapter.rooms[room])
+      console.log(io.sockets.adapter[drawer])
       let viewers = playerArr.filter(player => player !== drawer)
       io.to(drawer).emit('rotate', true, newRot);
       viewers.forEach(player => {
@@ -101,12 +115,13 @@ module.exports = io => {
     })
     //disconnect
     socket.on('disconnect', () => {
-      console.log(`Connection ${socket.id} has left the building`)
+      io.to(socket.room).emit('playerHasLeft', socket.username)
+      console.log(`This guyyyy ${socket.id}.. is gone..`)
     })
-  })
+
+
+})
 }
-
-
 
 
 
