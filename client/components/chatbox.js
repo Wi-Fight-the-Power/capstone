@@ -47,6 +47,8 @@ class Chatbox extends React.Component {
       this.setState({
         answer: true
       })
+    } else if (this.props.word === message.toLowerCase() && this.state.answer){
+      message = `is being superrrrrr Sketchi`
     }
 
     const newScore = {
