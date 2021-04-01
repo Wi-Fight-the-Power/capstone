@@ -35,17 +35,19 @@ class Chatbox extends React.Component {
     event.preventDefault()
 
     let message = this.state.message
-    const handle = this.state.handle
+    let handle = this.state.handle
     let score = 0
 
       if (this.props.word === message.toLowerCase() && !this.state.answer){
-      message = `GOT THE ANSWER +${this.props.points} points`
+        message = `${handle} GOT THE ANSWER +${this.props.points} points`
+        handle = 'SKETCHI'
       score = this.props.points;
       this.setState({
         answer: true
       })
     } else if (this.props.word === message.toLowerCase() && this.state.answer){
-      message = `is being superrrrrr Sketchi`
+      message = ` ${handle} is being superrrrrr Sketchi`
+      handle = 'SKETCHI'
     }
 
     const newScore = {
