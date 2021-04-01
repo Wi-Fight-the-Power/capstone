@@ -47,6 +47,7 @@ body {
   height: 200px;
   width: 400px;
   /* max-width: 600px; */
+  background-color: #DFE0E2;
   margin: 30px auto;
   font-family: fantasy;
   border: 1px solid #3f51b5;
@@ -57,7 +58,7 @@ body {
 #scorewindow {
   height: 100px;
   overflow: auto;
-  background-image: 'public/whitetile.png';
+  background-color: #A2AEBB;
 }
 
 /* this is the chat box stuff */
@@ -115,6 +116,7 @@ h2 {
   max-width: 600px;
   margin: 30px auto;
   border: 2px solid #3f51b5;
+  background-color: #DFE0E2;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
   border-radius: 2px;
   font-family: fantasy;
@@ -125,7 +127,7 @@ h2 {
   height: 100px;
   overflow: auto;
   font-weight: bolder;
-  background-image: 'public/whitetile.png';
+  background-color:  #A2AEBB;
 }
 
 #output p {
@@ -256,25 +258,47 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: fantasy;
+  font-family: Lucida;
   font-weight: bolder;
+}
+
+.gameInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #75ABBC;
+  border: black solid 2px;
 }
 
 .chatlayout {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #23B5D3;
+  padding: 5px;
+  border: black solid 2px;
 }
 
-.board {
-  display: flex;
-  flex-direction: column;
-}
-/* board */
 .board {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: #75ABBC;
+  padding: 5px;
+  border: black solid 2px;
+}
+
+.scoreChat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #75ABBC;
+  padding: 5px;
+  border: black solid 2px;
 }
 
 
