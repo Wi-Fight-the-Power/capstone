@@ -26,7 +26,7 @@ const Homepage = () => (
           Start
         </Button>
     </Link>
-    <p className='disclaimer'>-We are not responsible for any freinds losted during or after a game of Sketchi-</p>
+    <p className='disclaimer'>-We are not responsible for any friends lost during or after a game of Sketchi-</p>
   </div>
 )
 

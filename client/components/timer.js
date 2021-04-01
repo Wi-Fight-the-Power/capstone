@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Chatbox from './chatbox';
 import socket from '../socket'
+import {Howl} from 'howler'
 import {randomWord} from './gameFunctions'
 import {sendWord, updateAnswer} from '../store/game';
 
@@ -48,9 +49,17 @@ class Timer extends React.Component {
   checkTime(){
     socket.emit("countdown", 'data', this.props.roomNum)
     this.startTimer()
+
+    var yoo = new Howl({
+      src: ['/Yoo.mp3'],
+      volume: 0.7,
+    })
+    yoo.play()
+
     this.setState({
       visible: false,
     })
+
   }
 
 
@@ -59,7 +68,6 @@ class Timer extends React.Component {
     if (this.countingDown) {
       this.timer = setInterval(this.countDown, 1000);
     }
-
   }
 
   countDown() {
@@ -89,7 +97,17 @@ class Timer extends React.Component {
         this.props.updateAnswer(false);
       }
     }
+    // time running out sound effect
+    if (seconds == 9){
+      var sound = new Howl({
+      src: ['/ClockTicking.mp3'],
+      volume: 0.7,
+    })
+      sound.play()
+      console.log('playing timmer')
+    }
   }
+
 
   newWord(){
     console.log('i have been clicked bro');
@@ -97,6 +115,7 @@ class Timer extends React.Component {
    const word = randomWord();
    this.props.sendWord(word, roomNum);
   }
+
 
   render() {
 
