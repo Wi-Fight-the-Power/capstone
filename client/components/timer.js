@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import Chatbox from './chatbox';
 import socket from '../socket'
 import {randomWord} from './gameFunctions'
-import {sendWord} from '../store/game';
+import {sendWord, updateAnswer} from '../store/game';
 
 class Timer extends React.Component {
   constructor(props) {
@@ -86,6 +86,7 @@ class Timer extends React.Component {
         this.setState({
           visible: true
         })
+        this.props.updateAnswer(false);
       }
     }
   }
@@ -136,6 +137,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     sendWord: (word, room) => dispatch(sendWord(word, room)),
+    updateAnswer: (answer) => dispatch(updateAnswer(answer)),
   }
 }
 
