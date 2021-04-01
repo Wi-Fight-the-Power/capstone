@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Chatbox from './chatbox';
 import socket from '../socket'
+import {Howl} from 'howler'
 
 class Timer extends React.Component {
   constructor(props) {
@@ -78,7 +79,17 @@ class Timer extends React.Component {
         socket.emit('rotation', rotNum, this.props.roomNum)
       }
     }
+    // time running out sound effect
+    if (seconds == 9){
+      var sound = new Howl({
+      src: ['/ClockTicking.mp3'],
+      volume: 0.7,
+    })
+      sound.play()
+      console.log('playing timmer')
+    }
   }
+
 
   render() {
 
