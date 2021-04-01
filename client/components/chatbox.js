@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {sendMessage, sendScore} from '../store/game'
+import {sendMessage, sendScore, updateAnswer} from '../store/game'
 
 
 class Chatbox extends React.Component {
@@ -12,7 +12,6 @@ class Chatbox extends React.Component {
     this.state = {
       message: '',
       handle: this.props.me ? this.props.me.handle : 'john',
-      answer: false,
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
@@ -39,14 +38,12 @@ class Chatbox extends React.Component {
     let handle = this.state.handle
     let score = 0
 
-    if (this.props.word === message.toLowerCase() && !this.state.answer){
+    if (this.props.word === message.toLowerCase() && !this.props.answered){
       message = `${handle} GOT THE ANSWER +${this.props.points} points`
       handle = 'SKETCHI'
       score = this.props.points;
-      this.setState({
-        answer: true
-      })
-    } else if (this.props.word === message.toLowerCase() && this.state.answer){
+      this.props.updateAnswer(true);
+    } else if (this.props.word === message.toLowerCase() && this.props.answered){
         message = `${handle} is being superrrrrr Sketchi`
         handle = 'SKETCHI'
       }
@@ -59,6 +56,8 @@ class Chatbox extends React.Component {
       handle: handle,
       message: message
     }
+
+
     this.props.sendScore(newScore, this.props.roomNum);
 
     this.props.sendMessage(newMessage,this.props.roomNum);
@@ -133,13 +132,15 @@ const mapState = state => {
     game: state.game,
     me: state.game.me,
     word: state.game.word,
+    answered: state.game.answered
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     sendMessage: (message,room) => dispatch(sendMessage(message, room)),
-    sendScore: (score, room) => dispatch(sendScore(score, room))
+    sendScore: (score, room) => dispatch(sendScore(score, room)),
+    updateAnswer: (answer) => dispatch (updateAnswer(answer)),
   }
 }
 

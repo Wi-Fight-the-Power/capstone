@@ -112,7 +112,6 @@ render(){
        <div className='gameInfo'>
          <h1>Room code: {roomNum}</h1>
          <h1>Get Sketchi!</h1>
-         {/* <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2> */}
        </div>
          <div className='chatlayout'>
          <div className='board'>
