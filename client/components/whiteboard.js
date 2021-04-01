@@ -1,16 +1,18 @@
-import React, {useRef} from 'react'
+import React from 'react'
 // import { render } from "react-dom";
 import {Stage, Layer, Line, Text} from 'react-konva'
 import socket from '../socket'
 import {Button} from '@material-ui/core'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import { makeStyles } from '@material-ui/core/styles';
 
 const Board = props => {
   const [stroke, changeStroke] = React.useState(12)
   const [color, changeColor] = React.useState('#FFAEBC')
   const [tool, setTool] = React.useState('pen')
   const [lines, setLines] = React.useState([])
+  const [background, setBackground] = React.useState('white')
 
 
   const isDrawing = React.useRef(false)
@@ -43,26 +45,107 @@ const Board = props => {
   }
 
 
-  socket.on('drawing', drawn => setLines(drawn))
+
 
 
   const handleMouseUp = () => {
     isDrawing.current = false
   }
-
+ //undo last line
   const undoLast = () => {
     lines.pop()
     socket.emit('drawing', lines.concat(),props.roomNum)
     setLines(lines.concat())
 
   }
+  // change background
+  const sendBackground = (bgcolor) => {
+    socket.emit('boardColor', bgcolor, props.roomNum)
+  }
+
+const useStyles = makeStyles({
+ selected: {
+   background: "#666666 !important",
+   color: 'white'
+ },
+ white: {
+   background: 'white',
+   '&:hover': {
+       background: '#9c9c9c !important',
+       color: 'white !important'
+    },
+  },
+  tiffanyBlue: {
+    background: "#A0E7E5",
+    '&:hover': {
+        background: '#9c9c9c !important',
+        color: 'white !important'
+     },
+    },
+    yellow: {
+      background: "#FBE7C6",
+      '&:hover': {
+          background: '#9c9c9c !important',
+          color: 'white !important'
+       },
+      },
+      hotPink: {
+        background: "#FFAEBC",
+        '&:hover': {
+            background: '#9c9c9c !important',
+            color: 'white !important'
+         },
+        },
+        mint: {
+          background: "#B4F8C8",
+          '&:hover': {
+              background: '#9c9c9c !important',
+              color: 'white !important'
+           },
+  }
+});
+
+const classes=useStyles()
+
 
   return (
     <div>
         <Button color='primary' variant='contained' onClick={() => undoLast()}>UNDO</Button>
         {/* stroke size */}
         <input type="range" min='1' max='25'  className='strokeScale drawTools' onChange={e => changeStroke(e.target.value)}/>
+        {/* change background */}
+        <Select
+        className="drawTools"
+        value={background}
+        onChange={e => {
+          sendBackground(e.target.value)
+          setBackground(e.target.value)
+          }}>
+        <MenuItem  classes={{
+          root: classes.white,
+          selected: classes.selected
+        }} value="white">White</MenuItem>
 
+        <MenuItem classes={{
+          root: classes.hotPink,
+          selected: classes.selected
+        }} value="#FFAEBC">Hot Pink</MenuItem>
+
+        <MenuItem classes={{
+          root: classes.tiffanyBlue,
+          selected: classes.selected
+        }} value="#A0E7E5">Tiffany Blue</MenuItem>
+
+        <MenuItem classes={{
+          root: classes.mint,
+          selected: classes.selected
+        }} value="#B4F8C8">Mint</MenuItem>
+
+        <MenuItem classes={{
+          root: classes.yellow,
+          selected: classes.selected
+        }} value="#FBE7C6">Yellow</MenuItem>
+        </Select>
         {/* change colors */}
         <Select
         className="drawTools"
@@ -94,7 +177,7 @@ const Board = props => {
         onTouchStart={handleMouseDown}
         onTouchMove={handleMouseMove}
         onTouchEnd={handleMouseUp}
-          style={{  backgroundColor: 'pink'}}
+          style={{  backgroundColor: background}}
         >
         <Layer>
           <Text text="Just start drawing" x={5} y={30} />
