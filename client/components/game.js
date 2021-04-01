@@ -9,7 +9,6 @@ import Winner from './winner'
 import ViewBoard from './whiteBoardViewer'
 import {sendOrder, sendWord, drawerUpdate} from '../store/game'
 import {randomWord} from '../components/gameFunctions'
-import Playernotify from './playerleaving'
 
 
 class Game extends React.Component {
@@ -17,7 +16,7 @@ class Game extends React.Component {
     super(props);
     this.state = {
       me: this.props.me,
-      seconds: 3,
+      seconds: 20,
       currentRotation: 0,
       joined: false,
     }
@@ -119,7 +118,6 @@ render(){
          <div className='board'>
          <Board roomNum={roomNum}/>
          </div>
-         <Playernotify/>
          <div className='scoreChat'>
          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation} className='scoreChat'/>
          <Scoreboard roomNum={roomNum}/>
@@ -136,7 +134,6 @@ render(){
          <div className='board'>
          <ViewBoard roomNum={roomNum} />
          </div>
-         <Playernotify/>
          <div className='scoreChat'>
          <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} className='scoreChat' />
          <Scoreboard roomNum={roomNum}/>
