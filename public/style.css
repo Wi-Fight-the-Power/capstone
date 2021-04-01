@@ -100,7 +100,7 @@ form div {
 body {
   font-family: 'Nunito';
   /* font-family: 'Caveat', cursive; */
-  background-image: url(/whitetile.png)
+  background-image: url(/64DFDF.png)
   /* background-color: #A0E7E5; */
 
 }
@@ -270,7 +270,6 @@ input {
   background-color: #75ABBC;
   border: black solid 2px;
 }
-
 .chatlayout {
   display: flex;
   flex-direction: row;
@@ -307,10 +306,15 @@ input {
   flex-direction: column  ;
   justify-content: center;
   align-items: center;
+  background-color: #48BFE3;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 15px;
+  /* width: 500px; */
 }
 /* fonts */
-.roboto{
-font-family: 'Roboto', sans-serif;
+.Raleway{
+font-family: "Raleway",sans-serif;
 font-size: 25px;
 /* padding: 50px; */
 margin: 10px;
@@ -322,4 +326,11 @@ margin: 10px;
 
 .buttonMargin{
   margin: 20px;
+}
+
+.homepagemainDiv{
+  display: flex;
+  flex-direction: column  ;
+  justify-content: center;
+  align-items: center;
 }
