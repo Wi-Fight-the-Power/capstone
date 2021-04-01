@@ -62,11 +62,6 @@ class LobbyRoom extends React.Component{
   render(){
     return (
     <div className='allthingscenter'>
-    <div>
-      <p>
-
-      </p>
-      <div>
         <Button
         size="large"
       variant="contained"
@@ -75,8 +70,6 @@ class LobbyRoom extends React.Component{
        onClick={(e) => this.createRoom(e)}
            >Create Lobby
         </Button>
-      </div>
-    </div>
     <div className='roboto'>
       <TextField
     error={this.state.error}
@@ -104,7 +97,6 @@ class LobbyRoom extends React.Component{
     </div>
   )
   }
-
 }
 
 
