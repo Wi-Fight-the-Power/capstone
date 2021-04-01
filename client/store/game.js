@@ -6,7 +6,8 @@ const initialState = {
   me: {},
   order: [],
   word: '',
-  drawer: ''
+  drawer: '',
+  answered: false
 }
 
 //action types
@@ -18,6 +19,7 @@ const ME = 'ME';
 const UPDATE_ORDER = 'UPDATE_ORDER';
 const GET_WORD = 'GET_WORD';
 const UPDATE_DRAWER = 'UPDATE_DRAWER';
+const ANSWERED = 'ANSWERED';
 
 //action creators
 
@@ -69,6 +71,13 @@ export const updateDrawer = drawer => {
   return {
     type: UPDATE_DRAWER,
     drawer,
+  }
+}
+
+export const answered = answer => {
+  return {
+    type: ANSWERED,
+    answer
   }
 }
 
@@ -134,10 +143,18 @@ export const sendWord = (word, room) => dispatch => {
 
 export const drawerUpdate = (drawer, room) => dispatch => {
   try {
-    dispatch (updateDrawer(drawer));
+    dispatch(updateDrawer(drawer));
     socket.emit('drawer', drawer, room);
   } catch (error){
     console.log(error)
+  }
+}
+
+export const updateAnswer = (answer) => dispatch => {
+  try {
+    dispatch(answered(answer));
+  } catch (error){
+    console.log(error);
   }
 }
 
@@ -188,6 +205,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         drawer: action.drawer
+      }
+    case ANSWERED:
+      return {
+        ...state,
+        answered: action.answer
       }
     default:
       return state
