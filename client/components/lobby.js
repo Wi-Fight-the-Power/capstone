@@ -36,6 +36,11 @@ class LobbyRoom extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this)
     this.createRoom = this.createRoom.bind(this)
   }
+
+ componentWillUnmount(){
+    location.reload();
+  }
+
   handleChange(event) {
     this.setState({
       room : event.target.value,
