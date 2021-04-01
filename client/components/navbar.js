@@ -70,7 +70,7 @@ export default function Navbar() {
   );
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{backgroundColor : "#6930C3"}}>
         <Toolbar>
           <div>
       {['left'].map((anchor) => (
