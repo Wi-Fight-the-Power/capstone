@@ -34,7 +34,13 @@ class LobbyRoom extends React.Component{
     })
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.createRoom = this.createRoom.bind(this)
   }
+
+ componentWillUnmount(){
+    location.reload();
+  }
+
   handleChange(event) {
     this.setState({
       room : event.target.value,
@@ -47,25 +53,24 @@ class LobbyRoom extends React.Component{
     socket.emit("exist",this.state.room)
   }
 
+  createRoom(e){
+    e.preventDefault()
+    const randomnumber = Math.floor(100000 + Math.random() * 900000);
+    this.props.history.push({pathname: `/game/${randomnumber}`})
+  }
 
   render(){
     return (
     <div className='allthingscenter'>
-
-
-        <Link to="/createlobby"  style={{padding: '20px'}}>
-      <Button
-      style={{
-        backgroundColor : "#6930C3",
-        padding: '10px'
-      }}
-      size="large"
+        <Button
+        size="large"
       variant="contained"
-      color="primary" >
-          Create Room
+      color="primary"
+      type="button"
+       onClick={(e) => this.createRoom(e)}
+           >Create Lobby
         </Button>
-    </Link>
-
+    <div className='roboto'>
       <TextField
     error={this.state.error}
     id="room num"
@@ -76,10 +81,8 @@ class LobbyRoom extends React.Component{
     value={this.state.handle}
     helperText={this.state.roomErrormessage}
     />
-
-
+    <div className = 'buttonMargin'>
     <Button
-    style={{backgroundColor : "#6930C3"}}
       id="room num"
       type="submit"
       size="large"
@@ -88,12 +91,12 @@ class LobbyRoom extends React.Component{
       onClick={this.handleSubmit} >
           Join Game
         </Button>
-
+        </div>
+    </div>
     <Rooms/>
     </div>
   )
   }
-
 }
 
 
