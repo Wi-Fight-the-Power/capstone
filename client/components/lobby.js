@@ -34,6 +34,7 @@ class LobbyRoom extends React.Component{
     })
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.createRoom = this.createRoom.bind(this)
   }
   handleChange(event) {
     this.setState({
@@ -47,6 +48,11 @@ class LobbyRoom extends React.Component{
     socket.emit("exist",this.state.room)
   }
 
+  createRoom(e){
+    e.preventDefault()
+    const randomnumber = Math.floor(100000 + Math.random() * 900000);
+    this.props.history.push({pathname: `/game/${randomnumber}`})
+  }
 
   render(){
     return (
@@ -56,14 +62,14 @@ class LobbyRoom extends React.Component{
 
       </p>
       <div>
-        <Link to="/createlobby">
-      <Button
-      size="large"
+        <Button
+        size="large"
       variant="contained"
-      color="primary" >
-          Create Room
+      color="primary"
+      type="button"
+       onClick={(e) => this.createRoom(e)}
+           >Create Lobby
         </Button>
-    </Link>
       </div>
     </div>
     <div className='roboto'>
