@@ -110,8 +110,8 @@ render(){
      this.state.me.isDrawer ? (
      <div className="drawinggame">
        <div className='gameInfo'>
-         <h1>Room code: {roomNum}</h1>
-         <h1>Get Sketchi!</h1>
+         <h1 className='spacing'>Room code: {roomNum}</h1>
+         <h1 className='spacing'>Get Sketchi!</h1>
        </div>
          <div className='chatlayout'>
          <div className='board'>
@@ -126,8 +126,8 @@ render(){
    ) : (
      <div className="drawinggame">
        <div className='gameInfo'>
-         <h1>Room code: {roomNum}</h1>
-         <h1>{drawer} is Sketchi!</h1>
+         <h1 className='spacing'>Room code: {roomNum}</h1>
+         <h1 className='spacing'>{drawer} is Sketchi!</h1>
        </div>
          <div className='chatlayout'>
          <div className='board'>

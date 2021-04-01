@@ -110,9 +110,9 @@ const classes=useStyles()
 
   return (
     <div>
-        <Button color='primary' variant='contained' onClick={() => undoLast()}>UNDO</Button>
+        <Button color='secondary' variant='contained' onClick={() => undoLast()}>UNDO</Button>
         {/* stroke size */}
-        <input type="range" min='1' max='25'  className='strokeScale drawTools' onChange={e => changeStroke(e.target.value)}/>
+        <input id="range" type="range" min='5' max='50' value={stroke} className='strokeScale drawTools' onChange={e => changeStroke(e.target.value)}/>
         {/* change background */}
         <Select
         className="drawTools"

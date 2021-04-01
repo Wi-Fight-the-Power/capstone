@@ -6,16 +6,16 @@ const Homepage = () => (
   <div className='homepagemainDiv'>
     <div className='allthingscenter'>
       <img src='https://media.tenor.com/images/cdda4d937ceb893c7c6ce3963d55f4b2/tenor.gif'></img>
-      <h2 className='Raleway'>Ignore problems  in your life with Sketchi</h2>
+      <h2 className='Raleway'>Ignore problems in your life with Sketchi</h2>
       <p className='Raleway'>
         HomeWork Due Tomorrow? Sketchi
         <br/>
         Global Pandemic? Sketchi
         <br/>
-        Inlaws Coming Over? Sketchi
+        In-laws Coming Over? Sketchi
       </p>
       <h2 className='roboto'>
-        Sketchi is a online multiplayer pictionary game.
+        Sketchi is an online multiplayer pictionary game.
       </h2>
        <Link to="/lobby">
       <Button
