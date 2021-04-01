@@ -30,11 +30,12 @@ console.log('room',room)
   render() {
     // console.log(this.state.rooms,'rooms')
     return(
-      <div>
+      <div className ='allthingscenter'>
         <h3>Sketchi Demo Rooms</h3>
-        <div>
+        <div style={{padding: '20px'}}>
           <Link to="/game/1234">
           <Button
+          style={{backgroundColor : "#6930C3"}}
             size="large"
             variant="contained"
             color="primary" >
@@ -42,9 +43,10 @@ console.log('room',room)
           </Button>
           </Link>
         </div>
-        <div>
+        <div style={{padding: '20px'}}>
           <Link to="/game/5678">
           <Button
+          style={{backgroundColor : "#6930C3"}}
             size="large"
             variant="contained"
             color="primary" >
@@ -52,9 +54,10 @@ console.log('room',room)
           </Button>
           </Link>
         </div>
-        <div>
+        <div style={{padding: '20px'}}>
           <Link to="/game/9876">
           <Button
+          style={{backgroundColor : "#6930C3"}}
             size="large"
             variant="contained"
             color="primary" >
