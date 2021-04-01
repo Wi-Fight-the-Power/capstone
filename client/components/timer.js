@@ -45,6 +45,11 @@ class Timer extends React.Component {
   checkTime(){
     socket.emit("countdown", 'data', this.props.roomNum)
     this.startTimer()
+    var yoo = new Howl({
+      src: ['/Yoo.mp3'],
+      volume: 0.7,
+    })
+    yoo.play()
   }
 
 
@@ -53,7 +58,6 @@ class Timer extends React.Component {
     if (this.countingDown) {
       this.timer = setInterval(this.countDown, 1000);
     }
-
   }
 
   countDown() {
