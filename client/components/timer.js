@@ -138,8 +138,6 @@ class Timer extends React.Component {
       <Button color="primary" variant="contained" className='newWord' type='button' onClick={this.newWord}>
         <LoopIcon />
       </Button>
-
-             {/* <button className='newWord' type='button' onClick={this.newWord}>IMG</button> */}
              <h2 className='points-word'>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>
           </div>
           )
