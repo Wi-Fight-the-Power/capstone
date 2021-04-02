@@ -6,7 +6,6 @@ function Snackbar() {
   const { enqueueSnackbar } = useSnackbar();
   socket.on("playerHasLeft",(username)=>{
     enqueueSnackbar(`${username} Left The Game`);
-    console.log("playerHasLeft")
   })
   return (
     <React.Fragment>

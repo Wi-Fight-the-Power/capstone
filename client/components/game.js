@@ -7,7 +7,7 @@ import Scoreboard from './scoreboard'
 import CreateUser from './createUser'
 import Winner from './winner'
 import ViewBoard from './whiteBoardViewer'
-import {sendOrder, sendWord, drawerUpdate} from '../store/game'
+import {sendOrder, sendWord, drawerUpdate, updateAnswer} from '../store/game'
 import {randomWord} from '../components/gameFunctions'
 
 
@@ -16,14 +16,11 @@ class Game extends React.Component {
     super(props);
     this.state = {
       me: this.props.me,
-      seconds: 3,
+      seconds: 20,
       currentRotation: 0,
       joined: false,
     }
 
-        socket.on('playerHasLeft', name => {
-      console.log(name + ' Has left the game')
-    })
 
     socket.on('rotate', (isDrawer, curRot, drawerHandle) => {
       this.rotation(isDrawer, curRot)
@@ -71,7 +68,7 @@ class Game extends React.Component {
     }
 
   rotation(isDrawer, curRot){
-    console.log('rotation being called');
+    this.props.updateAnswer(false)
     let newState = this.state
     if(isDrawer){
       newState.me.isDrawer = true;
@@ -110,7 +107,7 @@ render(){
      this.state.me.isDrawer ? (
      <div className="drawinggame">
        <div className='gameInfo'>
-         <h1 className='spacing'>Room code: {roomNum}</h1>
+         <h1 className='spacing'>Room Code: {roomNum}</h1>
          <h1 className='spacing'>Get Sketchi!</h1>
        </div>
          <div className='chatlayout'>
@@ -165,7 +162,8 @@ const mapDispatch = dispatch => {
   return {
     sendOrder: (order, room) => dispatch(sendOrder(order, room)),
     sendWord: (word, room) => dispatch(sendWord(word, room)),
-    sendDrawer: (drawer, room) => dispatch(drawerUpdate(drawer, room))
+    sendDrawer: (drawer, room) => dispatch(drawerUpdate(drawer, room)),
+    updateAnswer: (answer) => dispatch(updateAnswer(answer)),
   }
 }
 

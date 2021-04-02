@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {sendMessage, sendScore, updateAnswer} from '../store/game'
-
+import {Howl} from 'howler'
 
 class Chatbox extends React.Component {
   constructor(props) {
@@ -43,9 +43,19 @@ class Chatbox extends React.Component {
       handle = 'SKETCHI'
       score = this.props.points;
       this.props.updateAnswer(true);
+      var correct = new Howl({
+      src: ['/correct.mp3'],
+      volume: 0.7,
+    })
+      correct.play()
     } else if (this.props.word === message.toLowerCase() && this.props.answered){
         message = `${handle} is being superrrrrr Sketchi`
         handle = 'SKETCHI'
+      var sound = new Howl({
+      src: ['/bruh.mp3'],
+      volume: 0.7,
+    })
+      sound.play()
       }
 
     const newScore = {
@@ -57,14 +67,18 @@ class Chatbox extends React.Component {
       message: message
     }
 
+    if (newScore.score !== 0){
+      this.props.sendScore(newScore, this.props.roomNum);
+    }
 
-    this.props.sendScore(newScore, this.props.roomNum);
+    if (newMessage.message !== ''){
+      this.props.sendMessage(newMessage,this.props.roomNum);
+    }
 
-    this.props.sendMessage(newMessage,this.props.roomNum);
+
     this.setState({
       message: '',
     })
-
   }
 
 
@@ -87,7 +101,7 @@ class Chatbox extends React.Component {
     return (
 
       <div id="chat-box">
-        <h2>CHATBOX</h2>
+        <h2>CHAT</h2>
         <div ref={this.chatContainer} id="chat-window">
           <div id="output" >
             {messages.map((object, i) => {
@@ -119,7 +133,7 @@ class Chatbox extends React.Component {
         />
             )}
         <button type="submit" id="send" onClick={this.handleSubmit} >
-          Send
+          SEND
         </button>
         </form>
       </div>

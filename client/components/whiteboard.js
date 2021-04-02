@@ -109,11 +109,12 @@ const classes=useStyles()
 
 
   return (
-    <div>
-        <Button color='secondary' variant='contained' onClick={() => undoLast()}>UNDO</Button>
+    <div className='toolbar'>
+        <Button className='undo' color='secondary' variant='contained' onClick={() => undoLast()}>UNDO</Button>
         {/* stroke size */}
         <input id="range" type="range" min='5' max='50' value={stroke} className='strokeScale drawTools' onChange={e => changeStroke(e.target.value)}/>
         {/* change background */}
+        <div className='easel'>
         <Select
         className="drawTools"
         value={background}
@@ -168,6 +169,7 @@ const classes=useStyles()
         <MenuItem value="eraser">Eraser</MenuItem>
         {/* <option value="fill">Fill</option> */}
       </Select>
+      </div>
       <Stage
         width={500}
         height={500}
@@ -197,6 +199,7 @@ const classes=useStyles()
           ))}
         </Layer>
       </Stage>
+
     </div>
   )
 }
