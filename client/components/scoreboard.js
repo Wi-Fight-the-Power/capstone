@@ -20,7 +20,7 @@ class Scoreboard extends Component {
 
     return (
     <div id='scoreboard'>
-      <h2>Scoreboard</h2>
+      <h2>SCORE</h2>
       <div id='scorewindow'>
         <div id='output'>
           {users.map((object, i) => {
