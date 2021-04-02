@@ -5,6 +5,10 @@ import socket from '../socket'
 import {Howl} from 'howler'
 import {randomWord} from './gameFunctions'
 import {sendWord, updateAnswer} from '../store/game';
+import LoopIcon from '@material-ui/icons/Loop';
+import Button from '@material-ui/core/Button';
+
+
 
 class Timer extends React.Component {
   constructor(props) {
@@ -130,7 +134,13 @@ class Timer extends React.Component {
           ) : (
           <div>
              <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
-             <button className='newWord' type='button' onClick={this.newWord}>IMG</button>
+
+      <Button color="primary" variant="contained" className='newWord' type='button' onClick={this.newWord}>
+        <LoopIcon />
+        fsdf
+      </Button>
+
+             {/* <button className='newWord' type='button' onClick={this.newWord}>IMG</button> */}
              <h2>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>
           </div>
           )
