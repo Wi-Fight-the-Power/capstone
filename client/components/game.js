@@ -16,7 +16,7 @@ class Game extends React.Component {
     super(props);
     this.state = {
       me: this.props.me,
-      seconds: 20,
+      seconds: 3,
       currentRotation: 0,
       joined: false,
     }
@@ -71,9 +71,9 @@ class Game extends React.Component {
     }
 
   rotation(isDrawer, curRot){
+    console.log('rotation being called');
     let newState = this.state
     if(isDrawer){
-      console.log(curRot)
       newState.me.isDrawer = true;
       newState.currentRotation = curRot
       this.setState(newState)

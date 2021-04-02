@@ -10,15 +10,11 @@ const ViewBoard = () => {
   const [background, setBackground] = React.useState('white')
 
 
-
-
 socket.on('drawing', drawn => setLines(drawn))
 
  socket.on('boardColor', bgcolor => {
-  console.log(bgcolor)
   setBackground(bgcolor)
 })
-
 
   return (
     <div>

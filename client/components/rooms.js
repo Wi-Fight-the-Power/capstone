@@ -10,25 +10,12 @@ class Rooms extends React.Component {
     this.state = {
       rooms:[]
     }
-    socket.on('roomNum',room=>{
-    // this.setState(prevState =>{
-    // return{
-    //   ...prevState,
-    //     rooms : [...prevState.rooms, room]
-    // }
-
-// })
-console.log('room',room)
-  })
-
-  // socket.on('Leave Room', roomNum)
   }
 
 
 
 
   render() {
-    // console.log(this.state.rooms,'rooms')
     return(
       <div className ='allthingscenter'>
         <h3>Sketchi Demo Rooms</h3>

@@ -85,7 +85,7 @@ class Timer extends React.Component {
     });
 
     // Check if we're at zero.
-    if (seconds == 0) {
+    if (seconds === 0) {
       clearInterval(this.timer);
       this.timer = 0;
       this.countingDown = false;
@@ -108,13 +108,11 @@ class Timer extends React.Component {
       volume: 0.7,
     })
       sound.play()
-      console.log('playing timmer')
     }
   }
 
 
   newWord(){
-    console.log('i have been clicked bro');
    const roomNum = this.props.roomNum;
    const word = randomWord();
    this.props.sendWord(word, roomNum);
