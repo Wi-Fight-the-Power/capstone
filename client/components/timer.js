@@ -104,13 +104,11 @@ class Timer extends React.Component {
       volume: 0.7,
     })
       sound.play()
-      console.log('playing timmer')
     }
   }
 
 
   newWord(){
-    console.log('i have been clicked bro');
    const roomNum = this.props.roomNum;
    const word = randomWord();
    this.props.sendWord(word, roomNum);

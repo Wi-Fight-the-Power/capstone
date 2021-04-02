@@ -56,8 +56,8 @@ module.exports = io => {
       }
       else {
         socket.emit('exist',false)
-        console.log("room doesnt exist")}
-        })
+        }
+      })
     //sends message data to room
     socket.on('message', (message, room ) => {
       socket.to(room).emit("message", message)
@@ -94,9 +94,8 @@ module.exports = io => {
     socket.on('getRoomLength', room => {
       // All player SocketIDs
       const roominfo = io.sockets.adapter.rooms[room].length
-      console.log(roominfo)
+
       if(roominfo < 2){
-        console.log(room)
         io.to(socket.id).emit('getRoomLength', true)
       } else {
         io.to(socket.id).emit('getRoomLength', false)
