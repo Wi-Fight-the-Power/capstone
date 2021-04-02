@@ -16,7 +16,7 @@ class Game extends React.Component {
     super(props);
     this.state = {
       me: this.props.me,
-      seconds: 3,
+      seconds: 20,
       currentRotation: 0,
       joined: false,
     }

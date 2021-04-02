@@ -55,7 +55,7 @@ class Timer extends React.Component {
     this.startTimer()
 
     var yoo = new Howl({
-      src: ['/Yoo.mp3'],
+      src: ['/boxingbell.mp3'],
       volume: 0.7,
     })
     yoo.play()

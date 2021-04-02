@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     fontFamily: 'Caveat',
-    color: 'white'
+    color: 'white',
+
   },
   list: {
     width: 250,
@@ -55,7 +56,7 @@ export default function Navbar() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
+      <List style={{backgroundColor : "#6930C3"}}>
         <Link to="/"  style={{ textDecoration: 'none'}}>
           <ListItem button >Home</ListItem>
         </Link>
