@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux';
-import {sendScore, sendWord} from '../store/game'
+import {sendScore, sendWord, updateAnswer} from '../store/game'
 import {randomWord} from './gameFunctions';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -20,6 +20,12 @@ class Winner extends React.Component {
     // this.handleClose = this.handleClose.bind(this)
     this.handleClose = this.handleClose.bind(this)
   }
+
+  componentDidMount(){
+    this.props.updateAnswer(false);
+  }
+
+
   handleClose = () => {
     this.setState({open:false})
   };
@@ -98,7 +104,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     sendScore: (score, room) => dispatch(sendScore(score, room)),
-    sendWord: (word, room) => dispatch(sendWord(word, room))
+    sendWord: (word, room) => dispatch(sendWord(word, room)),
+    updateAnswer: (answer) => dispatch(updateAnswer(answer))
   }
 }
 
