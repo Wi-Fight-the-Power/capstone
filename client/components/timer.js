@@ -128,7 +128,14 @@ class Timer extends React.Component {
         ? ( this.state.visible
           ? (
           <div className='buttonContainer'>
-             <button className='startButton' type='button' onClick={this.checkTime}>Start</button>
+             <Button
+             color='secondary'
+             style={{backgroundColor: "green"}}
+             variant='contained'
+             size='medium'
+             onClick={this.checkTime}>
+               START
+             </Button>
              <h2 className='points-word'>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>
           </div>
           ) : (

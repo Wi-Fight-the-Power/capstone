@@ -110,7 +110,7 @@ const classes=useStyles()
 
   return (
     <div className='toolbar'>
-        <Button color='secondary' variant='contained' onClick={() => undoLast()}>UNDO</Button>
+        <Button className='undo' color='secondary' variant='contained' onClick={() => undoLast()}>UNDO</Button>
         {/* stroke size */}
         <input id="range" type="range" min='5' max='50' value={stroke} className='strokeScale drawTools' onChange={e => changeStroke(e.target.value)}/>
         {/* change background */}

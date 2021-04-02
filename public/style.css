@@ -1,14 +1,14 @@
 
 body {
-  font-family: sans-serif;
+  font-family: "Raleway",sans-serif;
 }
 
-.SKETCHI {
+/* .SKETCHI {
   font-Family: fantasy;
   color: green;
   text-align: center;
   font-size: 50px
-}
+} */
 
 .logo{
   font-family: 'Caveat', cursive;
@@ -31,7 +31,8 @@ body {
 .startButton {
   background: green;
   color: #fff;
-  font-size: 30px;
+  font: "Raleway",sans-serif;
+  font-size: 50px;
   border-radius: 15px;
   width: 80%;
 }
@@ -41,6 +42,15 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.undo {
+ background: red;
+  color: #fff;
+  font: "Raleway",sans-serif;
+  font-size: 25px;
+  border-radius: 15px;
+  width: 15%;
 }
 
 .easel {
@@ -64,7 +74,7 @@ body {
   /* max-width: 600px; */
   background-color: #64DFDF;
   margin: 10px auto;
-  font-family: 'Raleway', 'sans-serif';
+  font-family: "Raleway",sans-serif;
   border: 1px solid #3f51b5;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
   border-radius: 15px;
@@ -123,7 +133,7 @@ form div {
 }
 
 body {
-  font-family: 'Nunito';
+  font-family: "Raleway",sans-serif;
   /* font-family: 'Caveat', cursive; */
   background-image: url(/64DFDF.png)
   /* background-color: #A0E7E5; */
@@ -187,7 +197,7 @@ input {
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #eee;
-  font-family: fantasy;
+  font-family: "Raleway",sans-serif;
   font-size: 16px;
 }
 
@@ -368,7 +378,7 @@ font-size: 25px;
 margin: 10px;
 }
 .disclaimer{
-  font-family: 'Roboto', sans-serif;
+  font-family: "Raleway",sans-serif;
   font-size: 10px
 }
 

@@ -101,7 +101,7 @@ class Chatbox extends React.Component {
     return (
 
       <div id="chat-box">
-        <h2>CHATBOX</h2>
+        <h2>CHAT</h2>
         <div ref={this.chatContainer} id="chat-window">
           <div id="output" >
             {messages.map((object, i) => {
@@ -133,7 +133,7 @@ class Chatbox extends React.Component {
         />
             )}
         <button type="submit" id="send" onClick={this.handleSubmit} >
-          Send
+          SEND
         </button>
         </form>
       </div>
