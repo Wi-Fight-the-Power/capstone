@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 // import IsUser from './createUserName'
 import Button from '@material-ui/core/Button';
 import Rooms from './rooms'
+import CreateLobby from './createlobby'
 
 
 class LobbyRoom extends React.Component{
@@ -34,6 +35,7 @@ class LobbyRoom extends React.Component{
     })
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleCreateGame = this.handleCreateGame.bind(this)
   }
 
   componentWillUnmount(){
@@ -52,24 +54,24 @@ class LobbyRoom extends React.Component{
     socket.emit("exist",this.state.room)
   }
 
+    handleCreateGame(event) {
+    const randomnumber = Math.floor(100000 + Math.random() * 900000);
+    event.preventDefault()
+    this.props.history.push({pathname: `/game/${randomnumber}`})
+  }
 
   render(){
     return (
     <div className='allthingscenter'>
-
-
-        <Link to="/createlobby"  style={{padding: '20px'}}>
-      <Button
-      style={{
+        <Button type="submit"
+        id="create lobby" onClick={this.handleCreateGame}
+        style={{
         backgroundColor : "#6930C3",
         padding: '10px'
       }}
       size="large"
       variant="contained"
-      color="primary" >
-          Create Room
-        </Button>
-    </Link>
+      color="primary" >Create Lobby</Button>
 
       <TextField
     error={this.state.error}
