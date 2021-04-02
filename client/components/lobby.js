@@ -35,6 +35,11 @@ class LobbyRoom extends React.Component{
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
+  componentWillUnmount(){
+    location.reload();
+  }
+
   handleChange(event) {
     this.setState({
       room : event.target.value,
@@ -51,22 +56,21 @@ class LobbyRoom extends React.Component{
   render(){
     return (
     <div className='allthingscenter'>
-    <div>
-      <p>
 
-      </p>
-      <div>
-        <Link to="/createlobby">
+
+        <Link to="/createlobby"  style={{padding: '20px'}}>
       <Button
+      style={{
+        backgroundColor : "#6930C3",
+        padding: '10px'
+      }}
       size="large"
       variant="contained"
       color="primary" >
           Create Room
         </Button>
     </Link>
-      </div>
-    </div>
-    <div className='roboto'>
+
       <TextField
     error={this.state.error}
     id="room num"
@@ -77,8 +81,10 @@ class LobbyRoom extends React.Component{
     value={this.state.handle}
     helperText={this.state.roomErrormessage}
     />
-    <div className = 'buttonMargin'>
+
+
     <Button
+    style={{backgroundColor : "#6930C3"}}
       id="room num"
       type="submit"
       size="large"
@@ -87,8 +93,7 @@ class LobbyRoom extends React.Component{
       onClick={this.handleSubmit} >
           Join Game
         </Button>
-        </div>
-    </div>
+
     <Rooms/>
     </div>
   )
