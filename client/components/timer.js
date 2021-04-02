@@ -127,9 +127,6 @@ class Timer extends React.Component {
         ? ( this.state.visible
           ? (
           <div className='buttonContainer'>
-<<<<<<< HEAD
-             <button className='startButton' type='button' onClick={this.checkTime}>Start</button>
-=======
              <Button
              color='secondary'
              style={{backgroundColor: "green"}}
@@ -138,7 +135,6 @@ class Timer extends React.Component {
              onClick={this.checkTime}>
                START
              </Button>
->>>>>>> d0ea4b8de066d6e37360f946480d68c159855002
              <h2 className='points-word'>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>
           </div>
           ) : (
