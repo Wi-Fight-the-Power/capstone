@@ -129,9 +129,7 @@ module.exports = io => {
       io.to(socket.room).emit('playerHasLeft', socket.username)
       console.log(`This guyyyy ${socket.id}.. is gone..`)
     })
-
-
-})
+  })
 }
 
 

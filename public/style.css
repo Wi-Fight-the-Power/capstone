@@ -20,7 +20,7 @@ body {
 }
 
 .word {
-  color: Red;
+  color: white;
 }
 
 .navbar {
@@ -28,31 +28,46 @@ body {
 }
 
 /* messing with buttons for a sec bro */
-.testButtons {
-  background: purple;
+.startButton {
+  background: green;
   color: #fff;
   font-size: 30px;
-  border: 2px black;
-  border-radius: 30px 30px 30px 30px;
-  width: 100%;
+  border-radius: 15px;
+  width: 80%;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.easel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .buttonContainer {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* scoreboard stuff */
 
 #scoreboard {
   height: 200px;
-  width: 400px;
+  width: 300px;
   /* max-width: 600px; */
   background-color: #64DFDF;
-  margin: 30px auto;
+  margin: 10px auto;
   font-family: 'Raleway', 'sans-serif';
   border: 1px solid #3f51b5;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
-  border-radius: 2px;
+  border-radius: 15px;
 }
 
 #scorewindow {
@@ -63,15 +78,25 @@ body {
 
 /* this is the chat box stuff */
 .handleColor {
-  color: blue;
+  color: #6930C3;
   font-weight: bold;
   padding: 5px;
 }
 
 .handleColor-rec {
-  color: red;
+  color: #5E60CE;
   font-weight: bold;
   padding: 5px;
+}
+
+h2 {
+  font-size: 18px;
+  padding: 10px 20px;
+  color: #3f51b5;
+}
+
+.points-word {
+  color: #56cfe1;
 }
 
 @media (max-width: 600px) {
@@ -106,25 +131,21 @@ body {
 }
 
 
-h2 {
-  font-size: 18px;
-  padding: 10px 20px;
-  color: #3f51b5;
-}
+
 
 #chat-box {
-  max-width: 600px;
-  margin: 30px auto;
+  width: 300px;
+  margin: 10px auto;
   border: 2px solid #3f51b5;
   background-color: #64DFDF;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
-  border-radius: 2px;
+  border-radius: 15px 15px 0px 0px;
   font-family: 'Raleway', 'sans-serif';
   font-weight: bolder;
 }
 
 #chat-window {
-  height: 100px;
+  height: 150px;
   overflow: auto;
   font-weight: bolder;
   background-color:  #A2AEBB;
@@ -171,14 +192,14 @@ input {
 }
 
 #send {
-  background: #3f51b5;
+  background: #6930C3;
   color: #fff;
   font-size: 18px;
-  font-family: fantasy;
+  font-family: 'Raleways', 'sans-serif';
   border: 0;
   padding: 12px 0;
   width: 100%;
-  border-radius: 0 0 2px 2px;
+  border-radius: 0 0 0px 0px;
 }
 
 /* for whiteboard */
@@ -198,11 +219,11 @@ input {
 }
 
 /* Konva Board */
-.konvajs-content {
+/* .konvajs-content {
   margin-top: 4em;
   margin-bottom: 4em;
   border-radius: 15;
-}
+} */
 canvas {
   border-radius: 15;
 }
@@ -306,6 +327,8 @@ canvas {
 }
 
 .board {
+  /* height: 100%; */
+  padding: 10px;
   display: flex;
   flex-direction: column  ;
   justify-content: center;
@@ -322,6 +345,7 @@ canvas {
   align-items: center;
   background-color: #7400B8;
   margin: 10px;
+  padding: 10px;
   border-radius: 15px;
 }
 
