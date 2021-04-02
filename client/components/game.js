@@ -73,7 +73,6 @@ class Game extends React.Component {
   rotation(isDrawer, curRot){
     let newState = this.state
     if(isDrawer){
-      console.log(curRot)
       newState.me.isDrawer = true;
       newState.currentRotation = curRot
       this.setState(newState)
