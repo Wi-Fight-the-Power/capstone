@@ -4,7 +4,7 @@ import Chatbox from './chatbox';
 import socket from '../socket'
 import {Howl} from 'howler'
 import {randomWord} from './gameFunctions'
-import {sendWord, updateAnswer} from '../store/game';
+import {sendWord} from '../store/game';
 import LoopIcon from '@material-ui/icons/Loop';
 import Button from '@material-ui/core/Button';
 
@@ -95,7 +95,6 @@ class Timer extends React.Component {
         this.setState({
           visible: true
         })
-        this.props.updateAnswer(false);
         let rotNum = this.props.curRot
         rotNum += 1
         socket.emit('rotation', rotNum, this.props.roomNum)
@@ -168,7 +167,6 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     sendWord: (word, room) => dispatch(sendWord(word, room)),
-    updateAnswer: (answer) => dispatch(updateAnswer(answer)),
   }
 }
 
