@@ -127,26 +127,25 @@ class Timer extends React.Component {
         {this.props.isDrawer
         ? ( this.state.visible
           ? (
-          <div>
-             <button className='testButtons' type='submit' onClick={this.checkTime}>Start</button>
-             <h2>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>
+          <div className='buttonContainer'>
+             <button className='startButton' type='button' onClick={this.checkTime}>Start</button>
+             <h2 className='points-word'>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>
           </div>
           ) : (
-          <div>
-             <h2>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
+          <div className='buttonContainer'>
+             <h2 className='points-word'>YOUR WORD IS: <span className='word'>{this.props.word.toUpperCase()}</span></h2>
 
       <Button color="primary" variant="contained" className='newWord' type='button' onClick={this.newWord}>
         <LoopIcon />
-        fsdf
       </Button>
 
              {/* <button className='newWord' type='button' onClick={this.newWord}>IMG</button> */}
-             <h2>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>
+             <h2 className='points-word'>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>
           </div>
           )
         )
         : (
-        <h2>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>)}
+        <h2 className='points-word'>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>)}
       </div>
       <Chatbox points={this.state.points} roomNum={this.props.roomNum} isDrawer={this.props.isDrawer}/>
       </div>
