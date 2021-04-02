@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {sendMessage, sendScore, updateAnswer} from '../store/game'
-
+import {Howl} from 'howler'
 
 class Chatbox extends React.Component {
   constructor(props) {
@@ -43,9 +43,19 @@ class Chatbox extends React.Component {
       handle = 'SKETCHI'
       score = this.props.points;
       this.props.updateAnswer(true);
+      var correct = new Howl({
+      src: ['/correct.mp3'],
+      volume: 0.7,
+    })
+      correct.play()
     } else if (this.props.word === message.toLowerCase() && this.props.answered){
         message = `${handle} is being superrrrrr Sketchi`
         handle = 'SKETCHI'
+      var sound = new Howl({
+      src: ['/bruh.mp3'],
+      volume: 0.7,
+    })
+      sound.play()
       }
 
     const newScore = {
