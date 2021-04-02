@@ -81,7 +81,7 @@ class Timer extends React.Component {
     });
 
     // Check if we're at zero.
-    if (seconds == 0) {
+    if (seconds === 0) {
       clearInterval(this.timer);
       this.timer = 0;
       this.countingDown = false;
