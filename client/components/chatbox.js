@@ -57,14 +57,18 @@ class Chatbox extends React.Component {
       message: message
     }
 
+    if (newScore.score !== 0){
+      this.props.sendScore(newScore, this.props.roomNum);
+    }
 
-    this.props.sendScore(newScore, this.props.roomNum);
+    if (newMessage.message !== ''){
+      this.props.sendMessage(newMessage,this.props.roomNum);
+    }
 
-    this.props.sendMessage(newMessage,this.props.roomNum);
+
     this.setState({
       message: '',
     })
-
   }
 
 
