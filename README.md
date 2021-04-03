@@ -40,9 +40,15 @@ Easy lobby access: Creating a lobby and providing friends with the room code tak
 Sketchi is a PWA built using React (with Redux), React Konva, Socket.io, Material UI, Node, and Express
 
 React - Client-side JavaScript framework
+
 React Konva - JavaScript library for drawing canvas graphics using React
+
 Node - Premier JavaScript web server
+
 Material UI - Design system
+
 Socket.io - JavaScript library for realtime web applications
+
 PWA (Progressive Web App) using React - Allows for mobile and web accessibility
+
 Noun-JSON - List of nouns used each round at random
