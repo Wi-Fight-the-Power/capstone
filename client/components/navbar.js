@@ -14,6 +14,9 @@ import ListItem from '@material-ui/core/ListItem';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    "& .MuiPaper-root": {
+      backgroundColor : "#6930C3"
+    }
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -30,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   fullList: {
     width: 'auto',
   },
+  paper: {
+    background: "blue"
+  }
 }));
 
 export default function Navbar() {
@@ -77,7 +83,7 @@ export default function Navbar() {
       {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}><MenuIcon /></Button>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+          <Drawer className={classes.root} anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}
           </Drawer>
         </React.Fragment>

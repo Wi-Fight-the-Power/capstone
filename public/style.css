@@ -31,12 +31,8 @@ body {
 .startButton {
   background: green;
   color: #fff;
-<<<<<<< HEAD
-  font-size: 30px;
-=======
   font: "Raleway",sans-serif;
   font-size: 50px;
->>>>>>> d0ea4b8de066d6e37360f946480d68c159855002
   border-radius: 15px;
   width: 80%;
 }
@@ -48,8 +44,6 @@ body {
   align-items: center;
 }
 
-<<<<<<< HEAD
-=======
 .undo {
  background: red;
   color: #fff;
@@ -59,7 +53,6 @@ body {
   width: 15%;
 }
 
->>>>>>> d0ea4b8de066d6e37360f946480d68c159855002
 .easel {
   display: flex;
   flex-direction: row;
@@ -81,11 +74,7 @@ body {
   /* max-width: 600px; */
   background-color: #64DFDF;
   margin: 10px auto;
-<<<<<<< HEAD
-  font-family: 'Raleway', 'sans-serif';
-=======
   font-family: "Raleway",sans-serif;
->>>>>>> d0ea4b8de066d6e37360f946480d68c159855002
   border: 1px solid #3f51b5;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
   border-radius: 15px;
