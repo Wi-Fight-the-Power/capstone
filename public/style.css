@@ -409,3 +409,14 @@ animation: AnimationName 30s ease infinite;
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
 }
+
+.aboutUs {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+background-color: #48BFE3;
+margin: 50px;
+padding: 25px;
+border-radius: 15px;
+}
