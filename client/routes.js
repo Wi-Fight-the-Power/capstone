@@ -6,6 +6,7 @@ import Game from './components/game'
 import CreateUser from './components/createUser'
 import Homepage from './components/homepage'
 import Createlobby from './components/createlobby'
+import Instructions from './components/instructions'
 
 
 
@@ -21,6 +22,7 @@ class Routes extends Component {
         <Route path="/lobby" component={Lobby} />
         <Route path="/createlobby" component={Createlobby} />
         <Route path='/createuser' component={CreateUser} />
+        <Route path='/instructions' component={Instructions} />
       </Switch>
     )
   }
