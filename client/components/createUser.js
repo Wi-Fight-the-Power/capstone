@@ -33,16 +33,25 @@ class CreateUser extends React.Component {
 
   handleChange(event) {
     this.setState({
-      handle: event.target.value
+      handle: event.target.value,
+      error:false
     })
 
   }
 
   handleSubmit(event) {
     event.preventDefault()
+    const usersArray = this.props.users.map(currentUser=>{
+      return currentUser.handle
+    })
 
-    //Sending name to socket to create a Key:Value
-    socket.emit('userToSocket', this.state.handle, this.props.roomNum)
+    if(usersArray.includes(this.state.handle)){
+      this.setState({
+          roomErrormessage:'Name Already In Use',
+          error:true
+        })
+    }else {
+      socket.emit('userToSocket', this.state.handle, this.props.roomNum)
 
     const user = JSON.stringify(this.state);
     localStorage.setItem('user', user);
@@ -55,6 +64,9 @@ class CreateUser extends React.Component {
       word: '',
       open:false,
     })
+    }
+    //Sending name to socket to create a Key:Value
+
   }
 handleClickOpen = () => {
     this.setState({open:true})
@@ -64,16 +76,11 @@ handleClose = () => {
   };
 
 
-
   render() {
     const {handle} = this.state
-
     return (
 
       <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open form dialog
-      </Button> */}
       <Dialog open={this.state.open} onClose={this.handleClose}/**/aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create User Name</DialogTitle>
         <DialogContent>
@@ -89,12 +96,11 @@ handleClose = () => {
             fullWidth
             value={handle}
             onChange={this.handleChange}
+            error={this.state.error}
+            helperText={this.state.roomErrormessage}
           />
         </DialogContent>
         <DialogActions>
-          {/* <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button> */}
           <Button onClick={this.handleSubmit} color="primary">
             create user
           </Button>
@@ -105,7 +111,11 @@ handleClose = () => {
   }
 }
 
-
+const mapState = (state) => {
+  return {
+    users: state.game.users
+  }
+}
 
 const mapDispatch = dispatch => {
   return {
@@ -114,7 +124,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(null, mapDispatch)(CreateUser)
-
-
-
+export default connect(mapState, mapDispatch)(CreateUser)
