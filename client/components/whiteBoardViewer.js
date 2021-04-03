@@ -5,21 +5,23 @@ import {Stage, Layer, Line, Text} from 'react-konva'
 import socket from '../socket'
 
 
-const ViewBoard = props => {
+const ViewBoard = () => {
   const [lines, setLines] = React.useState([])
+  const [background, setBackground] = React.useState('white')
 
 
+socket.on('drawing', drawn => setLines(drawn))
 
-
-  socket.on('drawing', drawn => setLines(drawn))
-
-
+ socket.on('boardColor', bgcolor => {
+  setBackground(bgcolor)
+})
 
   return (
     <div>
       <Stage
         width={500}
         height={500}
+        style={{  backgroundColor: background}}
         >
         <Layer>
           <Text text="Just start drawing" x={5} y={30} />

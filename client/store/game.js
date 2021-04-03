@@ -4,7 +4,10 @@ const initialState = {
   messages: [],
   users: [],
   me: {},
-  order: []
+  order: [],
+  word: '',
+  drawer: '',
+  answered: false
 }
 
 //action types
@@ -14,7 +17,9 @@ const UPDATE_SCORE = 'UPDATE_SCORE';
 const NEW_USER = 'NEW_USER';
 const ME = 'ME';
 const UPDATE_ORDER = 'UPDATE_ORDER';
-
+const GET_WORD = 'GET_WORD';
+const UPDATE_DRAWER = 'UPDATE_DRAWER';
+const ANSWERED = 'ANSWERED';
 
 //action creators
 
@@ -54,6 +59,29 @@ export const updateOrder = order => {
     order,
   }
 }
+
+export const getWord = word => {
+  return {
+    type: GET_WORD,
+    word,
+  }
+}
+
+export const updateDrawer = drawer => {
+  return {
+    type: UPDATE_DRAWER,
+    drawer,
+  }
+}
+
+export const answered = answer => {
+  return {
+    type: ANSWERED,
+    answer
+  }
+}
+
+
 
 
 //thunks
@@ -103,6 +131,32 @@ export const sendOrder = (order, room) => dispatch => {
   }
 }
 
+export const sendWord = (word, room) => dispatch => {
+  try {
+    dispatch(getWord(word));
+    socket.emit('word', word, room);
+  } catch (error){
+    console.log(error)
+  }
+}
+
+
+export const drawerUpdate = (drawer, room) => dispatch => {
+  try {
+    dispatch(updateDrawer(drawer));
+    socket.emit('drawer', drawer, room);
+  } catch (error){
+    console.log(error)
+  }
+}
+
+export const updateAnswer = (answer) => dispatch => {
+  try {
+    dispatch(answered(answer));
+  } catch (error){
+    console.log(error);
+  }
+}
 
 
 
@@ -142,7 +196,21 @@ export default (state = initialState, action) => {
         ...state,
         order: action.order
       }
-
+    case GET_WORD:
+      return {
+        ...state,
+        word: action.word
+      }
+    case UPDATE_DRAWER:
+      return {
+        ...state,
+        drawer: action.drawer
+      }
+    case ANSWERED:
+      return {
+        ...state,
+        answered: action.answer
+      }
     default:
       return state
   }

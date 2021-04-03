@@ -20,7 +20,8 @@
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
-    "test": "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register"
+    "test": "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register",
+    "dev": "concurrently --kill-others \"npm run build-client-watch\" \"npm run start-server\""
   },
   "lint-staged": {
     "*.{js,jsx}": [
@@ -40,13 +41,16 @@
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "compression": "^1.7.3",
+    "concurrently": "^6.0.0",
     "connect-session-sequelize": "^6.1.1",
     "express": "^4.16.4",
     "express-session": "^1.17.1",
     "history": "^4.10.1",
+    "howler": "^2.2.1",
     "konva": "^7.2.5",
     "material-ui-icons": "^1.0.0-beta.36",
     "morgan": "^1.10.0",
+    "notistack": "^1.0.5",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "pg": "^8.3.2",
@@ -105,6 +109,7 @@
     "lint-staged": "^8.1.5",
     "mocha": "^6.2.3",
     "nodemon": "^1.19.4",
+    "noun-json": "^1.0.1",
     "npm-merge-driver": "^2.3.6",
     "prettier": "1.11.1",
     "react-test-renderer": "^16.14.0",

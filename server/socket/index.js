@@ -2,30 +2,36 @@ module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
 
+
      //creates the room
     socket.on('Join Room', room => {
       socket.join(room)
+      //for listing the lobby
+      socket.emit('roomNum',room)
     })
-
     //user joined
-
     socket.on('userJoined', room => {
-      socket.to(room).emit('userJoined');
+      socket.to(room).emit('userJoined', room);
     })
+    //attaching player handle to socket id
+    socket.on('userToSocket', (name, room) => {
+      socket.username = name;
+      socket.room = room;
 
+    })
     //sending user info
-
     socket.on('sendingUserInfo', (info, room) => {
       // All player SocketIDs
       const roominfo = io.sockets.adapter.rooms[room].sockets
       // all players array
       const playerArr = Object.keys(roominfo)
       const newUser = playerArr[playerArr.length - 1];
-      socket.to(newUser).emit('recievingUserInfo', info)
-    })
+      io.to(newUser).emit('recievingUserInfo', info)
 
-    //leave the room
-    socket.on('Leave Room', room => {
+    })
+    //leaving a room
+     socket.on('leaveRoom', room => {
+
       socket.leave(room)
 
       const roominfo = io.sockets.adapter.rooms[room] || []
@@ -37,41 +43,46 @@ module.exports = io => {
       }
 
     })
+    //background color change
+    socket.on('boardColor', (bgcolor, room) => {
+      socket.to(room).emit('boardColor', bgcolor)
+    })
 
     //checks to see if room exist or not
     socket.on('exist', room => {
       const roominfo = io.sockets.adapter.rooms[room] || []
       if(roominfo.length > 0){
-        console.log(roominfo)
         socket.emit('exist',true)
       }
       else {
         socket.emit('exist',false)
-        console.log("room doesnt exist")}
-        })
-
+        }
+      })
     //sends message data to room
     socket.on('message', (message, room ) => {
-
       socket.to(room).emit("message", message)
     })
     //sends user data to room
-
     socket.on('user', (user, room) => {
       socket.to(room).emit('user', user)
     })
-
     //update order
      socket.on('order', (order, room ) => {
       socket.to(room).emit("order", order)
     })
-
+    //sends word to users
+   socket.on('word', (word, room) => {
+     socket.to(room).emit('word', word)
+   })
+   //sends drawer to users
+   socket.on('drawer', (drawer, room) => {
+     socket.to(room).emit('drawer', drawer)
+   })
     //sends drawing data to room
     socket.on('drawing', (data, room) => {
       socket.to(room).emit("drawing", data)
     })
     //disconnect
-
     socket.on('score', (score, room) => {
       socket.to(room).emit('score', score)
     })
@@ -79,28 +90,47 @@ module.exports = io => {
     socket.on('countdown', (time,room) => {
     socket.to(room).emit("timer",time)
   });
-    //rotation
-    socket.on('rotation', (room) => {
-      const roominfo = io.sockets.adapter.rooms[room].sockets
-
+    //room length
+    socket.on('getRoomLength', room => {
       // All player SocketIDs
+      const roominfo = io.sockets.adapter.rooms[room].length
+
+      if(roominfo < 2){
+        io.to(socket.id).emit('getRoomLength', true)
+      } else {
+        io.to(socket.id).emit('getRoomLength', false)
+      }
+    })
+    //rotation
+    socket.on('rotation', (curRot, room) => {
+      let newRot =  curRot
+      // All player SocketIDs
+      const roominfo = io.sockets.adapter.rooms[room].sockets
+      // all players array
       const playerArr = Object.keys(roominfo)
       socket.to(room).emit('users', playerArr, room);
+      if(newRot > playerArr.length -1){
+        newRot = 0;
+      }
+      let drawer = playerArr[newRot]
 
-      // All player ( not including drawer )
-      const withoutDrawerArr = playerArr.filter(IDs => IDs !== socket.id)
+      let drawerHandle = io.sockets.connected[drawer].username
 
-      // change drawer to viewer
-      io.to(socket.id).emit('rotation', true)
+      let viewers = playerArr.filter(player => player !== drawer)
+      io.to(drawer).emit('rotate', true, newRot, drawerHandle);
+      viewers.forEach(player => {
+      io.to(player).emit('rotate',
+      false, newRot, drawerHandle);
 
-      // change viewer to drawer
-      const viewerIndx = [Math.floor(Math.random() * withoutDrawerArr.length)]
-      socket.to(withoutDrawerArr[viewerIndx]).emit('rotation', false)
     })
-
+    })
     //disconnect
     socket.on('disconnect', () => {
-      console.log(`Connection ${socket.id} has left the building`)
+      io.to(socket.room).emit('playerHasLeft', socket.username)
+      console.log(`This guyyyy ${socket.id}.. is gone..`)
     })
   })
 }
+
+
+

@@ -4,104 +4,166 @@ import Board from './whiteboard'
 import socket from '../socket'
 import Timer from './timer'
 import Scoreboard from './scoreboard'
-import CreateUser from './createUser';
+import CreateUser from './createUser'
+import Winner from './winner'
 import ViewBoard from './whiteBoardViewer'
-import {nouns} from './gameFunctions';
-import {sendOrder} from '../store/game'
+import {sendOrder, sendWord, drawerUpdate, updateAnswer} from '../store/game'
+import {randomWord} from '../components/gameFunctions'
 
-let word = () => {
-  let index = Math.floor(Math.random() * nouns.length);
-  return nouns[index];
-}
 
 class Game extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       me: this.props.me,
-      rotation: this.props.users,
-      seconds: 90,
-      currentRotation: 1,
-      view: true,
+      seconds: 20,
+      currentRotation: 0,
+      joined: false,
     }
-    this.changeView = this.changeView.bind(this)
+
+
+    socket.on('rotate', (isDrawer, curRot, drawerHandle) => {
+      this.rotation(isDrawer, curRot)
+      this.props.sendDrawer(drawerHandle, this.props.match.params.id);
+    })
+
+
+    socket.on('userJoined', (room) => {
+      socket.emit('sendingUserInfo', this.props.me, room)
+    })
+
+    let newState = this.state
+    socket.on('getRoomLength', isLength => {
+      if(isLength){
+        newState.me.isDrawer = true
+        this.setState(newState)
+
+      }
+    })
     this.rotation = this.rotation.bind(this)
   }
 
   componentDidMount(){
-    const roomNum = this.props.match.params.id
-    socket.emit('Join Room', roomNum);
+   const roomNum = this.props.match.params.id
+   const word = randomWord();
+   this.props.sendWord(word, roomNum);
+
+  if(!this.state.joined){
+  this.setState({joined:true})
+  socket.emit('userJoined', roomNum);
   }
 
-  componentWillUnmount(){
-    socket.emit('leaveRoom', )
+
+
+  this.setState({joined:true})
+
+  socket.emit('Join Room', roomNum);
+
+  socket.emit('getRoomLength', roomNum);
   }
 
-  rotation(isViewer){
-    let rotationNum = this.state.currentRotation
-    console.log(isViewer)
-      if(isViewer){
-        this.setState({view: true, currentRotation: rotationNum++})
-        console.log('should not be drawering')
-      } else if (!isViewer) {
-        this.setState({view: false, currentRotation: rotationNum++})
-        console.log('should be drwaing')
-      }
+    componentWillUnmount(){
+    const roomNum = this.props.match.params.id;
+    socket.emit('leaveRoom', roomNum);
+    }
+
+  rotation(isDrawer, curRot){
+    this.props.updateAnswer(false)
+    let newState = this.state
+    if(isDrawer){
+      newState.me.isDrawer = true;
+      newState.currentRotation = curRot
+      this.setState(newState)
+      const word = randomWord();
+      const roomNum = this.props.match.params.id
+      this.props.sendWord(word, roomNum);
+    }
+    if(!isDrawer){
+      newState.me.isDrawer = false;
+      newState.currentRotation = curRot
+      this.setState(newState)
+    }
 
   }
 
-  changeView(){
-    const currentView = this.state.view
-    this.setState({view: !currentView})
-  }
 
 
 
 render(){
   const roomNum = this.props.match.params.id;
 
+  const winner = this.props.users.filter(user => {
+    return user.score > 5000
+  })
+
+  const drawer = this.props.drawer || 'Someone'
+
+
   return this.props.me.handle ? (
-   this.state.me.isDrawer ? (
+   winner.length === 1
+   ? (
+     <Winner roomNum={roomNum} />
+   ) : (
+     this.state.me.isDrawer ? (
      <div className="drawinggame">
-         <h1>Room code: {roomNum}</h1>
-         <h1>You are the Drawer!!</h1>
-         <h2>YOUR WORD IS: <span className='word'>{word().toUpperCase()}</span></h2>
+       <div className='gameInfo'>
+         <h1 className='spacing'>Room Code: {roomNum}</h1>
+         <h1 className='spacing'>Get Sketchi!</h1>
+       </div>
+         <div className='chatlayout'>
+         <div className='board'>
          <Board roomNum={roomNum}/>
+         </div>
+         <div className='scoreChat'>
+         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation} className='scoreChat'/>
          <Scoreboard roomNum={roomNum}/>
-       <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={!this.state.view}/>
-         {/* <button type="submit" id="room num" onClick={() => {this.changeView()}}>View/Draw</button> */}
-       </div>
-   )
-   : (
+         </div>
+         </div>
+         </div>
+   ) : (
      <div className="drawinggame">
-         <h1>Room code: {roomNum}</h1>
-         <h1>{this.state.rotation[0]} is Drawing!</h1>
-         <ViewBoard roomNum={roomNum} />
-         <Scoreboard roomNum={roomNum}/>
-       <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={!this.state.view}/>
-         {/* <button type="submit" id="room num" onClick={() => {this.changeView()}}>View/Draw</button> */}
+       <div className='gameInfo'>
+         <h1 className='spacing'>Room code: {roomNum}</h1>
+         <h1 className='spacing'>{drawer} is Sketchi!</h1>
        </div>
+         <div className='chatlayout'>
+         <div className='board'>
+         <ViewBoard roomNum={roomNum} />
+         </div>
+         <div className='scoreChat'>
+         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} className='scoreChat' />
+         <Scoreboard roomNum={roomNum}/>
+         </div>
+       </div>
+     </div>
    )
+    )
   )
   : (
   <div>
     <CreateUser roomNum={roomNum} />
   </div>
   )
-}
 
+}
 }
 
 const mapState = state => {
   return {
     users: state.game.users,
     me: state.game.me,
+    word: state.game.word,
+    drawer: state.game.drawer,
   }
 }
 
+
 const mapDispatch = dispatch => {
   return {
-    sendOrder: (order, room) => dispatch(sendOrder(order, room))
+    sendOrder: (order, room) => dispatch(sendOrder(order, room)),
+    sendWord: (word, room) => dispatch(sendWord(word, room)),
+    sendDrawer: (drawer, room) => dispatch(drawerUpdate(drawer, room)),
+    updateAnswer: (answer) => dispatch(updateAnswer(answer)),
   }
 }
 

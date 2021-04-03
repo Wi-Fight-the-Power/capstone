@@ -1,11 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {sendMessage, sendScore} from '../store/game'
-import {nouns} from './gameFunctions'
-
-
-
-
+import {sendMessage, sendScore, updateAnswer} from '../store/game'
+import {Howl} from 'howler'
 
 class Chatbox extends React.Component {
   constructor(props) {
@@ -16,7 +12,6 @@ class Chatbox extends React.Component {
     this.state = {
       message: '',
       handle: this.props.me ? this.props.me.handle : 'john',
-      score: 0
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
@@ -39,33 +34,51 @@ class Chatbox extends React.Component {
     event.preventDefault()
 
     let message = this.state.message
-    const handle = this.state.handle
-    let score = this.state.score
+    const scoreHandle = this.state.handle
+    let handle = this.state.handle
+    let score = 0
 
-      if (nouns.includes(message.toLowerCase())){
-      this.setState({
-        score: this.state.score += this.props.points
-      })
-      score = this.state.score
-      message = `GOT THE ANSWER +${this.props.points} points`
-    }
+    if (this.props.word === message.toLowerCase() && !this.props.answered){
+      message = `${handle} GOT THE ANSWER +${this.props.points} points`
+      handle = 'SKETCHI'
+      score = this.props.points;
+      this.props.updateAnswer(true);
+      var correct = new Howl({
+      src: ['/correct.mp3'],
+      volume: 0.7,
+    })
+      correct.play()
+    } else if (this.props.word === message.toLowerCase() && this.props.answered){
+        message = `${handle} is being superrrrrr Sketchi`
+        handle = 'SKETCHI'
+      var sound = new Howl({
+      src: ['/bruh.mp3'],
+      volume: 0.7,
+    })
+      sound.play()
+      }
 
     const newScore = {
-      handle: handle,
+      handle: scoreHandle,
       score: score
     }
     const newMessage = {
       handle: handle,
       message: message
     }
-    this.props.sendScore(newScore, this.props.roomNum);
 
-    this.props.sendMessage(newMessage,this.props.roomNum);
+    if (newScore.score !== 0){
+      this.props.sendScore(newScore, this.props.roomNum);
+    }
+
+    if (newMessage.message !== ''){
+      this.props.sendMessage(newMessage,this.props.roomNum);
+    }
+
+
     this.setState({
       message: '',
-      score: 0
     })
-
   }
 
 
@@ -85,11 +98,10 @@ class Chatbox extends React.Component {
   render() {
 
     const messages = this.props.game.messages || []
-    console.log(this.props.game.users)
     return (
 
       <div id="chat-box">
-        <h2>CHATBOX</h2>
+        <h2>CHAT</h2>
         <div ref={this.chatContainer} id="chat-window">
           <div id="output" >
             {messages.map((object, i) => {
@@ -107,7 +119,11 @@ class Chatbox extends React.Component {
           <div id="feedback" />
         </div>
         <form>
-        <input
+          {this.props.isDrawer
+          ? (
+            null
+            ) : (
+              <input
           id="message"
           type="text"
           onChange={this.handleChangeMessage}
@@ -115,8 +131,9 @@ class Chatbox extends React.Component {
           value={this.state.message}
           placeholder="Message"
         />
+            )}
         <button type="submit" id="send" onClick={this.handleSubmit} >
-          Send
+          SEND
         </button>
         </form>
       </div>
@@ -127,14 +144,17 @@ class Chatbox extends React.Component {
 const mapState = state => {
   return {
     game: state.game,
-    me: state.game.me
+    me: state.game.me,
+    word: state.game.word,
+    answered: state.game.answered
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     sendMessage: (message,room) => dispatch(sendMessage(message, room)),
-    sendScore: (score, room) => dispatch(sendScore(score, room))
+    sendScore: (score, room) => dispatch(sendScore(score, room)),
+    updateAnswer: (answer) => dispatch (updateAnswer(answer)),
   }
 }
 
