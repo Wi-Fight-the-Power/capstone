@@ -3,7 +3,7 @@ Sketchi is a PWA Pictionary style game
 
 ## LIVE DEMO: sketchi-draw.herokuapp.com
 
-## Team Members:
+## Team Members
 
 Jeremy Cook
 
@@ -17,7 +17,7 @@ William Watson
 
 Sketchi allows you to create rooms to play with friends, and offers real time communication with an in-game chat feature. While we can't guarantee it won't get competitive, you'll be able to have back and forth banter with all involved.
 
-# What Sketchi Offers:
+# What Sketchi Offers
 
 Easy to understand gameplay: With or without our instructions, it'll only take 1 round to figure out how everything works, and that's when things get Sketchi!
 
