@@ -6,8 +6,11 @@ Sketchi is a PWA Pictionary style game
 ## Team Members:
 
 Jeremy Cook
+
 Shawn Gay
+
 William Guan
+
 William Watson
 
 # Overview
