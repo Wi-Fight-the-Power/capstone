@@ -76,9 +76,9 @@ class LobbyRoom extends React.Component{
       <TextField
     error={this.state.error}
     id="room num"
-    label="RoomNumber"
+    label="Room Number"
     variant="outlined"
-    type="number"
+    type="text"
     onChange={this.handleChange}
     value={this.state.handle}
     helperText={this.state.roomErrormessage}

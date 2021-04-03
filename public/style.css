@@ -427,3 +427,8 @@ border-radius: 15px;
   justify-content: left;
   align-items: left;
 }
+
+Card {
+  display: flex;
+  flex-direction: row;
+}
