@@ -107,7 +107,7 @@ export default function AboutUs() {
           adjective
         </Typography>
         <Typography variant="body2" component="p">
-          well meaning and kindly.
+          When he's not coding, Jeremy is a huge New York Jets fan 'yeah we don't know why either'. He also likes gaming in his spare time. He loves using React!
           <br />
           "a benevolent smile"
         </Typography>
