@@ -13,7 +13,7 @@ const Instructions = () => {
         </p>
         <h3 className='inner-header'>Drawer</h3>
         <p>
-        As the Drawer you are expected to illustrate to the best of your ability a word given to you at random. You start by pressing the start button. This will start timer and reveal to you your word. If you don't like your word you have the opportunity to be given a new word by pressing the refresh button. Be careful though! The timer will continue to decrement while you're deciding what word to draw! If all Guessers correctly guess what your picture representation is you will be awarded points for your efforts.
+        As the Drawer you are expected to illustrate to the best of your ability a word given to you at random. You start by pressing the start button. This will start timer and reveal to you your word. If you don't like your word you have the opportunity to be given a new word by pressing the refresh button. Be careful though! The timer will continue to decrement while you're deciding what word to draw! You will receive points everytime a player guesses correctly.
         </p>
         <h3 className='inner-header'>Guesser</h3>
         <p>

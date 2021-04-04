@@ -151,7 +151,7 @@ class Timer extends React.Component {
         : (
         <h2 className='points-word'>MIN: {this.state.time.m} SEC: {this.state.time.s} POINTS: {this.state.points}</h2>)}
       </div>
-      <Chatbox points={this.state.points} roomNum={this.props.roomNum} isDrawer={this.props.isDrawer}/>
+      <Chatbox points={this.state.points} roomNum={this.props.roomNum} isDrawer={this.props.isDrawer} rotation={this.props.rotation}/>
       </div>
     );
   }

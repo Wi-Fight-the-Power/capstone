@@ -78,6 +78,10 @@ module.exports = io => {
    socket.on('drawer', (drawer, room) => {
      socket.to(room).emit('drawer', drawer)
    })
+   //sends answer status to user/room
+   socket.on('answered',(answer, room) => {
+     socket.to(room).emit('answered', answer)
+   })
     //sends drawing data to room
     socket.on('drawing', (data, room) => {
       socket.to(room).emit("drawing", data)
@@ -114,13 +118,14 @@ module.exports = io => {
       }
       let drawer = playerArr[newRot]
 
-      let drawerHandle = io.sockets.connected[drawer].username
+      //let drawerHandle = io.sockets.connected[drawer].username
+      //heads up, drawer handle was removed from rotations
 
       let viewers = playerArr.filter(player => player !== drawer)
-      io.to(drawer).emit('rotate', true, newRot, drawerHandle);
+      io.to(drawer).emit('rotate', true, newRot);
       viewers.forEach(player => {
       io.to(player).emit('rotate',
-      false, newRot, drawerHandle);
+      false, newRot);
 
     })
     })

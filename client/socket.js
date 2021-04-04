@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import store from './store/index'
-import {newMessage, updateScore, sendUser, updateOrder, getWord, updateDrawer} from './store/game'
+import {newMessage, updateScore, sendUser, updateOrder, getWord, updateDrawer, answered} from './store/game'
 
 const socket = io(window.location.origin)
 
@@ -34,6 +34,10 @@ socket.on('word', word => {
 
 socket.on('drawer', drawer => {
   store.dispatch(updateDrawer(drawer))
+})
+
+socket.on('answered', answer => {
+  store.dispatch(answered(answer))
 })
 
 

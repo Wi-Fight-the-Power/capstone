@@ -22,9 +22,8 @@ class Game extends React.Component {
     }
 
 
-    socket.on('rotate', (isDrawer, curRot, drawerHandle) => {
+    socket.on('rotate', (isDrawer, curRot) => {
       this.rotation(isDrawer, curRot)
-      this.props.sendDrawer(drawerHandle, this.props.match.params.id);
     })
 
 
@@ -68,7 +67,9 @@ class Game extends React.Component {
     }
 
   rotation(isDrawer, curRot){
-    this.props.updateAnswer(false)
+    this.props.updateAnswer({handle: this.props.me.handle, answer: false}, this.props.roomNum);
+
+
     let newState = this.state
     if(isDrawer){
       newState.me.isDrawer = true;
@@ -91,12 +92,20 @@ class Game extends React.Component {
 
 render(){
   const roomNum = this.props.match.params.id;
+  const drawer = this.props.drawer || 'Someone'
+
+
+  if (this.state.me.isDrawer){
+    this.props.sendDrawer(this.props.me.handle, roomNum);
+  }
 
   const winner = this.props.users.filter(user => {
     return user.score > 5000
   })
 
-  const drawer = this.props.drawer || 'Someone'
+
+
+
 
 
   return this.props.me.handle ? (
@@ -115,7 +124,7 @@ render(){
          <Board roomNum={roomNum}/>
          </div>
          <div className='scoreChat'>
-         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation} className='scoreChat'/>
+         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={true} curRot={this.state.currentRotation} rotation={this.rotation} className='scoreChat'/>
          <Scoreboard roomNum={roomNum}/>
          </div>
          </div>
@@ -131,7 +140,7 @@ render(){
          <ViewBoard roomNum={roomNum} />
          </div>
          <div className='scoreChat'>
-         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} className='scoreChat' />
+         <Timer roomNum={roomNum} seconds={this.state.seconds} isDrawer={false} curRot={this.state.currentRotation} rotation={this.rotation} className='scoreChat' />
          <Scoreboard roomNum={roomNum}/>
          </div>
        </div>
@@ -163,7 +172,7 @@ const mapDispatch = dispatch => {
     sendOrder: (order, room) => dispatch(sendOrder(order, room)),
     sendWord: (word, room) => dispatch(sendWord(word, room)),
     sendDrawer: (drawer, room) => dispatch(drawerUpdate(drawer, room)),
-    updateAnswer: (answer) => dispatch(updateAnswer(answer)),
+    updateAnswer: (answer, room) => dispatch(updateAnswer(answer, room)),
   }
 }
 

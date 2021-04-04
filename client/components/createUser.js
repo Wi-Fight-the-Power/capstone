@@ -18,7 +18,7 @@ class CreateUser extends React.Component {
     super()
     this.state = {
       handle: '',
-      isDrawing: false,
+      answered: false,
       score: 0,
       open: true,
       roomErrormessage:'',
