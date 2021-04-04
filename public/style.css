@@ -27,6 +27,49 @@ body {
   background-color: black;
 }
 
+.instructions {
+  display: flex;
+  flex-direction: column  ;
+  justify-content: center;
+  align-items: center;
+  background-color: #48BFE3;
+  margin: 10px;
+  border-radius: 15px;
+}
+
+.instructions-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 15px;
+  font-family: "Raleway",sans-serif;
+  font-weight: bolder;
+  background: linear-gradient(270deg, #80ffdb, #72efdd, #64dfdf, #56cfe1, #48bfe3, #4ea8de, #5390d9, #5e60ce, #6930c3, #7400b8);
+  background-size: 2000% 2000%;
+  animation: AnimationName 30s ease infinite;
+}
+
+.instructions-inner {
+  width: 60%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column  ;
+  justify-content: center;
+  align-items: center;
+  background-color: #7400B8;
+  margin: 10px;
+  border-radius: 15px;
+}
+
+.inner-header {
+  font-size: 25px;
+  color:#64dfdf;
+
+}
+
 /* messing with buttons for a sec bro */
 .startButton {
   background: green;

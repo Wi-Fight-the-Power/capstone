@@ -22,7 +22,7 @@ class Winner extends React.Component {
   }
 
   componentDidMount(){
-    this.props.updateAnswer(false);
+    this.props.updateAnswer({handle: this.props.me.handle, answer: false}, this.props.roomNum);
   }
 
 
@@ -105,7 +105,7 @@ const mapDispatch = dispatch => {
   return {
     sendScore: (score, room) => dispatch(sendScore(score, room)),
     sendWord: (word, room) => dispatch(sendWord(word, room)),
-    updateAnswer: (answer) => dispatch(updateAnswer(answer))
+    updateAnswer: (answer, room) => dispatch(updateAnswer(answer, room))
   }
 }
 

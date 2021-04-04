@@ -12,7 +12,9 @@ class Chatbox extends React.Component {
     this.state = {
       message: '',
       handle: this.props.me ? this.props.me.handle : 'john',
+      counter: 0,
     }
+
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
@@ -38,17 +40,17 @@ class Chatbox extends React.Component {
     let handle = this.state.handle
     let score = 0
 
-    if (this.props.word === message.toLowerCase() && !this.props.answered){
+    if (this.props.word === message.toLowerCase() && !this.props.me.answered){
+      this.props.updateAnswer({handle: handle, answer: true}, this.props.roomNum);
       message = `${handle} GOT THE ANSWER +${this.props.points} points`
       handle = 'SKETCHI'
       score = this.props.points;
-      this.props.updateAnswer(true);
       var correct = new Howl({
       src: ['/correct.mp3'],
       volume: 0.7,
     })
       correct.play()
-    } else if (this.props.word === message.toLowerCase() && this.props.answered){
+    } else if (this.props.word === message.toLowerCase() && this.props.me.answered){
         message = `${handle} is being superrrrrr Sketchi`
         handle = 'SKETCHI'
       var sound = new Howl({
@@ -69,6 +71,10 @@ class Chatbox extends React.Component {
 
     if (newScore.score !== 0){
       this.props.sendScore(newScore, this.props.roomNum);
+      this.props.sendScore({handle: this.props.drawer, score: 100}, this.props.roomNum);
+      this.setState(prevState => ({
+        counter: prevState.counter + 1
+      }))
     }
 
     if (newMessage.message !== ''){
@@ -79,6 +85,18 @@ class Chatbox extends React.Component {
     this.setState({
       message: '',
     })
+
+    const guessers = this.props.users.filter(user => {
+      return user.handle !== this.props.drawer
+    })
+
+    const correctGuessers = guessers.filter(guesser => {
+      return guesser.answered
+    })
+
+    if (correctGuessers.length === this.state.counter){
+      this.props.rotation();
+    }
   }
 
 
@@ -144,9 +162,11 @@ class Chatbox extends React.Component {
 const mapState = state => {
   return {
     game: state.game,
+    users: state.game.users,
     me: state.game.me,
     word: state.game.word,
-    answered: state.game.answered
+    answered: state.game.answered,
+    drawer: state.game.drawer
   }
 }
 
@@ -154,7 +174,7 @@ const mapDispatch = dispatch => {
   return {
     sendMessage: (message,room) => dispatch(sendMessage(message, room)),
     sendScore: (score, room) => dispatch(sendScore(score, room)),
-    updateAnswer: (answer) => dispatch (updateAnswer(answer)),
+    updateAnswer: (answer, room) => dispatch (updateAnswer(answer, room)),
   }
 }
 

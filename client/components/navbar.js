@@ -72,6 +72,9 @@ export default function Navbar() {
         <Link to="/aboutus"  style={{ textDecoration: 'none'}}>
           <ListItem button >About Us</ListItem>
         </Link>
+        <Link to="/instructions"  style={{ textDecoration: 'none'}}>
+          <ListItem button >Instructions</ListItem>
+        </Link>
       </List>
     </div>
   );

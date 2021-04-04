@@ -7,7 +7,7 @@ const initialState = {
   order: [],
   word: '',
   drawer: '',
-  answered: false
+  // answered: false
 }
 
 //action types
@@ -150,9 +150,10 @@ export const drawerUpdate = (drawer, room) => dispatch => {
   }
 }
 
-export const updateAnswer = (answer) => dispatch => {
+export const updateAnswer = (answer, room) => dispatch => {
   try {
     dispatch(answered(answer));
+    socket.emit('answered', answer, room);
   } catch (error){
     console.log(error);
   }
@@ -207,9 +208,16 @@ export default (state = initialState, action) => {
         drawer: action.drawer
       }
     case ANSWERED:
+      let answerHandle = action.answer.handle;
+      let newAnswer = action.answer.answer;
+      for (let i = 0; i < state.users.length; i++){
+        if (answerHandle === state.users[i].handle){
+          state.users[i].answered = newAnswer;
+        }
+      }
       return {
         ...state,
-        answered: action.answer
+        users: [...state.users]
       }
     default:
       return state
