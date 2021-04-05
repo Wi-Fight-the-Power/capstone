@@ -63,16 +63,18 @@ const Board = props => {
     socket.emit('boardColor', bgcolor, props.roomNum)
   }
 
-const useStyles = makeStyles({
+  const useStyles = makeStyles({
  selected: {
    background: "#666666 !important",
    color: 'white'
  },
  pen: {
    background: "#666666 !important",
-   color: 'white'
- },
- white: {
+   color: 'white',
+   borderRadius: '5px !important',
+   paddingLeft: '5px !important',
+  },
+  white: {
    background: 'white',
    '&:hover': {
        background: '#9c9c9c !important',
@@ -161,7 +163,8 @@ const useStyles = makeStyles({
    },
    penColor: {
      background: color + ' !important',
-
+   borderRadius: '5px !important',
+   paddingLeft: '5px !important',
      color: color === 'black' ||
      color === '#ff073a' ||
      color === '#f000ff' ?
@@ -169,7 +172,8 @@ const useStyles = makeStyles({
    },
    bgColor: {
      background: background + " !important",
-
+   borderRadius: '5px !important',
+   paddingLeft: '5px !important',
      color: background === 'black' ||
      background === '#ff073a' ||
      background === '#f000ff' ?
