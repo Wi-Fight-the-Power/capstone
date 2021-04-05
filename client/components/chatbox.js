@@ -12,7 +12,23 @@ class Chatbox extends React.Component {
     this.state = {
       message: '',
       handle: this.props.me ? this.props.me.handle : 'john',
-      counter: 0,
+    }
+
+    if (this.props.users.length >= 2){
+      let guessers = this.props.users.filter(user => {
+        return user.handle !== this.props.drawer
+      }) || '[]';
+      let correctGuessers = guessers.filter(guesser => {
+        return guesser.answered
+      }) || '[]';
+
+      console.log(guessers, 'guessers');
+      console.log(correctGuessers, 'correct');
+
+      if (guessers.length === correctGuessers.length){
+        console.log('rotation called');
+        this.props.rotation()
+      }
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -72,9 +88,6 @@ class Chatbox extends React.Component {
     if (newScore.score !== 0){
       this.props.sendScore(newScore, this.props.roomNum);
       this.props.sendScore({handle: this.props.drawer, score: 100}, this.props.roomNum);
-      this.setState(prevState => ({
-        counter: prevState.counter + 1
-      }))
     }
 
     if (newMessage.message !== ''){
@@ -85,18 +98,6 @@ class Chatbox extends React.Component {
     this.setState({
       message: '',
     })
-
-    const guessers = this.props.users.filter(user => {
-      return user.handle !== this.props.drawer
-    })
-
-    const correctGuessers = guessers.filter(guesser => {
-      return guesser.answered
-    })
-
-    if (correctGuessers.length === this.state.counter){
-      this.props.rotation();
-    }
   }
 
 
@@ -116,8 +117,9 @@ class Chatbox extends React.Component {
   render() {
 
     const messages = this.props.game.messages || []
-    return (
 
+
+    return (
       <div id="chat-box">
         <h2>CHAT</h2>
         <div ref={this.chatContainer} id="chat-window">
