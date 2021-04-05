@@ -58,3 +58,5 @@ Sketchi is a PWA built using React (with Redux), React Konva, Socket.io, Materia
 Scoreboard -  
 
 Drawer turn rotation - 
+
+Username consistency - 
