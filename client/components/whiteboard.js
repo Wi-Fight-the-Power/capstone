@@ -9,10 +9,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const Board = props => {
   const [stroke, changeStroke] = React.useState(12)
-  const [color, changeColor] = React.useState('white')
+  const [color, changeColor] = React.useState('black')
   const [tool, setTool] = React.useState('pen')
   const [lines, setLines] = React.useState([])
-  const [background, setBackground] = React.useState('black')
+  const [background, setBackground] = React.useState('white')
 
 
   const isDrawing = React.useRef(false)
@@ -160,7 +160,7 @@ const useStyles = makeStyles({
            },
    },
    penColor: {
-     background: color,
+     background: color + ' !important',
 
      color: color === 'black' ||
      color === '#ff073a' ||
@@ -168,7 +168,7 @@ const useStyles = makeStyles({
      'white' : 'black'
    },
    bgColor: {
-     background: background,
+     background: background + " !important",
 
      color: background === 'black' ||
      background === '#ff073a' ||
@@ -194,6 +194,7 @@ const classes=useStyles()
         className="drawTools"
         classes={{
           root: classes.bgColor,
+          selected: classes.bgColor,
         }}
         value={background}
         onChange={e => {
