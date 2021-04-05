@@ -462,4 +462,24 @@ background-color: #48BFE3;
 margin: 50px;
 padding: 25px;
 border-radius: 15px;
+flex-wrap:wrap
 }
+
+.img{
+  width: 200px;
+  height: 200px
+}
+
+.aboutUsCard{
+  display: flex;
+  flex-direction: column  ;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(270deg, #80ffdb, #72efdd, #64dfdf, #56cfe1, #48bfe3, #4ea8de, #5390d9, #5e60ce, #6930c3, #7400b8);
+  background-size: 2000% 2000%;
+  animation: AnimationName 30s ease infinite;
+  margin: 10px;
+  border-radius: 15px;
+  /* width: 500px; */
+}
+
