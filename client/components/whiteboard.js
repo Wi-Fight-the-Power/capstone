@@ -9,10 +9,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const Board = props => {
   const [stroke, changeStroke] = React.useState(12)
-  const [color, changeColor] = React.useState('#FFAEBC')
+  const [color, changeColor] = React.useState('white')
   const [tool, setTool] = React.useState('pen')
   const [lines, setLines] = React.useState([])
-  const [background, setBackground] = React.useState('white')
+  const [background, setBackground] = React.useState('black')
 
 
   const isDrawing = React.useRef(false)
@@ -75,6 +75,14 @@ const useStyles = makeStyles({
        color: 'white !important'
     },
   },
+  black: {
+    background: 'black',
+    color: 'white',
+    '&:hover': {
+       background: '#9c9c9c !important',
+       color: 'white !important'
+    },
+  },
   tiffanyBlue: {
     background: "#A0E7E5",
     '&:hover': {
@@ -129,6 +137,11 @@ const classes=useStyles()
           selected: classes.selected
         }} value="white">White</MenuItem>
 
+        <MenuItem  classes={{
+          root: classes.black,
+          selected: classes.selected
+        }} value="black">Black</MenuItem>
+
         <MenuItem classes={{
           root: classes.hotPink,
           selected: classes.selected
@@ -160,6 +173,11 @@ const classes=useStyles()
           root: classes.white,
           selected: classes.selected
         }} value="white">White</MenuItem>
+
+        <MenuItem  classes={{
+          root: classes.black,
+          selected: classes.selected
+        }} value="black">Black</MenuItem>
 
         <MenuItem classes={{
           root: classes.hotPink,

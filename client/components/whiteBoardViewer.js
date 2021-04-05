@@ -7,7 +7,7 @@ import socket from '../socket'
 
 const ViewBoard = () => {
   const [lines, setLines] = React.useState([])
-  const [background, setBackground] = React.useState('white')
+  const [background, setBackground] = React.useState('blacks')
 
 
 socket.on('drawing', drawn => setLines(drawn))
