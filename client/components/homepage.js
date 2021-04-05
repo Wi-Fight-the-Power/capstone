@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 const Homepage = () => (
   <div className='homepagemainDiv'>
     <div className='allthingscenter'>
-      <img src='https://media.tenor.com/images/cdda4d937ceb893c7c6ce3963d55f4b2/tenor.gif'></img>
+      <img src='https://media.tenor.com/images/cdda4d937ceb893c7c6ce3963d55f4b2/tenor.gif' className='fire'></img>
       <h2 className='Raleway'>Ignore problems in your life with Sketchi</h2>
       <p className='Raleway'>
         HomeWork Due Tomorrow? Sketchi

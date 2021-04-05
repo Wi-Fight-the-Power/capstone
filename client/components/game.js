@@ -7,7 +7,7 @@ import Scoreboard from './scoreboard'
 import CreateUser from './createUser'
 import Winner from './winner'
 import ViewBoard from './whiteBoardViewer'
-import {sendOrder, sendWord, drawerUpdate, updateAnswer} from '../store/game'
+import {sendWord, drawerUpdate, updateAnswer} from '../store/game'
 import {randomWord} from '../components/gameFunctions'
 
 
@@ -16,7 +16,7 @@ class Game extends React.Component {
     super(props);
     this.state = {
       me: this.props.me,
-      seconds: 20,
+      seconds: 90,
       currentRotation: 0,
       joined: false,
     }
@@ -101,7 +101,7 @@ render(){
   }
 
   const winner = this.props.users.filter(user => {
-    return user.score > 5000
+    return user.score >= 5000
   })
 
 
@@ -170,7 +170,6 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    sendOrder: (order, room) => dispatch(sendOrder(order, room)),
     sendWord: (word, room) => dispatch(sendWord(word, room)),
     sendDrawer: (drawer, room) => dispatch(drawerUpdate(drawer, room)),
     updateAnswer: (answer, room) => dispatch(updateAnswer(answer, room)),

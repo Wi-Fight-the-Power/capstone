@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     "& .MuiPaper-root": {
       backgroundColor : "#6930C3"
+    },
+    "& .MuiListItem-root": {
+      paddingTop:"20px",
+      paddingBottom:"20px",
     }
   },
   menuButton: {
@@ -64,16 +68,16 @@ export default function Navbar() {
     >
       <List style={{backgroundColor : "#6930C3"}}>
         <Link to="/"  style={{ textDecoration: 'none'}}>
-          <ListItem button >Home</ListItem>
+          <ListItem button style={{color : "white"}}>Home</ListItem>
         </Link>
-        <Link to="/lobby"  style={{ textDecoration: 'none'}}>
-          <ListItem button >lobby</ListItem>
+        <Link to="/Lobby"  style={{ textDecoration: 'none'}}>
+          <ListItem button style={{color : "white"}}>lobby</ListItem>
         </Link>
         <Link to="/aboutus"  style={{ textDecoration: 'none'}}>
-          <ListItem button >About Us</ListItem>
+          <ListItem button style={{color : "white"}}>About Us</ListItem>
         </Link>
         <Link to="/instructions"  style={{ textDecoration: 'none'}}>
-          <ListItem button >Instructions</ListItem>
+          <ListItem button style={{color : "white"}}>Instructions</ListItem>
         </Link>
       </List>
     </div>
