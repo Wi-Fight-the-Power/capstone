@@ -1,7 +1,7 @@
 # Sketchi
 Sketchi is a PWA Pictionary style game
 
-# LIVE SITE: sketchi-draw.herokuapp.com
+# Live Site: sketchi-draw.herokuapp.com
 
 ## Team Members
 
