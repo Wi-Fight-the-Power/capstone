@@ -113,6 +113,8 @@ const classes=useStyles()
         <Button className='undo' color='secondary' variant='contained' onClick={() => undoLast()}>UNDO</Button>
         {/* stroke size */}
         <input id="range" type="range" min='5' max='50' value={stroke} className='strokeScale drawTools' onChange={e => changeStroke(e.target.value)}/>
+
+
         {/* change background */}
         <div className='easel'>
         <Select
@@ -147,16 +149,40 @@ const classes=useStyles()
           selected: classes.selected
         }} value="#FBE7C6">Yellow</MenuItem>
         </Select>
-        {/* change colors */}
+
+
+        {/* change draw colors */}
         <Select
         className="drawTools"
         value={color}
         onChange={e => changeColor(e.target.value)}>
-        <MenuItem value="#FFAEBC">Hot Pink</MenuItem>
-        <MenuItem value="#A0E7E5">Tiffany Blue</MenuItem>
-        <MenuItem value="#B4F8C8">Mint</MenuItem>
-        <MenuItem value="#FBE7C6">Yellow</MenuItem>
+        <MenuItem  classes={{
+          root: classes.white,
+          selected: classes.selected
+        }} value="white">White</MenuItem>
+
+        <MenuItem classes={{
+          root: classes.hotPink,
+          selected: classes.selected
+        }} value="#FFAEBC">Hot Pink</MenuItem>
+
+        <MenuItem classes={{
+          root: classes.tiffanyBlue,
+          selected: classes.selected
+        }} value="#A0E7E5">Tiffany Blue</MenuItem>
+
+        <MenuItem classes={{
+          root: classes.mint,
+          selected: classes.selected
+        }} value="#B4F8C8">Mint</MenuItem>
+
+        <MenuItem classes={{
+          root: classes.yellow,
+          selected: classes.selected
+        }} value="#FBE7C6">Yellow</MenuItem>
       </Select>
+
+
       {/* tool selection */}
       <Select
         className="drawTools"

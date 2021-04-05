@@ -38,10 +38,6 @@ class LobbyRoom extends React.Component{
     this.handleCreateGame = this.handleCreateGame.bind(this)
   }
 
-  componentWillUnmount(){
-    location.reload();
-  }
-
   handleChange(event) {
     this.setState({
       room : event.target.value,
