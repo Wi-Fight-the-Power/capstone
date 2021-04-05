@@ -4,10 +4,8 @@ const initialState = {
   messages: [],
   users: [],
   me: {},
-  order: [],
   word: '',
   drawer: '',
-  // answered: false
 }
 
 //action types
@@ -16,7 +14,6 @@ const NEW_MESSAGE = 'GOT_MESSAGE'
 const UPDATE_SCORE = 'UPDATE_SCORE';
 const NEW_USER = 'NEW_USER';
 const ME = 'ME';
-const UPDATE_ORDER = 'UPDATE_ORDER';
 const GET_WORD = 'GET_WORD';
 const UPDATE_DRAWER = 'UPDATE_DRAWER';
 const ANSWERED = 'ANSWERED';
@@ -52,13 +49,6 @@ export const setMe = (me) => {
 }
 
 
-
-export const updateOrder = order => {
-  return {
-    type: UPDATE_ORDER,
-    order,
-  }
-}
 
 export const getWord = word => {
   return {
@@ -122,15 +112,6 @@ export const sendMe = (me) => dispatch => {
   }
 }
 
-export const sendOrder = (order, room) => dispatch => {
-  try {
-    dispatch(updateOrder(order));
-    socket.emit('order', order, room)
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 export const sendWord = (word, room) => dispatch => {
   try {
     dispatch(getWord(word));
@@ -163,6 +144,7 @@ export const updateAnswer = (answer, room) => dispatch => {
 
 //reducer
 
+// eslint-disable-next-line complexity
 export default (state = initialState, action) => {
   switch (action.type) {
     case NEW_MESSAGE:
@@ -171,7 +153,9 @@ export default (state = initialState, action) => {
         messages: [...state.messages, action.message]
       }
     case UPDATE_SCORE:
+      // eslint-disable-next-line no-case-declarations
       let handle = action.score.handle;
+      // eslint-disable-next-line no-case-declarations
       let newScore = action.score.score;
       for (let i = 0; i < state.users.length; i++){
         if (handle === state.users[i].handle){
@@ -192,11 +176,6 @@ export default (state = initialState, action) => {
         ...state,
         me: action.me
       }
-    case UPDATE_ORDER:
-      return {
-        ...state,
-        order: action.order
-      }
     case GET_WORD:
       return {
         ...state,
@@ -208,7 +187,9 @@ export default (state = initialState, action) => {
         drawer: action.drawer
       }
     case ANSWERED:
+      // eslint-disable-next-line no-case-declarations
       let answerHandle = action.answer.handle;
+      // eslint-disable-next-line no-case-declarations
       let newAnswer = action.answer.answer;
       for (let i = 0; i < state.users.length; i++){
         if (answerHandle === state.users[i].handle){

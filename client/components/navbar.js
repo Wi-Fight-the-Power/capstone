@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor : "#6930C3"
     },
     "& .MuiListItem-root": {
-      margin : "#6930C3"
+      paddingTop:"20px",
+      paddingBottom:"20px",
     }
   },
   menuButton: {
