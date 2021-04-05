@@ -63,7 +63,8 @@ class LobbyRoom extends React.Component{
         id="create lobby" onClick={this.handleCreateGame}
         style={{
         backgroundColor : "#6930C3",
-        padding: '10px'
+        padding: '10px',
+        margin: '20px'
       }}
       size="large"
       variant="contained"
@@ -82,7 +83,7 @@ class LobbyRoom extends React.Component{
 
 
     <Button
-    style={{backgroundColor : "#6930C3"}}
+    style={{backgroundColor : "#6930C3", margin: '20px'}}
       id="room num"
       type="submit"
       size="large"
