@@ -57,6 +57,6 @@ Sketchi is a PWA built using React (with Redux), React Konva, Socket.io, Materia
 
 Scoreboard -  
 
-Drawer turn rotation - 
+Drawer turn rotation - Towards the latter end of testing, we began noticing that players were either being skipped from being drawer (based on the order in which users joined) or they were drawing for multiple turns in a row. This was a tricky issue because multiple times in localhost, this issue would not occur, but would occur upon deployment to heroku. 
 
-Username consistency - 
+Username consistency - One issue that we had throughout most of our testing was having multiples of the same user render in one game (the scoreboard). At first, we were using local storage to hold a users information for that particular browser session. Over time, we switched to making usernames specific to only the specific room that the user was joining. By prompting them to create a username while technically already in the room (this renders once they fill out their username), they only have that specified name in that particular room until they leave (sockets really came in handy here). 
