@@ -70,8 +70,8 @@ export default function Navbar() {
         <Link to="/"  style={{ textDecoration: 'none'}}>
           <ListItem button style={{color : "white"}}>Home</ListItem>
         </Link>
-        <Link to="/Lobby"  style={{ textDecoration: 'none'}}>
-          <ListItem button style={{color : "white"}}>lobby</ListItem>
+        <Link to="/lobby"  style={{ textDecoration: 'none'}}>
+          <ListItem button style={{color : "white"}}>Lobby</ListItem>
         </Link>
         <Link to="/aboutus"  style={{ textDecoration: 'none'}}>
           <ListItem button style={{color : "white"}}>About Us</ListItem>
