@@ -55,7 +55,7 @@ Sketchi is a PWA built using React (with Redux), React Konva, Socket.io, Materia
 
 # Challenges 
 
-Drawer turn rotation - Towards the latter end of testing, we began noticing that players were either being skipped from being drawer (based on the order in which users joined) or they were drawing for multiple turns in a row. This was a tricky issue because multiple times in localhost, this issue would not occur, but would occur upon deployment to heroku. 
+Drawer turn rotation - Towards the latter end of testing, we began noticing that players were either being skipped from being drawer (based on the order in which users joined) or they were drawing for multiple turns in a row. This was a tricky issue because multiple times in localhost, this issue would not occur, but would occur upon deployment to heroku. Since the sockets had a slight delay, the parameter that would trigger the rotation was being triggered back to back. In our case, once a rounds timer would hit zero, the turn rotation would occur twice instead of once, leading to player 2 being skipped. In order to fix this, the parameters were altered to be more specific. In this case, we added a set timeout to the socket (750ms) so that the rotation wouldn't trigger until after the timeout expired, meaning the parameter wouldn't trigger a second rotation.
 
 ![image](https://user-images.githubusercontent.com/20148275/113599975-5c2b1280-960d-11eb-9822-8773dd924739.png)
 
