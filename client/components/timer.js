@@ -97,7 +97,7 @@ class Timer extends React.Component {
         })
         let rotNum = this.props.curRot
         rotNum += 1
-        setTimeout(() => {socket.emit('rotation', rotNum, this.props.roomNum)}, 1000);
+        setTimeout(() => {socket.emit('rotation', rotNum, this.props.roomNum)}, 750);
       }
     }
     // time running out sound effect
