@@ -154,7 +154,7 @@ h2 {
 }
 
 @media (max-width: 600px) {
-html, body {margin: 0; height: 100%; overflow: hidden}
+html, body {margin: 0; height: 100%}
 }
 
 

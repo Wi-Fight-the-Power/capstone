@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux';
-import {sendScore, sendWord, updateAnswer} from '../store/game'
+import {sendScore, sendWord} from '../store/game'
 import {randomWord} from './gameFunctions';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -20,12 +20,6 @@ class Winner extends React.Component {
     // this.handleClose = this.handleClose.bind(this)
     this.handleClose = this.handleClose.bind(this)
   }
-
-  componentDidMount(){
-    this.props.updateAnswer({handle: this.props.me.handle, answer: false}, this.props.roomNum);
-  }
-
-
   handleClose = () => {
     this.setState({open:false})
   };
@@ -50,10 +44,6 @@ class Winner extends React.Component {
 
     return me.score > 5000
     ? (
-      // <div>
-      //   <h2>YOU WIN!</h2>
-      //   <button type='button' onClick={this.handleReset}>New Game?</button>
-      // </div>
       <Dialog open={this.state.open} onClose={this.handleClose}/**/aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Good Game</DialogTitle>
         <DialogContent>
@@ -62,18 +52,12 @@ class Winner extends React.Component {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {/* <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button> */}
           <Button onClick={this.handleReset} color="primary">
             new Game?
           </Button>
         </DialogActions>
       </Dialog>
     ) : (
-      // <div>
-      //   <h2>{winner[0].handle} Wins!</h2>
-      // </div>
       <Dialog open={this.state.open} onClose={this.handleClose}/**/aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">You lost, {winner[0].handle} won</DialogTitle>
         <DialogContent>
@@ -82,12 +66,6 @@ class Winner extends React.Component {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {/* <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button> */}
-          {/* <Button onClick={this.handleReset} color="primary">
-            new Game?
-          </Button> */}
         </DialogActions>
       </Dialog>
     )
@@ -104,8 +82,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     sendScore: (score, room) => dispatch(sendScore(score, room)),
-    sendWord: (word, room) => dispatch(sendWord(word, room)),
-    updateAnswer: (answer, room) => dispatch(updateAnswer(answer, room))
+    sendWord: (word, room) => dispatch(sendWord(word, room))
   }
 }
 

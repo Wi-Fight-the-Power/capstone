@@ -1,11 +1,8 @@
 import React from 'react'
 import socket from '../socket'
-import {Link} from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
-// import IsUser from './createUserName'
 import Button from '@material-ui/core/Button';
 import Rooms from './rooms'
-import CreateLobby from './createlobby'
 
 
 class LobbyRoom extends React.Component{
@@ -38,6 +35,10 @@ class LobbyRoom extends React.Component{
     this.handleCreateGame = this.handleCreateGame.bind(this)
   }
 
+  componentWillUnmount(){
+    location.reload();
+  }
+
   handleChange(event) {
     this.setState({
       room : event.target.value,
@@ -63,8 +64,7 @@ class LobbyRoom extends React.Component{
         id="create lobby" onClick={this.handleCreateGame}
         style={{
         backgroundColor : "#6930C3",
-        padding: '10px',
-        margin: '20px'
+        padding: '10px'
       }}
       size="large"
       variant="contained"
@@ -83,7 +83,7 @@ class LobbyRoom extends React.Component{
 
 
     <Button
-    style={{backgroundColor : "#6930C3", margin: '20px'}}
+    style={{backgroundColor : "#6930C3"}}
       id="room num"
       type="submit"
       size="large"
